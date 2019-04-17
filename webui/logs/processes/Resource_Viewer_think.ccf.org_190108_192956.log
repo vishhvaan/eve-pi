@@ -1,0 +1,39 @@
+id:69
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Resource Viewer
+start_time:1546975796431
+command:/eve/scripts/webui-sc/resources.sh
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 1  0      0 464472  53820 375716    0    0     0     0   24   16  0  0 100  0  0
+
+
+       949448 K total memory
+        55264 K used memory
+       195524 K active memory
+       238720 K inactive memory
+       464648 K free memory
+        53820 K buffer memory
+       375716 K swap cache
+       102396 K total swap
+            0 K used swap
+       102396 K free swap
+        69540 non-nice user cpu ticks
+            0 nice user cpu ticks
+        24932 system cpu ticks
+    165378977 idle cpu ticks
+        13686 IO-wait cpu ticks
+            0 IRQ cpu ticks
+        17979 softirq cpu ticks
+            0 stolen cpu ticks
+       144426 pages paged in
+       701077 pages paged out
+            0 pages swapped in
+            0 pages swapped out
+    855026987 interrupts
+     26325783 CPU context switches
+   1546558850 boot time
+        10093 forks

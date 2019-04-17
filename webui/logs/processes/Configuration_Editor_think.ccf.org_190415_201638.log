@@ -1,0 +1,14 @@
+id:506
+user_name:think.ccf.org
+user_id:10.66.101.117-84763fe03e204fe5
+script:Configuration Editor
+start_time:1555359398710
+command:/eve/scripts/webui-sc/confeditor.py
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/confeditor.py", line 137, in <module>
+    section_select(config)
+  File "/eve/scripts/webui-sc/confeditor.py", line 22, in section_select
+    num = csections.index(section) + 1
+UnboundLocalError: local variable 'section' referenced before assignment

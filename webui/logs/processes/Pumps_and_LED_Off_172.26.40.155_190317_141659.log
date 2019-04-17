@@ -1,0 +1,18 @@
+id:267
+user_name:172.26.40.155
+user_id:172.26.40.1-fd619819a3174031
+script:Pumps and LED Off
+start_time:1552832219550
+command:su -c ./pumpsledoff.py -s /bin/sh vishhvaan
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Enabled:
+[1, 2, 3]
+Started
+Pin Lists:
+[20, 17, 21, 25]
+Done!
+[0, 1, 2, 3]
+[8, 9, 10, 11]
+Done!
+Done!

@@ -1,0 +1,14 @@
+id:285
+user_name:172.26.40.155
+user_id:172.26.40.1-fd619819a3174031
+script:1 - Pump Control
+start_time:1552841552218
+command:/eve/scripts/webui-sc/mpumptimed.py 1, 2 Drug,Media,Waste 1
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+[1, 2]
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/mpumptimed.py", line 143, in <module>
+    pname = sys.argv[2].split(',')
+AttributeError: 'int' object has no attribute 'argv'

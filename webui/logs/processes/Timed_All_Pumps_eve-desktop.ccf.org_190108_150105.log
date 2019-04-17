@@ -1,0 +1,10 @@
+id:19
+user_name:eve-desktop.ccf.org
+user_id:10.66.100.75-6d9654bbebd64500
+script:Timed All Pumps
+start_time:1546959665198
+command:/eve/scripts/webui-sc/pumpstimed.py 10
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+Started
+Done!

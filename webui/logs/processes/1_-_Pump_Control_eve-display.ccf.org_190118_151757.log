@@ -1,0 +1,10 @@
+id:196
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-9eb13dc2780543ef
+script:1 - Pump Control
+start_time:1547824677777
+command:/eve/scripts/webui-sc/mpumptimed.py Drug 10
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+Started
+Done!

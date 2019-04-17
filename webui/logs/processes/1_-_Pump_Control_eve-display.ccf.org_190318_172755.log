@@ -1,0 +1,16 @@
+id:299
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:1 - Pump Control
+start_time:1552930075157
+command:/eve/scripts/webui-sc/mpumptimed.py 1 Drug,Media,Waste 5
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+[1]
+Started
+Pin Lists:
+[20, 17, 21]
+Started ...
+Running ...
+Finished

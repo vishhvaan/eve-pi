@@ -1,0 +1,13 @@
+id:83
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Timed Pumps On
+start_time:1546982874130
+command:/eve/scripts/webui-sc/pumpstimed.py 20
+exit_code:-15
+>>>>>  OUTPUT STARTED <<<<<
+/eve/scripts/webui-sc/pumpstimed.py:25: RuntimeWarning: This channel is already in use, continuing anyway.  Use GPIO.setwarnings(False) to disable warnings.
+  GPIO.setup(pin, GPIO.OUT)
+Started
+
+>> STOPPED BY USER

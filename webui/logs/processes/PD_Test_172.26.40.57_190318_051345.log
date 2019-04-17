@@ -1,0 +1,18 @@
+id:290
+user_name:172.26.40.57
+user_id:172.26.40.1-fd619819a3174031
+script:PD Test
+start_time:1552886025169
+command:/eve/scripts/webui-sc/pd_test.py 1 0.2 30
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+[1]
+Started
+Pin Lists:
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/pd_test.py", line 132, in <module>
+    runner(sys,gpioe,gpio_add,adc,adc_add,chkt,loops)
+  File "/eve/scripts/webui-sc/pd_test.py", line 83, in runner
+    print("{:>5}\t{:>5.3f}".format(pd.value, pd.voltage))
+NameError: name 'pd' is not defined

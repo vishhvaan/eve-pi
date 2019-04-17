@@ -1,0 +1,12 @@
+id:288
+user_name:172.26.40.57
+user_id:172.26.40.1-fd619819a3174031
+script:PD Test
+start_time:1552885928662
+command:/eve/scripts/webui-sc/pd_test.py 1 0.2 30
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/pd_test.py", line 31, in <module>
+    chkt=abs(pumpt)
+NameError: name 'pumpt' is not defined

@@ -1,0 +1,62 @@
+id:269
+user_name:172.26.40.155
+user_id:172.26.40.1-fd619819a3174031
+script:1 - Pump Control
+start_time:1552835712432
+command:/eve/scripts/webui-sc/mpumptimed.py all Drug,Media,Waste 1
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+[1, 2, 3]
+Started
+Pin Lists:
+[20, 17, 21]
+[0, 1, 2]
+[8, 9, 10]
+Process Process-3:
+Process Process-2:
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/multiprocessing/process.py", line 249, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.5/multiprocessing/process.py", line 249, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.5/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.5/multiprocessing/process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+  File "/eve/scripts/webui-sc/mpumptimed.py", line 85, in runner
+    pins[P_nut_pins].value = True
+  File "/eve/scripts/webui-sc/mpumptimed.py", line 87, in runner
+    pins[P_waste_pins].value = True
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_mcp230xx.py", line 145, in value
+    self._mcp.gpio = _enable_bit(self._mcp.gpio, self._pin)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_mcp230xx.py", line 311, in gpio
+    return self._read_u16le(_MCP23017_GPIOA)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_mcp230xx.py", line 145, in value
+    self._mcp.gpio = _enable_bit(self._mcp.gpio, self._pin)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_mcp230xx.py", line 278, in _read_u16le
+    i2c.readinto(_BUFFER, end=2)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_bus_device/i2c_device.py", line 96, in readinto
+    self.i2c.readfrom_into(self.device_address, buf, **kwargs)
+  File "/usr/local/lib/python3.5/dist-packages/busio.py", line 55, in readfrom_into
+    return self._i2c.readfrom_into(address, buffer, stop=stop)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_mcp230xx.py", line 311, in gpio
+    return self._read_u16le(_MCP23017_GPIOA)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_blinka/microcontroller/generic_linux/i2c.py", line 44, in readfrom_into
+    readin = self._i2c_bus.read_bytes(address, end-start)
+  File "/usr/local/lib/python3.5/dist-packages/Adafruit_PureIO/smbus.py", line 155, in read_bytes
+    return self._device.read(number)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_mcp230xx.py", line 277, in _read_u16le
+    i2c.write(_BUFFER, end=1, stop=False)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_bus_device/i2c_device.py", line 112, in write
+    self.i2c.writeto(self.device_address, buf, **kwargs)
+OSError: [Errno 121] Remote I/O error
+  File "/usr/local/lib/python3.5/dist-packages/busio.py", line 64, in writeto
+    return self._i2c.writeto(address, memoryview(buffer)[start:end], stop=stop)
+  File "/usr/local/lib/python3.5/dist-packages/adafruit_blinka/microcontroller/generic_linux/i2c.py", line 38, in writeto
+    self._i2c_bus.write_bytes(address, buffer[start:end])
+  File "/usr/local/lib/python3.5/dist-packages/Adafruit_PureIO/smbus.py", line 244, in write_bytes
+    self._device.write(buf)
+OSError: [Errno 121] Remote I/O error
+Done!

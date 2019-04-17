@@ -1,0 +1,378 @@
+id:133
+user_name:eve-desktop.ccf.org
+user_id:10.66.100.75-6d9654bbebd64500
+script:3 - Morbidostat Experiment
+start_time:1547050644780
+command:su -c ./vish_control_drugs.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+Connected!
+Experiment begun at 11:17:28 on Wed - Jan 09, 2019
+saving to disk
+Elapsed Time: 1 second ; OD = 1.699
+saving to disk
+Elapsed Time: 3 seconds ; OD = 1.699
+saving to disk
+Elapsed Time: 5 seconds ; OD = 1.693
+saving to disk
+Elapsed Time: 7 seconds ; OD = 1.695
+saving to disk
+Elapsed Time: 9 seconds ; OD = 1.691
+saving to disk
+Elapsed Time: 11 seconds ; OD = 1.691
+saving to disk
+Elapsed Time: 13 seconds ; OD = 1.689
+saving to disk
+Elapsed Time: 15 seconds ; OD = 1.687
+saving to disk
+Elapsed Time: 17 seconds ; OD = 1.687
+saving to disk
+Elapsed Time: 19 seconds ; OD = 1.685
+saving to disk
+Elapsed Time: 21 seconds ; OD = 1.685
+saving to disk
+Elapsed Time: 23 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 25 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 27 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 29 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 31 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 33 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 35 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 37 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 39 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 41 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 43 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 45 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 47 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 49 seconds ; OD = 1.685
+saving to disk
+Elapsed Time: 51 seconds ; OD = 1.685
+saving to disk
+Elapsed Time: 53 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 55 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 57 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 59 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 1 minute, 1 second ; OD = 1.681
+saving to disk
+Elapsed Time: 1 minute, 3 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 1 minute, 5 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 1 minute, 7 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 1 minute, 9 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 1 minute, 11 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 1 minute, 13 seconds ; OD = 1.663
+saving to disk
+Elapsed Time: 1 minute, 15 seconds ; OD = 1.661
+saving to disk
+Elapsed Time: 1 minute, 17 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 1 minute, 19 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 1 minute, 21 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 1 minute, 23 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 1 minute, 25 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 1 minute, 27 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 1 minute, 29 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 1 minute, 31 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 1 minute, 33 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 1 minute, 35 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 1 minute, 37 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 1 minute, 39 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 1 minute, 41 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 1 minute, 43 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 1 minute, 45 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 1 minute, 47 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 1 minute, 49 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 1 minute, 51 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 1 minute, 53 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 1 minute, 55 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 1 minute, 57 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 1 minute, 59 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 2 minutes, 1 second ; OD = 1.669
+saving to disk
+Elapsed Time: 2 minutes, 3 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 2 minutes, 5 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 2 minutes, 7 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 2 minutes, 9 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 11 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 13 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 15 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 17 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 2 minutes, 19 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 2 minutes, 21 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 23 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 25 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 27 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 2 minutes, 29 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 31 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 2 minutes, 33 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 2 minutes, 35 seconds ; OD = 1.685
+saving to disk
+Elapsed Time: 2 minutes, 37 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 2 minutes, 39 seconds ; OD = 1.685
+saving to disk
+Elapsed Time: 2 minutes, 41 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 2 minutes, 43 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 45 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 47 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 49 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 51 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 2 minutes, 53 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 2 minutes, 55 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 2 minutes, 57 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 2 minutes, 59 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 1 second ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 3 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 5 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 7 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 9 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 3 minutes, 11 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 13 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 15 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 17 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 19 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 21 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 3 minutes, 23 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 25 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 27 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 29 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 31 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 3 minutes, 33 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 3 minutes, 35 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 3 minutes, 37 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 39 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 41 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 43 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 45 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 47 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 3 minutes, 49 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 3 minutes, 51 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 53 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 3 minutes, 55 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 3 minutes, 57 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 3 minutes, 59 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 4 minutes, 1 second ; OD = 1.677
+saving to disk
+Elapsed Time: 4 minutes, 3 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 4 minutes, 5 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 4 minutes, 7 seconds ; OD = 1.665
+saving to disk
+Elapsed Time: 4 minutes, 9 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 4 minutes, 11 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 13 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 15 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 4 minutes, 17 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 4 minutes, 19 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 4 minutes, 21 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 23 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 4 minutes, 25 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 4 minutes, 27 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 4 minutes, 29 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 4 minutes, 31 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 33 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 4 minutes, 35 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 4 minutes, 37 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 4 minutes, 39 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 4 minutes, 41 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 4 minutes, 43 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 45 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 4 minutes, 47 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 49 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 4 minutes, 51 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 4 minutes, 53 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 4 minutes, 55 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 4 minutes, 57 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 4 minutes, 59 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 5 minutes, 1 second ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 3 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 5 seconds ; OD = 1.681
+saving to disk
+Elapsed Time: 5 minutes, 7 seconds ; OD = 1.683
+saving to disk
+Elapsed Time: 5 minutes, 9 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 11 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 5 minutes, 13 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 15 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 5 minutes, 17 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 5 minutes, 19 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 21 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 5 minutes, 23 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 5 minutes, 25 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 5 minutes, 27 seconds ; OD = 1.679
+saving to disk
+Elapsed Time: 5 minutes, 29 seconds ; OD = 1.677
+saving to disk
+Elapsed Time: 5 minutes, 31 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 33 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 35 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 37 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 39 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 41 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 5 minutes, 43 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 5 minutes, 45 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 5 minutes, 47 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 49 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 5 minutes, 51 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 53 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 minutes, 55 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 5 minutes, 57 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 5 minutes, 59 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 6 minutes, 1 second ; OD = 1.673
+saving to disk
+Elapsed Time: 6 minutes, 3 seconds ; OD = 1.673
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

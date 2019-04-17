@@ -1,0 +1,46 @@
+id:77
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Morbidostat Experiment
+start_time:1546976053769
+command:su -c ./vish_control_drugs.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+Connected!
+Experiment begun at 14:34:17 on Tue - Jan 08, 2019
+saving to disk
+Elapsed Time: 1 second ; OD = 0.128
+saving to disk
+Elapsed Time: 3 seconds ; OD = 0.132
+saving to disk
+Elapsed Time: 5 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 7 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 9 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 11 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 13 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 15 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 17 seconds ; OD = 0.136
+saving to disk
+Elapsed Time: 19 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 21 seconds ; OD = 0.136
+saving to disk
+Elapsed Time: 23 seconds ; OD = 0.136
+saving to disk
+Elapsed Time: 25 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 27 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 29 seconds ; OD = 0.134
+saving to disk
+Elapsed Time: 31 seconds ; OD = 0.136
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

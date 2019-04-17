@@ -1,0 +1,9 @@
+id:9
+user_name:172.26.40.230
+user_id:172.26.40.230-74fbe15917a24116
+script:Timed All Pumps
+start_time:1546932267232
+command:/eve/webui/scripts/pumpstimed.py he
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Please type a number.

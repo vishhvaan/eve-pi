@@ -1,0 +1,12 @@
+id:184
+user_name:lri-107674.ccf.org
+user_id:10.66.100.211-4b004016d50641d3
+script:Pumps and LED Off
+start_time:1547425648189
+command:su -c ./pumpsledoff.py -s /bin/sh vishhvaan
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Traceback (most recent call last):
+  File "./pumpsledoff.py", line 18, in <module>
+    GPIO.setup(pin, GPIO.OUT)
+RuntimeError: No access to /dev/mem.  Try running as root!

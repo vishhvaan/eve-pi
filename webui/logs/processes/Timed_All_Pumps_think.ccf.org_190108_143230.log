@@ -1,0 +1,9 @@
+id:16
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Timed All Pumps
+start_time:1546957950537
+command:/eve/scripts/webui-sc/pumpstimed.py 10*.1
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Please type a number.

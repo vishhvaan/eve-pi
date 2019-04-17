@@ -1,0 +1,24 @@
+id:540
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:PD Test
+start_time:1555430581514
+command:/eve/scripts/webui-sc/pd_test.py 2 0.5 10
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+EVEs Selected:
+[2]
+EVE2
+  732	1.461
+  718	1.435
+  747	1.493
+  933	1.863
+  929	1.855
+  696	1.349
+  537	1.071
+  538	1.073
+  559	1.117
+  675	1.353
+
+Done

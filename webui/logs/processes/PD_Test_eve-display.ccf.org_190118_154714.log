@@ -1,0 +1,33 @@
+id:201
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-9eb13dc2780543ef
+script:PD Test
+start_time:1547826434980
+command:su -c ./pd_test.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+  raw	    v
+  303	0.612
+  302	0.604
+  302	0.610
+  300	0.610
+  301	0.610
+  301	0.612
+  302	0.610
+  300	0.608
+  302	0.604
+  302	0.608
+  301	0.610
+  300	0.610
+  301	0.610
+  302	0.608
+  301	0.610
+  301	0.608
+  303	0.612
+  302	0.610
+  302	0.606
+  300	0.612
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

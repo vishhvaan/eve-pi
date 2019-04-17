@@ -1,0 +1,97 @@
+id:524
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:Configuration Editor
+start_time:1555361257868
+command:/eve/scripts/webui-sc/confeditor.py
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+ 0. MAIN
+ 1. EVE1
+ 2. EVE2
+ 3. EVE3
+ 4. EVE4
+ 5. View All
+ 6. Save File
+ 7. Exit
+Select section to edit/option: 3
+
+Section: EVE3
+ 0. enabled                 : no
+ 1. pi_pins                 : no
+ 2. m_address               : 32
+ 3. p_drug_pins             : 8
+ 4. p_nut_pins              : 9
+ 5. p_waste_pins            : 10
+ 6. p_led_pins              : 11
+ 7. p_sfan_pins             : 12
+ 8. p_fan_pins              : 13
+ 9. a_address               : 72
+10. analogin                : 2
+11. slack_icon              : https://i.imgur.com/2p3XFQD.jpg
+12. exp_time_hours          : 24
+13. p_drug_times            : .75
+14. p_nut_times             : .75
+15. p_waste_times           : .75
+16. od_av_length            : 30
+17. time_between_pumps      : 12
+18. od_thr                  : 2.5
+19. od_min                  : 2.0
+20. time_between_ods        : 2
+21. time_thresh             : 0.6
+22. od_error                : 0.6
+23. time_between_graphs     : 30
+24. time_between_saves      : 1
+
+25. Back
+Select key to edit: 0
+New value: yes
+
+Section: EVE3
+ 0. enabled                 : yes
+ 1. pi_pins                 : no
+ 2. m_address               : 32
+ 3. p_drug_pins             : 8
+ 4. p_nut_pins              : 9
+ 5. p_waste_pins            : 10
+ 6. p_led_pins              : 11
+ 7. p_sfan_pins             : 12
+ 8. p_fan_pins              : 13
+ 9. a_address               : 72
+10. analogin                : 2
+11. slack_icon              : https://i.imgur.com/2p3XFQD.jpg
+12. exp_time_hours          : 24
+13. p_drug_times            : .75
+14. p_nut_times             : .75
+15. p_waste_times           : .75
+16. od_av_length            : 30
+17. time_between_pumps      : 12
+18. od_thr                  : 2.5
+19. od_min                  : 2.0
+20. time_between_ods        : 2
+21. time_thresh             : 0.6
+22. od_error                : 0.6
+23. time_between_graphs     : 30
+24. time_between_saves      : 1
+Confim Change [y,N]: y
+Config File Edited.
+
+Edit another key in this section [y,N]: n
+
+Menu
+ 0. Edit a Section
+ 1. View File
+ 2. Save File
+ 3. Exit
+Select option: 2
+
+Config Saved
+
+Menu
+ 0. Edit a Section
+ 1. View File
+ 2. Save File
+ 3. Exit
+Select option: 3
+
+Editor Closed

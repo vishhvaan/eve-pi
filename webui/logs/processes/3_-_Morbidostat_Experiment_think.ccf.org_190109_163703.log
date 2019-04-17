@@ -1,0 +1,56 @@
+id:137
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:3 - Morbidostat Experiment
+start_time:1547051823805
+command:/eve/scripts/test/vish_control_drugs.py
+exit_code:-15
+>>>>>  OUTPUT STARTED <<<<<
+Connected!
+Experiment begun at 11:37:07 on Wed - Jan 09, 2019
+saving to disk
+Elapsed Time: 1 second ; OD = 1.649
+saving to disk
+Elapsed Time: 3 seconds ; OD = 1.645
+saving to disk
+Elapsed Time: 5 seconds ; OD = 1.645
+saving to disk
+Elapsed Time: 7 seconds ; OD = 1.643
+saving to disk
+Elapsed Time: 9 seconds ; OD = 1.639
+saving to disk
+Elapsed Time: 11 seconds ; OD = 1.639
+saving to disk
+Elapsed Time: 13 seconds ; OD = 1.639
+saving to disk
+Elapsed Time: 15 seconds ; OD = 1.637
+saving to disk
+Elapsed Time: 17 seconds ; OD = 1.637
+saving to disk
+Elapsed Time: 19 seconds ; OD = 1.633
+saving to disk
+Elapsed Time: 21 seconds ; OD = 1.635
+saving to disk
+Elapsed Time: 23 seconds ; OD = 1.637
+saving to disk
+Elapsed Time: 25 seconds ; OD = 1.631
+saving to disk
+Elapsed Time: 27 seconds ; OD = 1.637
+saving to disk
+Elapsed Time: 29 seconds ; OD = 1.633
+saving to disk
+Elapsed Time: 31 seconds ; OD = 1.631
+saving to disk
+Elapsed Time: 33 seconds ; OD = 1.633
+saving to disk
+Elapsed Time: 35 seconds ; OD = 1.633
+saving to disk
+Elapsed Time: 37 seconds ; OD = 1.633
+saving to disk
+Elapsed Time: 39 seconds ; OD = 1.631
+saving to disk
+Elapsed Time: 41 seconds ; OD = 1.633
+saving to disk
+Elapsed Time: 43 seconds ; OD = 1.633
+
+>> STOPPED BY USER

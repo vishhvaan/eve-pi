@@ -1,0 +1,45 @@
+id:507
+user_name:think.ccf.org
+user_id:10.66.101.117-84763fe03e204fe5
+script:Configuration Editor
+start_time:1555359572645
+command:/eve/scripts/webui-sc/confeditor.py
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+ 0. View All
+ 1. Save File
+ 2. Exit
+Select section to edit/option: 0
+
+
+Menu
+ 0. Edit a Section
+ 1. View File
+ 2. Save File
+ 3. Exit
+Select option: 1
+
+
+Menu
+ 0. Edit a Section
+ 1. View File
+ 2. Save File
+ 3. Exit
+Select option: 2
+
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/confeditor.py", line 137, in <module>
+    section_select(config)
+  File "/eve/scripts/webui-sc/confeditor.py", line 34, in section_select
+    print_conf(config)
+  File "/eve/scripts/webui-sc/confeditor.py", line 84, in print_conf
+    menu()
+  File "/eve/scripts/webui-sc/confeditor.py", line 64, in menu
+    print_conf(config)
+  File "/eve/scripts/webui-sc/confeditor.py", line 84, in print_conf
+    menu()
+  File "/eve/scripts/webui-sc/confeditor.py", line 67, in menu
+    save_file(config)
+  File "/eve/scripts/webui-sc/confeditor.py", line 87, in save_file
+    with open('../test/multiplex2/eve-conf.ini', 'w') as cfgfile:
+FileNotFoundError: [Errno 2] No such file or directory: '../test/multiplex2/eve-conf.ini'

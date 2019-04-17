@@ -1,0 +1,10 @@
+id:98
+user_name:172.26.41.155
+user_id:172.26.40.230-74fbe15917a24116
+script:Pump Control
+start_time:1547016097213
+command:/eve/scripts/webui-sc/mpumptimed.py 1 Drug
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+Started
+Done!

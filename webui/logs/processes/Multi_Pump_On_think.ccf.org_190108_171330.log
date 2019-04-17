@@ -1,0 +1,9 @@
+id:41
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Multi Pump On
+start_time:1546967610256
+command:/eve/scripts/webui-sc/mpumptimed.py sdfsdf Drug
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Please type a number.

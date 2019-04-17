@@ -1,0 +1,12 @@
+id:57
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Morbidostat Experiment
+start_time:1546974512295
+command:/eve/scripts/test/vish_control_drugs.py
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Traceback (most recent call last):
+  File "/eve/scripts/test/vish_control_drugs.py", line 34, in <module>
+    import psutil
+ImportError: No module named 'psutil'

@@ -1,0 +1,61 @@
+id:134
+user_name:eve-desktop.ccf.org
+user_id:10.66.100.75-6d9654bbebd64500
+script:3 - Morbidostat Experiment
+start_time:1547050719367
+command:su -c ./vish_control_drugs.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+Connected!
+Experiment begun at 11:18:43 on Wed - Jan 09, 2019
+saving to disk
+Elapsed Time: 1 second ; OD = 1.655
+saving to disk
+Elapsed Time: 3 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 5 seconds ; OD = 1.675
+saving to disk
+Elapsed Time: 7 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 9 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 11 seconds ; OD = 1.673
+saving to disk
+Elapsed Time: 13 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 15 seconds ; OD = 1.671
+saving to disk
+Elapsed Time: 17 seconds ; OD = 1.669
+
+saving to disk
+Elapsed Time: 19 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 21 seconds ; OD = 1.667
+saving to disk
+Elapsed Time: 23 seconds ; OD = 1.667
+saving to disk
+Elapsed Time: 25 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 27 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 29 seconds ; OD = 1.669
+saving to disk
+Elapsed Time: 31 seconds ; OD = 1.665
+saving to disk
+Elapsed Time: 33 seconds ; OD = 1.665
+saving to disk
+Elapsed Time: 35 seconds ; OD = 1.663
+saving to disk
+Elapsed Time: 37 seconds ; OD = 1.663
+saving to disk
+Elapsed Time: 39 seconds ; OD = 1.661
+saving to disk
+Elapsed Time: 41 seconds ; OD = 1.663
+saving to disk
+Elapsed Time: 43 seconds ; OD = 1.663
+saving to disk
+Elapsed Time: 45 seconds ; OD = 1.663
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

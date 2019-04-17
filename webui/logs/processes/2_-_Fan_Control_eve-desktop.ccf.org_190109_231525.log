@@ -1,0 +1,11 @@
+id:153
+user_name:eve-desktop.ccf.org
+user_id:10.66.100.75-6d9654bbebd64500
+script:2 - Fan Control
+start_time:1547075725404
+command:/eve/scripts/webui-sc/fancont.py On 15
+exit_code:-15
+>>>>>  OUTPUT STARTED <<<<<
+Fan at Full Power
+
+>> STOPPED BY USER

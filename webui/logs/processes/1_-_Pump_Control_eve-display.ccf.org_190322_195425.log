@@ -1,0 +1,13 @@
+id:387
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:1 - Pump Control
+start_time:1553284465692
+command:/eve/scripts/webui-sc/mpumptimed.py 1,2 Waste 5
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/mpumptimed.py", line 138, in <module>
+    totsys_l = list(map(int, evesys))
+ValueError: invalid literal for int() with base 10: ','

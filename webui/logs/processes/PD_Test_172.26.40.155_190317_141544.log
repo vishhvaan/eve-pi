@@ -1,0 +1,17 @@
+id:264
+user_name:172.26.40.155
+user_id:172.26.40.1-fd619819a3174031
+script:PD Test
+start_time:1552832144312
+command:su -c ./pd_test.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+  raw	    v
+ 1466	2.925
+ 1424	2.857
+ 1498	3.009
+ 1440	2.867
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

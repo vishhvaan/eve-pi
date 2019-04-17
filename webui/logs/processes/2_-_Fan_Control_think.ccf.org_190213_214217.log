@@ -1,0 +1,12 @@
+id:239
+user_name:think.ccf.org
+user_id:10.66.101.117-2654fbb13bb74740
+script:2 - Fan Control
+start_time:1550094137395
+command:/eve/scripts/webui-sc/fancont.py 1 Off 0.3
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/fancont.py", line 29, in <module>
+    mcp = adafruit_mcp230xx.MCP23017(self.i2c, address=config[sysstr].getint('m_address'))
+NameError: name 'self' is not defined

@@ -1,0 +1,28 @@
+id:65
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:PD Test
+start_time:1546975419191
+command:su -c ./pd_test.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+  raw	    v
+   69	0.134
+   67	0.136
+   68	0.134
+   67	0.132
+   67	0.132
+   66	0.132
+   66	0.132
+   65	0.132
+   66	0.132
+   66	0.130
+   65	0.130
+   65	0.130
+   65	0.128
+   65	0.130
+   65	0.130
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

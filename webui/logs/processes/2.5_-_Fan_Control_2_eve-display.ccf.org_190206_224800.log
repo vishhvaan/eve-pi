@@ -1,0 +1,10 @@
+id:237
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-9eb13dc2780543ef
+script:2.5 - Fan Control 2
+start_time:1549493280789
+command:/eve/scripts/webui-sc/fancont2.py On 20
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+Fan at Full Power
+Fan at Low Power. Done.

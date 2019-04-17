@@ -1,0 +1,23 @@
+id:360
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:1 - Pump Control
+start_time:1553202711844
+command:/eve/scripts/webui-sc/mpumptimed.py all Drug,Media,Waste 20
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+[1, 2, 4]
+Started
+Pin Lists:
+[20, 17, 16]
+Started ...
+[0, 1, 2]
+Started ...
+[20, 24, 25]
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/mpumptimed.py", line 149, in <module>
+    runner(sys,gpioe,gpio_add,pname)
+  File "/eve/scripts/webui-sc/mpumptimed.py", line 75, in runner
+    mcp = gpioe[gpio_add.index(config[confsec].getint('m_address'))]
+ValueError: 0 is not in list

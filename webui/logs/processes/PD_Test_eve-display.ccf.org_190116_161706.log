@@ -1,0 +1,12 @@
+id:192
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-9eb13dc2780543ef
+script:PD Test
+start_time:1547655426918
+command:su -c ./pd_test.py -s /bin/sh vishhvaan
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+Traceback (most recent call last):
+  File "./pd_test.py", line 19, in <module>
+    GPIO.setup(P_LED_pins, GPIO.OUT)
+RuntimeError: No access to /dev/mem.  Try running as root!

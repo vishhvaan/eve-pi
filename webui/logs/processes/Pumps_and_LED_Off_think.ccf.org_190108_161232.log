@@ -1,0 +1,9 @@
+id:36
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:Pumps and LED Off
+start_time:1546963952206
+command:/eve/scripts/webui-sc/pumpsledoff.py
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+Done!

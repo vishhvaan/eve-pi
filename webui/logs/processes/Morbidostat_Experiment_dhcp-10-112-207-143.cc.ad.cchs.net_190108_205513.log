@@ -1,0 +1,42 @@
+id:81
+user_name:dhcp-10-112-207-143.cc.ad.cchs.net
+user_id:10.112.207.143-7af21f11bebc4e03
+script:Morbidostat Experiment
+start_time:1546980913519
+command:su -c ./vish_control_drugs.py -s /bin/sh vishhvaan
+exit_code:143
+>>>>>  OUTPUT STARTED <<<<<
+Connected!
+Experiment begun at 15:55:17 on Tue - Jan 08, 2019
+saving to disk
+Elapsed Time: 1 second ; OD = 2.035
+saving to disk
+Elapsed Time: 3 seconds ; OD = 2.035
+saving to disk
+Elapsed Time: 5 seconds ; OD = 2.031
+saving to disk
+Elapsed Time: 7 seconds ; OD = 2.031
+saving to disk
+Elapsed Time: 9 seconds ; OD = 2.029
+saving to disk
+Elapsed Time: 11 seconds ; OD = 2.031
+saving to disk
+Elapsed Time: 13 seconds ; OD = 2.029
+saving to disk
+Elapsed Time: 15 seconds ; OD = 2.027
+saving to disk
+Elapsed Time: 17 seconds ; OD = 2.027
+saving to disk
+Elapsed Time: 19 seconds ; OD = 2.025
+saving to disk
+Elapsed Time: 21 seconds ; OD = 2.025
+saving to disk
+Elapsed Time: 23 seconds ; OD = 2.025
+saving to disk
+Elapsed Time: 25 seconds ; OD = 2.023
+saving to disk
+Elapsed Time: 27 seconds ; OD = 2.065
+
+>> STOPPED BY USER
+
+Session terminated, terminating shell... ...terminated.

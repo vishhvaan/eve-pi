@@ -1,0 +1,12 @@
+id:12
+user_name:172.26.40.230
+user_id:172.26.40.230-74fbe15917a24116
+script:Timed All Pumps
+start_time:1546932466797
+command:/eve/scripts/webui-sc/pumpstimed.py 5
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+/eve/scripts/webui-sc/pumpstimed.py:25: RuntimeWarning: This channel is already in use, continuing anyway.  Use GPIO.setwarnings(False) to disable warnings.
+  GPIO.setup(pin, GPIO.OUT)
+Started
+Done!

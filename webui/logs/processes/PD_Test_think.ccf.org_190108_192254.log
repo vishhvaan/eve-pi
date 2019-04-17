@@ -1,0 +1,9 @@
+id:64
+user_name:think.ccf.org
+user_id:10.66.101.117-0f3330edfb0e49d1
+script:PD Test
+start_time:1546975374852
+command:su -c pd_test.py -s /bin/sh vishhvaan
+exit_code:127
+>>>>>  OUTPUT STARTED <<<<<
+sh: 1: pd_test.py: not found

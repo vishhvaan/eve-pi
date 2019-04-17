@@ -1,0 +1,23 @@
+id:294
+user_name:172.26.40.57
+user_id:172.26.40.1-fd619819a3174031
+script:PD Test
+start_time:1552886272184
+command:/eve/scripts/webui-sc/pd_test.py all 0.5 3
+exit_code:1
+>>>>>  OUTPUT STARTED <<<<<
+EVEs Selected:
+[1, 2, 3]
+
+EVE1
+ 1721	3.458
+ 1682	3.356
+ 1766	3.534
+
+EVE2
+Traceback (most recent call last):
+  File "/eve/scripts/webui-sc/pd_test.py", line 131, in <module>
+    runner(sys,gpioe,gpio_add,adc,adc_add,chkt,loops)
+  File "/eve/scripts/webui-sc/pd_test.py", line 75, in runner
+    pins = [None]*(max(pin_list)+1)
+NameError: name 'pin_list' is not defined

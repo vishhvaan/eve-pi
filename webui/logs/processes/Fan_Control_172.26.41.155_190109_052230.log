@@ -1,0 +1,11 @@
+id:87
+user_name:172.26.41.155
+user_id:172.26.40.230-74fbe15917a24116
+script:Fan Control
+start_time:1547011350970
+command:/eve/scripts/webui-sc/fancont.py Off 0.3
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+/eve/scripts/webui-sc/fancont.py:26: RuntimeWarning: This channel is already in use, continuing anyway.  Use GPIO.setwarnings(False) to disable warnings.
+  GPIO.setup(pin, GPIO.OUT)
+Turning Fan Off
