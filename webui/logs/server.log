@@ -7024,3 +7024,35 @@ json.decoder.JSONDecodeError: Expecting ',' delimiter: line 3 column 27 (char 49
 2019-04-16 16:49:33,472 [tornado.access.INFO] 101 GET /scripts/execution/io/558 (10.66.100.177) 5.06ms
 2019-04-16 16:49:39,175 [web_server.INFO] eve-display.ccf.org disconnected
 2019-04-16 16:49:39,190 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/558 (10.66.100.177) 2.89ms
+2019-04-17 12:53:57,838 [tornado.access.INFO] 302 GET / (10.66.101.117) 3.65ms
+2019-04-17 12:53:58,728 [tornado.access.INFO] 304 GET /conf/title (10.66.101.117) 3.35ms
+2019-04-17 12:53:58,780 [tornado.access.INFO] 304 GET /scripts/list (10.66.101.117) 20.19ms
+2019-04-17 12:53:58,823 [tornado.access.WARNING] 404 GET /username (10.66.101.117) 5.27ms
+2019-04-17 12:53:58,863 [tornado.access.INFO] 304 GET /scripts/execution/active (10.66.101.117) 5.50ms
+2019-04-17 12:53:59,961 [tornado.access.INFO] 200 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.66.101.117) 15.67ms
+2019-04-17 12:54:01,584 [web_server.INFO] Calling script 3 - Morbidostat Experiment. User {'hostname': 'think.ccf.org', 'ip': '10.66.101.117'}
+2019-04-17 12:54:01,587 [script_server.execution_service.INFO] Calling script #559: vish_control_drugs.py
+2019-04-17 12:54:01,598 [web_server.ERROR] Error while calling the script
+Traceback (most recent call last):
+  File "src/web/server.py", line 319, in post
+    all_audit_names)
+  File "src/execution/execution_service.py", line 46, in start_script
+    executor.start()
+  File "src/execution/executor.py", line 64, in start
+    process_wrapper.start()
+  File "src/execution/process_base.py", line 28, in start
+    self.start_execution(self.command, self.working_directory)
+  File "src/execution/process_pty.py", line 44, in start_execution
+    start_new_session=True)
+  File "/usr/lib/python3.5/subprocess.py", line 676, in __init__
+    restore_signals, start_new_session)
+  File "/usr/lib/python3.5/subprocess.py", line 1282, in _execute_child
+    raise child_exception_type(errno_num, err_msg)
+FileNotFoundError: [Errno 2] No such file or directory: 'vish_control_drugs.py'
+2019-04-17 12:54:01,618 [tornado.access.ERROR] 500 POST /scripts/execution (10.66.101.117) 53.14ms
+2019-04-17 12:54:51,589 [web_server.INFO] Calling script 3 - Morbidostat Experiment. User {'hostname': 'think.ccf.org', 'ip': '10.66.101.117'}
+2019-04-17 12:54:51,592 [script_server.execution_service.INFO] Calling script #560: /eve/scripts/live/master.py
+2019-04-17 12:54:51,612 [tornado.access.INFO] 200 POST /scripts/execution (10.66.101.117) 43.46ms
+2019-04-17 12:54:51,628 [tornado.access.INFO] 101 GET /scripts/execution/io/560 (10.66.101.117) 5.38ms
+2019-04-17 12:54:59,028 [web_server.INFO] think.ccf.org disconnected
+2019-04-17 12:54:59,044 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/560 (10.66.101.117) 3.02ms
