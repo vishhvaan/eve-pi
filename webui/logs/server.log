@@ -7056,3 +7056,245 @@ FileNotFoundError: [Errno 2] No such file or directory: 'vish_control_drugs.py'
 2019-04-17 12:54:51,628 [tornado.access.INFO] 101 GET /scripts/execution/io/560 (10.66.101.117) 5.38ms
 2019-04-17 12:54:59,028 [web_server.INFO] think.ccf.org disconnected
 2019-04-17 12:54:59,044 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/560 (10.66.101.117) 3.02ms
+2019-04-17 13:58:53,329 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 13:58:53,331 [script_server.execution_service.INFO] Calling script #561: /eve/scripts/webui-sc/pd_test.py 2 0.5 10
+2019-04-17 13:58:53,356 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 50.42ms
+2019-04-17 13:58:53,437 [tornado.access.INFO] 101 GET /scripts/execution/io/561 (10.66.100.177) 2.53ms
+2019-04-17 13:58:59,088 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 13:58:59,104 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/561 (10.66.100.177) 3.00ms
+2019-04-17 13:59:09,967 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 13:59:09,970 [script_server.execution_service.INFO] Calling script #562: /eve/scripts/webui-sc/pd_test.py 2 0.5 30
+2019-04-17 13:59:09,990 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 47.99ms
+2019-04-17 13:59:10,015 [tornado.access.INFO] 101 GET /scripts/execution/io/562 (10.66.100.177) 4.64ms
+2019-04-17 13:59:25,848 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 13:59:25,862 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/562 (10.66.100.177) 5.91ms
+2019-04-17 14:02:14,586 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:02:14,590 [script_server.execution_service.INFO] Calling script #563: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:02:14,611 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 48.60ms
+2019-04-17 14:02:14,643 [tornado.access.INFO] 101 GET /scripts/execution/io/563 (10.66.100.177) 5.37ms
+2019-04-17 14:02:30,500 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:02:30,516 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/563 (10.66.100.177) 2.96ms
+2019-04-17 14:03:47,928 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:03:47,930 [script_server.execution_service.INFO] Calling script #564: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:03:47,950 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 43.27ms
+2019-04-17 14:03:47,971 [tornado.access.INFO] 101 GET /scripts/execution/io/564 (10.66.100.177) 5.38ms
+2019-04-17 14:04:03,830 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:04:03,854 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/564 (10.66.100.177) 3.01ms
+2019-04-17 14:04:10,696 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:04:10,700 [script_server.execution_service.INFO] Calling script #565: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:04:10,721 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 47.11ms
+2019-04-17 14:04:10,746 [tornado.access.INFO] 101 GET /scripts/execution/io/565 (10.66.100.177) 5.21ms
+2019-04-17 14:04:26,637 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:04:26,646 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/565 (10.66.100.177) 3.15ms
+2019-04-17 14:04:36,726 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:04:36,729 [script_server.execution_service.INFO] Calling script #566: /eve/scripts/webui-sc/pd_test.py 2 0.5 30
+2019-04-17 14:04:36,750 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 45.80ms
+2019-04-17 14:04:36,779 [tornado.access.INFO] 101 GET /scripts/execution/io/566 (10.66.100.177) 8.15ms
+2019-04-17 14:04:52,607 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:04:52,617 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/566 (10.66.100.177) 3.15ms
+2019-04-17 14:08:55,246 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:08:55,249 [script_server.execution_service.INFO] Calling script #567: /eve/scripts/webui-sc/pd_test.py 1 0.5 30
+2019-04-17 14:08:55,270 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 45.64ms
+2019-04-17 14:08:55,291 [tornado.access.INFO] 101 GET /scripts/execution/io/567 (10.66.100.177) 5.90ms
+2019-04-17 14:09:11,145 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:09:11,162 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/567 (10.66.100.177) 6.38ms
+2019-04-17 14:09:18,636 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:09:18,639 [script_server.execution_service.INFO] Calling script #568: /eve/scripts/webui-sc/pd_test.py 1 0.5 30
+2019-04-17 14:09:18,660 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 45.46ms
+2019-04-17 14:09:18,681 [tornado.access.INFO] 101 GET /scripts/execution/io/568 (10.66.100.177) 5.63ms
+2019-04-17 14:09:34,551 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:09:34,563 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/568 (10.66.100.177) 6.41ms
+2019-04-17 14:11:59,108 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:11:59,111 [script_server.execution_service.INFO] Calling script #569: /eve/scripts/webui-sc/pd_test.py 1 0.5 30
+2019-04-17 14:11:59,132 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 45.52ms
+2019-04-17 14:11:59,151 [tornado.access.INFO] 101 GET /scripts/execution/io/569 (10.66.100.177) 5.67ms
+2019-04-17 14:12:15,004 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:12:15,012 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/569 (10.66.100.177) 3.25ms
+2019-04-17 14:12:20,189 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:12:20,193 [script_server.execution_service.INFO] Calling script #570: /eve/scripts/webui-sc/pd_test.py 2 0.5 30
+2019-04-17 14:12:20,214 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 49.81ms
+2019-04-17 14:12:20,234 [tornado.access.INFO] 101 GET /scripts/execution/io/570 (10.66.100.177) 5.77ms
+2019-04-17 14:12:36,086 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:12:36,129 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/570 (10.66.100.177) 3.03ms
+2019-04-17 14:12:39,504 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:12:39,507 [script_server.execution_service.INFO] Calling script #571: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:12:39,528 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 46.53ms
+2019-04-17 14:12:39,550 [tornado.access.INFO] 101 GET /scripts/execution/io/571 (10.66.100.177) 6.04ms
+2019-04-17 14:12:55,418 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:12:55,435 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/571 (10.66.100.177) 6.52ms
+2019-04-17 14:14:05,442 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:14:05,445 [script_server.execution_service.INFO] Calling script #572: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:14:05,466 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 47.11ms
+2019-04-17 14:14:05,494 [tornado.access.INFO] 101 GET /scripts/execution/io/572 (10.66.100.177) 5.57ms
+2019-04-17 14:14:21,345 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:14:21,356 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/572 (10.66.100.177) 2.99ms
+2019-04-17 14:16:48,067 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:16:48,071 [script_server.execution_service.INFO] Calling script #573: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:16:48,092 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 46.68ms
+2019-04-17 14:16:48,114 [tornado.access.INFO] 101 GET /scripts/execution/io/573 (10.66.100.177) 5.32ms
+2019-04-17 14:17:03,951 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:17:03,964 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/573 (10.66.100.177) 3.23ms
+2019-04-17 14:18:36,994 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 14:18:36,997 [script_server.execution_service.INFO] Calling script #574: /eve/scripts/webui-sc/pd_test.py 3 0.5 30
+2019-04-17 14:18:37,018 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 47.08ms
+2019-04-17 14:18:37,044 [tornado.access.INFO] 101 GET /scripts/execution/io/574 (10.66.100.177) 5.66ms
+2019-04-17 14:18:52,900 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 14:18:52,915 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/574 (10.66.100.177) 2.97ms
+2019-04-17 14:47:54,009 [tornado.access.INFO] 304 GET /conf/title (10.112.205.51) 3.43ms
+2019-04-17 14:47:54,053 [tornado.access.INFO] 304 GET /scripts/list (10.112.205.51) 20.50ms
+2019-04-17 14:47:54,080 [tornado.access.WARNING] 404 GET /username (10.112.205.51) 5.29ms
+2019-04-17 14:47:54,095 [tornado.access.INFO] 304 GET /scripts/execution/active (10.112.205.51) 5.69ms
+2019-04-17 14:48:03,271 [tornado.access.INFO] 304 GET /conf/title (10.112.205.51) 3.43ms
+2019-04-17 14:48:03,302 [tornado.access.INFO] 304 GET /scripts/list (10.112.205.51) 20.70ms
+2019-04-17 14:48:03,378 [tornado.access.INFO] 304 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.112.205.51) 16.06ms
+2019-04-17 14:48:03,503 [tornado.access.WARNING] 404 GET /username (10.112.205.51) 5.31ms
+2019-04-17 14:48:03,536 [tornado.access.INFO] 304 GET /scripts/execution/active (10.112.205.51) 5.58ms
+2019-04-17 15:03:29,208 [tornado.access.INFO] 304 GET /scripts/list (10.112.205.51) 20.51ms
+2019-04-17 15:03:29,219 [tornado.access.INFO] 304 GET /conf/title (10.112.205.51) 3.38ms
+2019-04-17 15:03:29,249 [tornado.access.INFO] 304 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.112.205.51) 15.79ms
+2019-04-17 15:03:29,313 [tornado.access.WARNING] 404 GET /username (10.112.205.51) 2.64ms
+2019-04-17 15:03:29,327 [tornado.access.INFO] 304 GET /scripts/execution/active (10.112.205.51) 2.70ms
+2019-04-17 15:21:40,212 [tornado.access.INFO] 302 GET / (10.66.100.150) 3.70ms
+2019-04-17 15:21:40,225 [identification.INFO] Assigned user_id=10.66.100.150-e39e61c60b224812 to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-17 15:21:40,233 [tornado.access.INFO] 200 GET /index.html (10.66.100.150) 12.83ms
+2019-04-17 15:21:40,467 [tornado.access.INFO] 200 GET /css/font_styles.css (10.66.100.150) 8.44ms
+2019-04-17 15:21:40,481 [tornado.access.INFO] 200 GET /css/index.css (10.66.100.150) 8.59ms
+2019-04-17 15:21:40,498 [tornado.access.INFO] 200 GET /js/libs/hashtable.js (10.66.100.150) 10.59ms
+2019-04-17 15:21:40,513 [tornado.access.INFO] 200 GET /js/libs/marked.js (10.66.100.150) 8.73ms
+2019-04-17 15:21:40,528 [tornado.access.INFO] 200 GET /js/index.js (10.66.100.150) 8.66ms
+2019-04-17 15:21:40,540 [tornado.access.INFO] 200 GET /js/libs/materialize.min.js (10.66.100.150) 94.92ms
+2019-04-17 15:21:40,558 [tornado.access.INFO] 200 GET /css/libs/materialize.min.css (10.66.100.150) 7.81ms
+2019-04-17 15:21:40,876 [tornado.access.INFO] 200 GET /css/bash_styles.css (10.66.100.150) 4.29ms
+2019-04-17 15:21:40,891 [tornado.access.INFO] 200 GET /js/common.js (10.66.100.150) 4.39ms
+2019-04-17 15:21:40,903 [tornado.access.INFO] 200 GET /js/libs/jquery.min.js (10.66.100.150) 21.69ms
+2019-04-17 15:21:40,905 [tornado.access.INFO] 200 GET /js/libs/vue.js (10.66.100.150) 11.12ms
+2019-04-17 15:21:41,123 [tornado.access.INFO] 200 GET /images/search.png (10.66.100.150) 4.20ms
+2019-04-17 15:21:41,192 [tornado.access.INFO] 200 GET /images/td.jpg (10.66.100.150) 4.10ms
+2019-04-17 15:21:41,204 [tornado.access.INFO] 200 GET /images/logout.png (10.66.100.150) 4.19ms
+2019-04-17 15:21:41,265 [tornado.access.INFO] 200 GET /js/components/abstract_input.js (10.66.100.150) 8.37ms
+2019-04-17 15:21:41,327 [tornado.access.INFO] 200 GET /js/components/component.js (10.66.100.150) 8.39ms
+2019-04-17 15:21:41,340 [tornado.access.INFO] 200 GET /images/console.png (10.66.100.150) 8.35ms
+2019-04-17 15:21:41,351 [tornado.access.INFO] 200 GET /js/components/checkbox.js (10.66.100.150) 8.25ms
+2019-04-17 15:21:41,363 [tornado.access.INFO] 200 GET /js/components/textfield.js (10.66.100.150) 8.34ms
+2019-04-17 15:21:41,379 [tornado.access.INFO] 200 GET /js/components/combobox.js (10.66.100.150) 8.46ms
+2019-04-17 15:21:41,399 [tornado.access.INFO] 200 GET /js/components/file_upload.js (10.66.100.150) 8.50ms
+2019-04-17 15:21:41,465 [tornado.access.INFO] 200 GET /css/fonts/roboto/Roboto-Light.woff2 (10.66.100.150) 4.79ms
+2019-04-17 15:21:41,476 [tornado.access.INFO] 200 GET /js/components/log_panel.js (10.66.100.150) 4.62ms
+2019-04-17 15:21:41,482 [tornado.access.INFO] 200 GET /css/fonts/roboto/Roboto-Regular.woff2 (10.66.100.150) 4.95ms
+2019-04-17 15:21:41,500 [tornado.access.INFO] 200 GET /js/script/script-controller.js (10.66.100.150) 4.49ms
+2019-04-17 15:21:41,507 [tornado.access.INFO] 200 GET /images/titleBackground.jpg (10.66.100.150) 72.80ms
+2019-04-17 15:21:41,514 [tornado.access.INFO] 200 GET /js/script/script-view.js (10.66.100.150) 4.49ms
+2019-04-17 15:21:41,556 [tornado.access.INFO] 200 GET /js/script/script-execution-model.js (10.66.100.150) 4.26ms
+2019-04-17 15:21:41,700 [tornado.access.INFO] 200 GET /scripts/list (10.66.100.150) 9.47ms
+2019-04-17 15:21:41,752 [tornado.access.INFO] 200 GET /conf/title (10.66.100.150) 1.76ms
+2019-04-17 15:21:41,779 [tornado.access.WARNING] 404 GET /username (10.66.100.150) 2.57ms
+2019-04-17 15:21:41,855 [tornado.access.INFO] 200 GET /scripts/execution/active (10.66.100.150) 2.70ms
+2019-04-17 15:21:41,919 [tornado.access.INFO] 200 GET /favicon.ico (10.66.100.150) 4.21ms
+2019-04-17 15:21:44,490 [tornado.access.INFO] 200 GET /scripts/info?name=PD%20Test (10.66.100.150) 16.52ms
+2019-04-17 15:21:49,792 [web_server.INFO] Calling script PD Test. User {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-17 15:21:49,795 [script_server.execution_service.INFO] Calling script #575: /eve/scripts/webui-sc/pd_test.py all 0.5 5
+2019-04-17 15:21:49,816 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.150) 48.51ms
+2019-04-17 15:21:49,832 [tornado.access.INFO] 101 GET /scripts/execution/io/575 (10.66.100.150) 5.46ms
+2019-04-17 15:21:58,462 [web_server.INFO] lri-108141.ccf.org disconnected
+2019-04-17 15:21:58,472 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/575 (10.66.100.150) 3.03ms
+2019-04-17 15:21:58,557 [tornado.access.INFO] 200 GET /css/fonts/libs/MaterialIcons-Regular.woff2 (10.66.100.150) 4.57ms
+2019-04-17 15:38:39,098 [tornado.access.INFO] 200 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.66.100.177) 16.18ms
+2019-04-17 15:38:40,621 [web_server.INFO] Calling script 3 - Morbidostat Experiment. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:38:40,624 [script_server.execution_service.INFO] Calling script #576: /eve/scripts/live/master.py
+2019-04-17 15:38:40,644 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 42.92ms
+2019-04-17 15:38:40,669 [tornado.access.INFO] 101 GET /scripts/execution/io/576 (10.66.100.177) 5.25ms
+2019-04-17 15:38:49,441 [tornado.access.INFO] 200 POST /scripts/execution/stop/576 (10.66.100.177) 6.55ms
+2019-04-17 15:38:49,579 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:38:49,593 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/576 (10.66.100.177) 6.02ms
+2019-04-17 15:38:53,409 [tornado.access.INFO] 200 GET /scripts/info?name=Pumps%20and%20LED%20Off (10.66.100.177) 16.04ms
+2019-04-17 15:38:54,116 [web_server.INFO] Calling script Pumps and LED Off. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:38:54,120 [script_server.execution_service.INFO] Calling script #577: su -c ./pumpsledoff.py -s /bin/sh vishhvaan
+2019-04-17 15:38:54,145 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 47.66ms
+2019-04-17 15:38:54,167 [tornado.access.INFO] 101 GET /scripts/execution/io/577 (10.66.100.177) 2.92ms
+2019-04-17 15:38:55,959 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:38:55,977 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/577 (10.66.100.177) 6.47ms
+2019-04-17 15:39:08,503 [tornado.access.INFO] 304 GET /scripts/info?name=PD%20Test (10.66.100.177) 17.82ms
+2019-04-17 15:39:20,274 [web_server.INFO] Calling script PD Test. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:39:20,276 [script_server.execution_service.INFO] Calling script #578: /eve/scripts/webui-sc/pd_test.py all 0.5 5
+2019-04-17 15:39:20,372 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 120.61ms
+2019-04-17 15:39:20,391 [tornado.access.INFO] 101 GET /scripts/execution/io/578 (10.66.100.177) 5.70ms
+2019-04-17 15:39:29,125 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:39:29,143 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/578 (10.66.100.177) 6.42ms
+2019-04-17 15:40:01,528 [tornado.access.INFO] 304 GET /scripts/info?name=Configuration%20Editor (10.66.100.177) 16.90ms
+2019-04-17 15:40:04,046 [web_server.INFO] Calling script Configuration Editor. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:40:04,048 [script_server.execution_service.INFO] Calling script #579: /eve/scripts/webui-sc/confeditor.py
+2019-04-17 15:40:04,069 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 41.82ms
+2019-04-17 15:40:04,091 [tornado.access.INFO] 101 GET /scripts/execution/io/579 (10.66.100.177) 5.83ms
+2019-04-17 15:43:49,318 [tornado.access.INFO] 200 POST /scripts/execution/stop/579 (10.66.100.177) 6.75ms
+2019-04-17 15:43:49,388 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:43:49,414 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/579 (10.66.100.177) 6.28ms
+2019-04-17 15:45:43,880 [web_server.INFO] Calling script Configuration Editor. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:45:43,884 [script_server.execution_service.INFO] Calling script #580: /eve/scripts/webui-sc/confeditor.py
+2019-04-17 15:45:43,906 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 45.32ms
+2019-04-17 15:45:43,940 [tornado.access.INFO] 101 GET /scripts/execution/io/580 (10.66.100.177) 5.77ms
+2019-04-17 15:45:55,175 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:45:55,190 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/580 (10.66.100.177) 6.35ms
+2019-04-17 15:46:01,362 [web_server.INFO] Calling script Configuration Editor. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:46:01,365 [script_server.execution_service.INFO] Calling script #581: /eve/scripts/webui-sc/confeditor.py
+2019-04-17 15:46:01,387 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 44.36ms
+2019-04-17 15:46:01,415 [tornado.access.INFO] 101 GET /scripts/execution/io/581 (10.66.100.177) 5.78ms
+2019-04-17 15:47:03,832 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:47:03,847 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/581 (10.66.100.177) 6.49ms
+2019-04-17 15:47:06,512 [tornado.access.INFO] 304 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.66.100.177) 16.90ms
+2019-04-17 15:47:08,404 [tornado.access.INFO] 304 GET /scripts/info?name=Configuration%20Editor (10.66.100.177) 16.84ms
+2019-04-17 15:47:12,312 [tornado.access.INFO] 304 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.66.100.177) 16.84ms
+2019-04-17 15:47:14,140 [web_server.INFO] Calling script 3 - Morbidostat Experiment. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:47:14,143 [script_server.execution_service.INFO] Calling script #582: /eve/scripts/live/master.py
+2019-04-17 15:47:14,164 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 44.32ms
+2019-04-17 15:47:14,186 [tornado.access.INFO] 101 GET /scripts/execution/io/582 (10.66.100.177) 6.27ms
+2019-04-17 15:47:37,598 [tornado.access.INFO] 200 POST /scripts/execution/stop/582 (10.66.100.177) 7.17ms
+2019-04-17 15:47:37,729 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:47:37,751 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/582 (10.66.100.177) 6.36ms
+2019-04-17 15:47:39,952 [tornado.access.INFO] 304 GET /scripts/info?name=Configuration%20Editor (10.66.100.177) 17.04ms
+2019-04-17 15:47:41,407 [web_server.INFO] Calling script Configuration Editor. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:47:41,408 [script_server.execution_service.INFO] Calling script #583: /eve/scripts/webui-sc/confeditor.py
+2019-04-17 15:47:41,429 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 41.88ms
+2019-04-17 15:47:41,449 [tornado.access.INFO] 101 GET /scripts/execution/io/583 (10.66.100.177) 5.75ms
+2019-04-17 15:48:47,895 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:48:47,911 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/583 (10.66.100.177) 7.03ms
+2019-04-17 15:48:49,513 [tornado.access.INFO] 304 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.66.100.177) 17.08ms
+2019-04-17 15:48:50,218 [web_server.INFO] Calling script 3 - Morbidostat Experiment. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-17 15:48:50,221 [script_server.execution_service.INFO] Calling script #584: /eve/scripts/live/master.py
+2019-04-17 15:48:50,243 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 43.69ms
+2019-04-17 15:48:50,272 [tornado.access.INFO] 101 GET /scripts/execution/io/584 (10.66.100.177) 5.59ms
+2019-04-17 15:49:28,737 [tornado.access.INFO] 200 POST /scripts/execution/stop/584 (10.66.100.177) 7.19ms
+2019-04-17 15:49:28,854 [web_server.INFO] eve-display.ccf.org disconnected
+2019-04-17 15:49:28,874 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/584 (10.66.100.177) 3.11ms
+2019-04-17 16:06:49,627 [tornado.access.INFO] 200 GET /scripts/info?name=Configuration%20Editor (10.66.100.150) 16.95ms
+2019-04-17 16:06:50,317 [web_server.INFO] Calling script Configuration Editor. User {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-17 16:06:50,320 [script_server.execution_service.INFO] Calling script #585: /eve/scripts/webui-sc/confeditor.py
+2019-04-17 16:06:50,342 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.150) 53.61ms
+2019-04-17 16:06:50,361 [tornado.access.INFO] 101 GET /scripts/execution/io/585 (10.66.100.150) 5.64ms
+2019-04-17 16:07:29,533 [tornado.access.INFO] 200 POST /scripts/execution/stop/585 (10.66.100.150) 6.94ms
+2019-04-17 16:07:29,665 [web_server.INFO] lri-108141.ccf.org disconnected
+2019-04-17 16:07:29,678 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/585 (10.66.100.150) 6.41ms
+2019-04-17 16:15:36,186 [web_server.INFO] Calling script Configuration Editor. User {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-17 16:15:36,189 [script_server.execution_service.INFO] Calling script #586: /eve/scripts/webui-sc/confeditor.py
+2019-04-17 16:15:36,211 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.150) 44.35ms
+2019-04-17 16:15:36,230 [tornado.access.INFO] 101 GET /scripts/execution/io/586 (10.66.100.150) 5.76ms
+2019-04-17 16:16:13,374 [web_server.INFO] lri-108141.ccf.org disconnected
+2019-04-17 16:16:13,389 [tornado.access.INFO] 200 POST /scripts/execution/cleanup/586 (10.66.100.150) 6.43ms
+2019-04-18 10:54:10,800 [tornado.access.INFO] 304 GET /scripts/info?name=Configuration%20Editor (10.66.100.177) 21.65ms
+2019-04-18 11:01:08,279 [tornado.access.INFO] 304 GET /scripts/info?name=3%20-%20Morbidostat%20Experiment (10.66.100.177) 16.74ms
+2019-04-18 11:01:09,906 [web_server.INFO] Calling script 3 - Morbidostat Experiment. User {'hostname': 'eve-display.ccf.org', 'ip': '10.66.100.177'}
+2019-04-18 11:01:09,909 [script_server.execution_service.INFO] Calling script #587: /eve/scripts/live/master.py
+2019-04-18 11:01:09,930 [tornado.access.INFO] 200 POST /scripts/execution (10.66.100.177) 44.66ms
+2019-04-18 11:01:09,958 [tornado.access.INFO] 101 GET /scripts/execution/io/587 (10.66.100.177) 9.23ms
+2019-04-18 11:08:23,006 [tornado.access.INFO] 302 GET / (10.66.100.150) 3.77ms
+2019-04-18 11:08:23,783 [identification.INFO] Assigned user_id=10.66.100.150-1ad5536757b74edc to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,801 [identification.INFO] Assigned user_id=10.66.100.150-d5706fa46c824aa4 to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,807 [identification.INFO] Assigned user_id=10.66.100.150-376a455171d8419a to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,812 [identification.INFO] Assigned user_id=10.66.100.150-f9d5130c248249cb to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,818 [identification.INFO] Assigned user_id=10.66.100.150-09dcdd1f1ec145e1 to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,823 [identification.INFO] Assigned user_id=10.66.100.150-e2ab58092722492c to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,829 [identification.INFO] Assigned user_id=10.66.100.150-288cd290835f4064 to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,835 [identification.INFO] Assigned user_id=10.66.100.150-cc8d862ca45a4158 to {'hostname': 'lri-108141.ccf.org', 'ip': '10.66.100.150'}
+2019-04-18 11:08:23,841 [tornado.access.INFO] 304 GET /scripts/list (10.66.100.150) 61.05ms
+2019-04-18 11:08:23,852 [tornado.access.INFO] 304 GET /conf/title (10.66.100.150) 3.63ms
+2019-04-18 11:08:23,864 [tornado.access.WARNING] 404 GET /username (10.66.100.150) 5.53ms
+2019-04-18 11:08:23,895 [tornado.access.INFO] 304 GET /scripts/execution/active (10.66.100.150) 6.00ms

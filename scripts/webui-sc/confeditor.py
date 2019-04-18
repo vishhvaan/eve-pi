@@ -2,7 +2,7 @@
 import configparser
 
 config = configparser.ConfigParser()
-config.read('../test/multiplex2/eve-conf.ini')
+config.read('eve-conf.ini')
 
 def int_imp(inp):
     while True:
@@ -84,7 +84,7 @@ def print_conf(config):
     menu()
 
 def save_file(config):
-    with open('../test/multiplex2/eve-conf.ini', 'w') as cfgfile:
+    with open('eve-conf.ini', 'w') as cfgfile:
         config.write(cfgfile)
     cfgfile.close()
     print('Config Saved')
