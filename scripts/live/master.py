@@ -148,7 +148,7 @@ def live_plotter():
        odcsvs.append(temp_locs['ods'])
        pumpcsvs.append(temp_locs['pumps'])
 
-    plotter.Plotter(actsys, odcsvs, pumpcsvs)
+    plotter.Plotter(actsys, odcsvs, pumpcsvs, config['MAIN']['hostname'])
 
 def slackresponder():
     while True:

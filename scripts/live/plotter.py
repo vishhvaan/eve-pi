@@ -10,11 +10,13 @@ from dash.dependencies import Input, Output
 
 class Plotter:
 
-    def __init__(self,sysarr,ODcsvs, pumpcsvs):
+    def __init__(self,sysarr,ODcsvs, pumpcsvs, hostname):
 
         self.external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
         self.app = dash.Dash(__name__, external_stylesheets=self.external_stylesheets)
+
+        self.hostname = hostname
 
         # self.allODs = []
         # self.allpumps = []
@@ -292,5 +294,5 @@ class Plotter:
         # if __name__ == '__main__':
             # self.app.run_server(debug=True, host='eve.ccf.org')
 
-        self.app.run_server(host='eve2.ccf.org')
+        self.app.run_server(host=self.hostname)
 
