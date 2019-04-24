@@ -72,7 +72,9 @@ chanid = multimess['channel']
 multits = multimess['ts']
 
 i2c_lock = [0]*totsys
+i2c_q = []
 graph_lock = [0]*totsys
+graph_q = []
 morbidostats = list()
 
 
@@ -392,24 +394,24 @@ class Morbidostat:
         self.threadts = self.initalmessage['ts']
         self.recgrats = self.recgra['ts']
         self.firstrec = True
-        ###  TURNING ON THE LED #######
-        # if self.pipins:
-        #     GPIO.output(self.P_LED_pins,1)
-        # else:
-        #     self.pins[self.P_LED_pins].value = True
-
-
 
     def get_OD(self):
         self.thread_locks['adc'].acquire()
         global i2c_lock
+        global i2c_q
         print_buffer = 0
-        while sum(i2c_lock):
+        id = str(self.sysnum)+'OD'
+
+        i2c_q.append(id)
+
+        while i2c_q[0] is not id and not sum(i2c_lock):
             time.sleep(0.1)
             print_buffer += 1
-            if print_buffer % 15 == 0: print ('[%s] {GetOD} Waiting for Locks...' % self.sysstr)
+            if print_buffer % 15 == 0:
+                print ('[%s] {GetOD} Waiting for Locks...' % self.sysstr)
+                print(i2c_q)
 
-        if not sum(i2c_lock):
+        if i2c_q[0] is id:
             i2c_lock[self.sysnum-1] = True
             time.sleep(0.05)
 
@@ -426,11 +428,12 @@ class Morbidostat:
                     self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
                     time.sleep(0.1)
                     self.pins[self.P_LED_pins].value = False
-                i2c_lock[self.sysnum-1] = False
             except:
-                i2c_lock[self.sysnum-1] = False
-                print ('[%s] WARNING ADC REQUEST CRASHED' % self.sysstr)
+                print ('[%s] OD - WARNING ADC REQUEST CRASHED' % self.sysstr)
                 pass
+
+        i2c_lock[self.sysnum-1] = False
+        i2c_q.pop(0)
 
         self.avOD_buffer = self.avOD_buffer + [self.currOD]
         self.avOD_buffer.pop(0)
@@ -516,10 +519,17 @@ class Morbidostat:
     def graphOD(self):
         self.thread_locks['graphs'].acquire()
         global graph_lock
-        while sum(graph_lock):
+        global graph_q
+
+        id = str(self.sysnum)+'G'
+
+        graph_q.append(id)
+        time.sleep(0.1)
+
+        while graph_q[0] is not id:
             time.sleep(30)
 
-        if not sum(graph_lock):
+        if graph_q[0] is id:
             graph_lock[self.sysnum-1] = True
             time.sleep(2)
             print('[%s] Generating graph' % self.sysstr)
@@ -765,6 +775,7 @@ class Morbidostat:
                     file = file_content
                 )
         graph_lock[self.sysnum-1] = False
+        graph_q.pop(0)
         self.thread_locks['graphs'].release()
 
     def dynLimit(self):
@@ -800,78 +811,88 @@ class Morbidostat:
     def control_alg(self):
         self.thread_locks['control_alg'].acquire()
         global i2c_lock
+        global i2c_q
         print_buffer = 0
-        while sum(i2c_lock):
+        id = str(self.sysnum)+'CA'
+
+        i2c_q.append(id)
+
+        while i2c_q[0] is not id:
             time.sleep(0.1)
             print_buffer += 1
             if print_buffer % 10 == 0: print ('[%s] {CAlg} Waiting for Locks...' % self.sysstr)
 
-        if not sum(i2c_lock):
+        if i2c_q[0] is id:
             i2c_lock[self.sysnum-1] = True
             time.sleep(0.05)
 
+        try:
+            if self.avOD > self.OD_min:
+                self.pump_on(self.P_waste_pins)
+                time.sleep(self.P_waste_times)
+                self.pump_off(self.P_waste_pins)
 
-        if self.avOD > self.OD_min:
-            self.pump_on(self.P_waste_pins)
-            time.sleep(self.P_waste_times)
-            self.pump_off(self.P_waste_pins)
+                self.waste = 3
+                self.drug_mass = self.drug_mass - (self.drug_mass/12)
 
-            self.waste = 3
-            self.drug_mass = self.drug_mass - (self.drug_mass/12)
+                if self.avOD > self.OD_thr and self.avOD > self.last_dilutionOD:
+                    print('[%s] OD Threshold exceeded, pumping cefepime' % self.sysstr)
 
-            if self.avOD > self.OD_thr and self.avOD > self.last_dilutionOD:
-                print('[%s] OD Threshold exceeded, pumping cefepime' % self.sysstr)
+                    self.pump_on(self.P_drug_pins)
+                    time.sleep(self.P_drug_times)
+                    self.pump_off(self.P_drug_pins)
+                    self.drug = 2
 
-                self.pump_on(self.P_drug_pins)
-                time.sleep(self.P_drug_times)
-                self.pump_off(self.P_drug_pins)
-                self.drug = 2
+                    self.drug_mass = self.drug_mass + 2.5
 
-                self.drug_mass = self.drug_mass + 2.5
+                    self.slack_client.api_call(
+                        "chat.postMessage",
+                        channel = self.chan,
+                        username=self.sysstr,
+                        icon_url = self.slack_usericon,
+                        thread_ts = self.threadts,
+                        text = "OD = %0.3f, pumping cefepime. Cefepime concentration: %f ug/mL" % (self.avOD, (self.drug_mass)/12)
+                        )
+
+
+                else:
+                    print('[%s] OD below threshold, pumping nutrient' % self.sysstr)
+
+                    self.pump_on(self.P_nut_pins)
+                    time.sleep(self.P_nut_times)
+                    self.pump_off(self.P_nut_pins)
+                    self.nut = 1
+
+                    self.slack_client.api_call(
+                        "chat.postMessage",
+                        channel = self.chan,
+                        username=self.sysstr,
+                        icon_url = self.slack_usericon,
+                        thread_ts = self.threadts,
+                        text = "OD = %0.3f, pumping nutrient. Cefepime concentration: %f ug/mL" % (self.avOD, (self.drug_mass)/12)
+                        )
+
+
+            else: #report even when pumps aren't activated yet
+
+                # self.drug_mass = 0 if self.drug_mass < 0
 
                 self.slack_client.api_call(
-                    "chat.postMessage",
-                    channel = self.chan,
-                    username=self.sysstr,
-                    icon_url = self.slack_usericon,
-                    thread_ts = self.threadts,
-                    text = "OD = %0.3f, pumping cefepime. Cefepime concentration: %f ug/mL" % (self.avOD, (self.drug_mass)/12)
-                    )
-
-
-            else:
-                print('[%s] OD below threshold, pumping nutrient' % self.sysstr)
-
-                self.pump_on(self.P_nut_pins)
-                time.sleep(self.P_nut_times)
-                self.pump_off(self.P_nut_pins)
-                self.nut = 1
-
-                self.slack_client.api_call(
-                    "chat.postMessage",
-                    channel = self.chan,
-                    username=self.sysstr,
-                    icon_url = self.slack_usericon,
-                    thread_ts = self.threadts,
-                    text = "OD = %0.3f, pumping nutrient. Cefepime concentration: %f ug/mL" % (self.avOD, (self.drug_mass)/12)
-                    )
-
-
-        else: #report even when pumps aren't activated yet
-
-            # self.drug_mass = 0 if self.drug_mass < 0
-
-            self.slack_client.api_call(
-                    "chat.postMessage",
-                    channel = self.chan,
-                    username=self.sysstr,
-                    icon_url = self.slack_usericon,
-                    thread_ts = self.threadts,
-                    text = "OD = %0.3f, OD below nutrient pump threshold." % (self.avOD)
-                    )
+                        "chat.postMessage",
+                        channel = self.chan,
+                        username=self.sysstr,
+                        icon_url = self.slack_usericon,
+                        thread_ts = self.threadts,
+                        text = "OD = %0.3f, OD below nutrient pump threshold." % (self.avOD)
+                        )
+        except Exception as e:
+            print ('[%s] CA - WARNING ADC REQUEST CRASHED' % self.sysstr)
+            print(e)
+            pass
 
         self.last_dilutionOD = self.avOD
         i2c_lock[self.sysnum-1] = False
+        i2c_q.pop(0)
 
         self.thread_locks['control_alg'].release()
 
