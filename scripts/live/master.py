@@ -131,6 +131,18 @@ def eve_starter():
     for starti in range(len(morbidostats)):
        morbidostats[starti][0].start()
 
+def i2c_controller():
+    while True:
+        if len(i2c_q) is 0:
+            time.sleep(0.05)
+        else:
+            if i2c_q[0][1] is 'O':
+                morbidostats[int(i2c_q[0][0])][0].get_OD()
+            elif i2c_q[0][1] is 'C':
+                morbidostats[int(i2c_q[0][0])][0].control_alg()
+            i2c_q.pop(0)
+
+
 def live_plotter():
     max_time = 0
     for sysitr in range(totsys):
@@ -245,8 +257,9 @@ class Morbidostat:
         # self.currOD = np.zeros(num_cham)
         self.currOD = 0
         # averaged OD value
-        # self.avOD = np.zeros(num_cham)
+        self.scaling = self.config[self.sysstr].getboolean('scaling')
         self.avOD = 0
+        self.maxOD = 0
         self.OD_av_length = self.config[self.sysstr].getint('OD_av_length')
         # OD averaging buffer
         self.avOD_buffer = [0] * self.OD_av_length #need to change for multiplexing
@@ -281,7 +294,7 @@ class Morbidostat:
         self.photod = AnalogIn(self.adc[self.adc_add.index(self.config[self.sysstr].getint('a_address'))], getattr(ADS,'P'+ str(self.config[self.sysstr].getint('Analogin'))))
 
         # Setup the GPIO Pins to Control the Pumps
-        self.pipins = self.config[self.sysstr].getboolean('Pi_pins')
+        self.pipins = self.config[self.sysstr].getboolean('pi_pins')
         self.P_drug_pins = self.config[self.sysstr].getint('P_drug_pins')
         self.P_nut_pins = self.config[self.sysstr].getint('P_nut_pins')
         self.P_waste_pins = self.config[self.sysstr].getint('P_waste_pins')
@@ -336,7 +349,7 @@ class Morbidostat:
         file = open(self.outfile_OD, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Current OD', 'Average OD','OD Timing'])
-        wr.writerow(['current', 'average','time','hour','threads','min'])
+        wr.writerow(['current', 'average','maxod','time','hour','threads','min'])
         file.close()
 
         self.outfile_pump = "/mnt/morbidodata/%s/%s/pump_%s.csv" % (self.sysstr, self.start_time, self.start_time)
@@ -351,7 +364,7 @@ class Morbidostat:
         file = open(self.hr_outfile_OD, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Current OD', 'Average OD','OD Timing'])
-        wr.writerow(['current', 'average','time','hour','threads','min'])
+        wr.writerow(['current', 'average','maxod','time','hour','threads','min'])
         file.close()
 
         self.hr_outfile_pump = "/mnt/morbidodata/%s/%s/hr_pump_%s.csv" % (self.sysstr, self.start_time, self.start_time)
@@ -396,48 +409,47 @@ class Morbidostat:
         self.firstrec = True
 
     def get_OD(self):
-        self.thread_locks['adc'].acquire()
-        global i2c_lock
-        global i2c_q
+        # global i2c_lock
+
         print_buffer = 0
-        id = str(self.sysnum)+'OD'
 
-        i2c_q.append(id)
+        # i2c_q.append(id)
 
-        while i2c_q[0] is not id and not sum(i2c_lock):
-            time.sleep(0.1)
-            print_buffer += 1
-            if print_buffer % 15 == 0:
-                print ('[%s] {GetOD} Waiting for Locks...' % self.sysstr)
-                print(i2c_q)
+        # while i2c_q[0] is not id and not sum(i2c_lock):
+            # time.sleep(0.1)
+            # print_buffer += 1
+            # if print_buffer % 15 == 0:
+                # print ('[%s] {GetOD} Waiting for Locks...' % self.sysstr)
+                # print(i2c_q)
 
-        if i2c_q[0] is id:
-            i2c_lock[self.sysnum-1] = True
-            time.sleep(0.05)
+        # if i2c_q[0] is id:
+            # i2c_lock[self.sysnum-1] = True
+            # time.sleep(0.05)
 
-            try:
-                if self.pipins:
-                    GPIO.output(self.P_LED_pins,1)
-                    time.sleep(0.1)
-                    self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
-                    time.sleep(0.1)
-                    GPIO.output(self.P_LED_pins,0)
-                else:
-                    self.pins[self.P_LED_pins].value = True
-                    time.sleep(0.1)
-                    self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
-                    time.sleep(0.1)
-                    self.pins[self.P_LED_pins].value = False
-            except:
-                print ('[%s] OD - WARNING ADC REQUEST CRASHED' % self.sysstr)
-                pass
+        try:
+            if self.pipins:
+                GPIO.output(self.P_LED_pins,1)
+                time.sleep(0.1)
+                self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
+                time.sleep(0.1)
+                GPIO.output(self.P_LED_pins,0)
+            else:
+                self.pins[self.P_LED_pins].value = True
+                time.sleep(0.1)
+                self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
+                time.sleep(0.1)
+                self.pins[self.P_LED_pins].value = False
+        except:
+            print ('[%s] OD - WARNING ADC REQUEST CRASHED' % self.sysstr)
+            pass
 
-        i2c_lock[self.sysnum-1] = False
-        i2c_q.pop(0)
+        # i2c_lock[self.sysnum-1] = False
+        # i2c_q.pop(0)
 
         self.avOD_buffer = self.avOD_buffer + [self.currOD]
         self.avOD_buffer.pop(0)
         self.avOD = sum(self.avOD_buffer)/len(self.avOD_buffer)
+        if self.avOD > self.maxOD: self.maxOD = self.avOD
 
         self.thread_locks['adc'].release()
 
@@ -468,7 +480,7 @@ class Morbidostat:
         return {'ods':self.outfile_OD, 'pumps': self.outfile_pump}
 
     def bufferdata(self):
-        odlist = [self.currOD, self.avOD, self.nows, (self.elapsed_time.total_seconds())/3600, self.active_threads, self.OD_min]
+        odlist = [self.currOD, self.avOD, self.maxOD, self.nows, (self.elapsed_time.total_seconds())/3600, self.active_threads, self.OD_min]
         pulist = [self.nut,self.drug,self.waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.drug_mass]
         self.hr_OD_tmplist.append(odlist)
         self.hr_pump_tmplist.append(pulist)
@@ -534,246 +546,256 @@ class Morbidostat:
             time.sleep(2)
             print('[%s] Generating graph' % self.sysstr)
 
-        self.slack_client.api_call(
-            "chat.postMessage",
-            channel = self.chan,
-            username=self.sysstr,
-            icon_url = self.slack_usericon,
-            text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
-            thread_ts = self.threadts
-            )
-
-        allODs = pd.read_csv(self.outfile_OD, index_col='hour')
-        # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
-        # allODs['hour'] = allODs['hour'].divide(3600)
-        # allODs.set_index('hour')
-        # print(allODs)
-        #fig = plt.figure(dpi=1000)
-        plt.rcParams["figure.dpi"] = 200
-        ODplt = (allODs[['average']]).plot()  #figsize=(10,10) in the plot
-        # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
-        ODfig = ODplt.get_figure()
-        self.outfile_OD = "/mnt/morbidodata/%s/%s/ODdata_%s.csv" % (self.sysstr, self.start_time, self.start_time)
-        ODfig.savefig("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time))
-        ODfig.clf(); ODplt = None; ODfig = None; fig = None
-        with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+        try:
             self.slack_client.api_call(
-                "files.upload",
-                channels = self.chan,
-                thread_ts = self.threadts,
-                title = "ODPlot",
-                file = file_content
-            )
-
-        allpumps = pd.read_csv(self.outfile_pump, index_col='hour')   # cols: 'media', 'drug','waste','pump_time','hour','drug_mass'
-
-        allconcs = allpumps[['drug_mass']]/12
-        allconcs.rename(columns={'drug_mass':'drug_conc'}, inplace=True)
-        # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
-        # allODs['hour'] = allODs['hour'].divide(3600)
-        # allODs.set_index('hour')
-        # print(allODs)
-        #fig = plt.figure(dpi=1000)
-        colors = getattr(getattr(pd.plotting, '_style'), '_get_standard_colors')(num_colors=2)
-        plt.rcParams["figure.dpi"] = 200
-        ODplt = (allODs[['average']]).plot(label='average', color=colors[0])  #figsize=(10,10) in the plot
-        ODplt.set_ylabel(ylabel='Average OD')
-        lines, labels = ODplt.get_legend_handles_labels()
-
-        DM = ODplt.twinx()
-        DM.spines['right'].set_position(('axes', 1.0))
-        allconcs.plot(ax = DM, label='drug_mass',color=colors[1],legend=False)
-        DM.set_ylabel(ylabel='Drug Concentration (ug/mL)')
-        line, label = DM.get_legend_handles_labels()
-        lines += line
-        labels += label
-        ODplt.legend(lines, labels, loc=2)
-        # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
-        ODfig = ODplt.get_figure()
-        ODfig.savefig("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time),bbox_inches='tight')
-        ODfig.clf(); ODplt.figure = None; ODplt = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
-        plt.close('all')
-        with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-            self.slack_client.api_call(
-                "files.upload",
-                channels = self.chan,
-                thread_ts = self.threadts,
-                title = "ODConc",
-                file = file_content
-            )
-
-
-        pumpa = allpumps[['media','drug','waste']]
-        colors = getattr(getattr(pd.plotting, '_style'), '_get_standard_colors')(num_colors=4)
-        PUplt,PUax = plt.subplots()
-        PUax.plot(allODs[['average']], label= 'average', color=colors[0])
-        PUax.plot(allODs[['min']], label= '_nolegend_', color = 'tab:grey', linestyle= ':')
-        PUax.set_ylabel(ylabel='Average OD')
-        lines, labels = PUax.get_legend_handles_labels()
-
-        DM = PUax.twinx()
-        DM.spines['right'].set_position(('axes', 1.0))
-        pumpa.plot(ax = DM,color=colors[1:4],legend=False)
-        DM.set_yticklabels([])
-
-        line, label = DM.get_legend_handles_labels()
-        lines += line
-        labels += label
-        PUax.legend(lines, labels, loc=2)
-        # PUplt.axhline(y=self.OD_min, color='tab:grey', linestyle=':')
-        # PUplt.axhline(y=self.OD_thr, color='tab:grey', linestyle=':')
-
-        # PUfig = PUplt.get_figure()
-        PUplt.savefig("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time))
-        allpumps = None; PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
-        plt.close('all')
-        with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-            self.slack_client.api_call(
-                "files.upload",
-                channels = self.chan,
-                thread_ts = self.threadts,
-                title = "PUPlot",
-                file = file_content
-            )
-
-        # THREADS GRAPH
-
-        plt.rcParams["figure.dpi"] = 200
-        ODthr = (allODs[['average']]).plot(label='average', color='tab:blue')  #figsize=(10,10) in the plot
-        ODthr.set_ylabel(ylabel='Average OD')
-        lines, labels = ODthr.get_legend_handles_labels()
-
-        DM = ODthr.twinx()
-        DM.spines['right'].set_position(('axes', 1.0))
-        allODs[['threads']].plot(ax = DM, label='threads',color='tab:purple',legend=False)
-        DM.set_ylabel(ylabel='Active Threads')
-        line, label = DM.get_legend_handles_labels()
-        lines += line
-        labels += label
-        ODthr.legend(lines, labels, loc=2)
-        # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
-        ODfig = ODthr.get_figure()
-        ODfig.savefig("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time),bbox_inches='tight')
-        ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
-        plt.close('all')
-        with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-            self.slack_client.api_call(
-                "files.upload",
-                channels = self.chan,
-                thread_ts = self.threadts,
-                title = "ODThreads",
-                file = file_content
-            )
-
-        if self.firstrec:
-            self.recmes = self.slack_client.api_call(
                 "chat.postMessage",
                 channel = self.chan,
                 username=self.sysstr,
                 icon_url = self.slack_usericon,
                 text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
-                thread_ts = self.recgrats
+                thread_ts = self.threadts
                 )
+
+            allODs = pd.read_csv(self.outfile_OD, index_col='hour')
+
+            if self.scaling: allODs[['average']] = allODs[['average']]/float(allODs[['maxod']].iloc[-1])
+
+            # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
+            # allODs['hour'] = allODs['hour'].divide(3600)
+            # allODs.set_index('hour')
+            # print(allODs)
+            #fig = plt.figure(dpi=1000)
+            plt.rcParams["figure.dpi"] = 200
+            ODplt = (allODs[['average']]).plot()  #figsize=(10,10) in the plot
+            # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
+            ODfig = ODplt.get_figure()
+            self.outfile_OD = "/mnt/morbidodata/%s/%s/ODdata_%s.csv" % (self.sysstr, self.start_time, self.start_time)
+            ODfig.savefig("/mnt/morbidodata/%s/%s/ODplot_%s.png"  % (self.sysstr, self.start_time, self.start_time))
+            ODfig.clf(); ODplt = None; ODfig = None; fig = None
             with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.recod = self.slack_client.api_call(
+                self.slack_client.api_call(
                     "files.upload",
                     channels = self.chan,
-                    thread_ts = self.recgrats,
+                    thread_ts = self.threadts,
                     title = "ODPlot",
                     file = file_content
                 )
+
+            allpumps = pd.read_csv(self.outfile_pump, index_col='hour')   # cols: 'media', 'drug','waste','pump_time','hour','drug_mass'
+
+            allconcs = allpumps[['drug_mass']]/12
+            allconcs.rename(columns={'drug_mass':'drug_conc'}, inplace=True)
+            # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
+            # allODs['hour'] = allODs['hour'].divide(3600)
+            # allODs.set_index('hour')
+            # print(allODs)
+            #fig = plt.figure(dpi=1000)
+            colors = getattr(getattr(pd.plotting, '_style'), '_get_standard_colors')(num_colors=2)
+            plt.rcParams["figure.dpi"] = 200
+            ODplt = (allODs[['average']]).plot(label='average', color=colors[0])  #figsize=(10,10) in the plot
+            ODplt.set_ylabel(ylabel='Average OD')
+            lines, labels = ODplt.get_legend_handles_labels()
+
+            DM = ODplt.twinx()
+            DM.spines['right'].set_position(('axes', 1.0))
+            allconcs.plot(ax = DM, label='drug_mass',color=colors[1],legend=False)
+            DM.set_ylabel(ylabel='Drug Concentration (ug/mL)')
+            line, label = DM.get_legend_handles_labels()
+            lines += line
+            labels += label
+            ODplt.legend(lines, labels, loc=2)
+            # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
+            ODfig = ODplt.get_figure()
+            ODfig.savefig("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), bbox_inches='tight')
+            ODfig.clf(); ODplt.figure = None; ODplt = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
+            plt.close('all')
             with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.recodc = self.slack_client.api_call(
+                self.slack_client.api_call(
                     "files.upload",
                     channels = self.chan,
-                    thread_ts = self.recgrats,
+                    thread_ts = self.threadts,
                     title = "ODConc",
                     file = file_content
                 )
+
+
+            pumpa = allpumps[['media','drug','waste']]
+            colors = getattr(getattr(pd.plotting, '_style'), '_get_standard_colors')(num_colors=4)
+            PUplt,PUax = plt.subplots()
+            PUax.plot(allODs[['average']], label= 'average', color=colors[0])
+            PUax.plot(allODs[['min']], label= '_nolegend_', color = 'tab:grey', linestyle= ':')
+            PUax.set_ylabel(ylabel='Average OD')
+            lines, labels = PUax.get_legend_handles_labels()
+
+            DM = PUax.twinx()
+            DM.spines['right'].set_position(('axes', 1.0))
+            pumpa.plot(ax = DM,color=colors[1:4],legend=False)
+            DM.set_yticklabels([])
+
+            line, label = DM.get_legend_handles_labels()
+            lines += line
+            labels += label
+            PUax.legend(lines, labels, loc=2)
+            # PUplt.axhline(y=self.OD_min, color='tab:grey', linestyle=':')
+            # PUplt.axhline(y=self.OD_thr, color='tab:grey', linestyle=':')
+
+            # PUfig = PUplt.get_figure()
+            PUplt.savefig("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time))
+            allpumps = None; PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
+            plt.close('all')
             with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.recpu = self.slack_client.api_call(
+                self.slack_client.api_call(
                     "files.upload",
                     channels = self.chan,
-                    thread_ts = self.recgrats,
+                    thread_ts = self.threadts,
                     title = "PUPlot",
                     file = file_content
                 )
+
+            # THREADS GRAPH
+
+            plt.rcParams["figure.dpi"] = 200
+            ODthr = (allODs[['average']]).plot(label='average', color='tab:blue')  #figsize=(10,10) in the plot
+            ODthr.set_ylabel(ylabel='Average OD')
+            lines, labels = ODthr.get_legend_handles_labels()
+
+            DM = ODthr.twinx()
+            DM.spines['right'].set_position(('axes', 1.0))
+            allODs[['threads']].plot(ax = DM, label='threads',color='tab:purple',legend=False)
+            DM.set_ylabel(ylabel='Active Threads')
+            line, label = DM.get_legend_handles_labels()
+            lines += line
+            labels += label
+            ODthr.legend(lines, labels, loc=2)
+            # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
+            ODfig = ODthr.get_figure()
+            ODfig.savefig("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time))
+            ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
+            plt.close('all')
             with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.rethr = self.slack_client.api_call(
+                self.slack_client.api_call(
                     "files.upload",
                     channels = self.chan,
-                    thread_ts = self.recgrats,
+                    thread_ts = self.threadts,
                     title = "ODThreads",
                     file = file_content
                 )
-            # print(self.recod['file']['shares']['public'][self.chanid][0]['ts'])
-            self.firstrec = False
-        else:
-            self.slack_client.api_call(
-                "chat.delete",
-                channel = self.chanid,
-                ts = self.recmes['ts']
-                )
-            self.slack_client.api_call(
-                "chat.delete",
-                channel = self.chanid,
-                ts = self.recod['file']['shares']['public'][self.chanid][0]['ts']
-                )
-            self.slack_client.api_call(
-                "chat.delete",
-                channel = self.chanid,
-                ts = self.recodc['file']['shares']['public'][self.chanid][0]['ts']
-                )
-            self.slack_client.api_call(
-                "chat.delete",
-                channel = self.chanid,
-                ts = self.recpu['file']['shares']['public'][self.chanid][0]['ts']
-                )
-            self.slack_client.api_call(
-                "chat.delete",
-                channel = self.chanid,
-                ts = self.rethr['file']['shares']['public'][self.chanid][0]['ts']
-                )
-            self.recmes = self.slack_client.api_call(
-                "chat.postMessage",
-                channel = self.chan,
-                username=self.sysstr,
-                icon_url = self.slack_usericon,
-                text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
-                thread_ts = self.recgrats
-                )
-            with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.recod = self.slack_client.api_call(
-                    "files.upload",
-                    channels = self.chan,
-                    thread_ts = self.recgrats,
-                    title = "ODPlot",
-                    file = file_content
-                )
-            with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.recodc = self.slack_client.api_call(
-                    "files.upload",
-                    channels = self.chan,
-                    thread_ts = self.recgrats,
-                    title = "ODConc",
-                    file = file_content
-                )
-            with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.recpu = self.slack_client.api_call(
-                    "files.upload",
-                    channels = self.chan,
-                    thread_ts = self.recgrats,
-                    title = "PUPlot",
-                    file = file_content
-                )
-            with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.rethr = self.slack_client.api_call(
-                    "files.upload",
-                    channels = self.chan,
-                    thread_ts = self.recgrats,
-                    title = "ODThreads",
-                    file = file_content
-                )
+
+            if self.firstrec:
+                self.recmes = self.slack_client.api_call(
+                    "chat.postMessage",
+                    channel = self.chan,
+                    username=self.sysstr,
+                    icon_url = self.slack_usericon,
+                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                    thread_ts = self.recgrats
+                    )
+                with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.recod = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "ODPlot",
+                        file = file_content
+                    )
+                with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.recodc = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "ODConc",
+                        file = file_content
+                    )
+                with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.recpu = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "PUPlot",
+                        file = file_content
+                    )
+                with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.rethr = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "ODThreads",
+                        file = file_content
+                    )
+                # print(self.recod['file']['shares']['public'][self.chanid][0]['ts'])
+                self.firstrec = False
+            else:
+                self.slack_client.api_call(
+                    "chat.delete",
+                    channel = self.chanid,
+                    ts = self.recmes['ts']
+                    )
+                self.slack_client.api_call(
+                    "chat.delete",
+                    channel = self.chanid,
+                    ts = self.recod['file']['shares']['public'][self.chanid][0]['ts']
+                    )
+                self.slack_client.api_call(
+                    "chat.delete",
+                    channel = self.chanid,
+                    ts = self.recodc['file']['shares']['public'][self.chanid][0]['ts']
+                    )
+                self.slack_client.api_call(
+                    "chat.delete",
+                    channel = self.chanid,
+                    ts = self.recpu['file']['shares']['public'][self.chanid][0]['ts']
+                    )
+                self.slack_client.api_call(
+                    "chat.delete",
+                    channel = self.chanid,
+                    ts = self.rethr['file']['shares']['public'][self.chanid][0]['ts']
+                    )
+                self.recmes = self.slack_client.api_call(
+                    "chat.postMessage",
+                    channel = self.chan,
+                    username=self.sysstr,
+                    icon_url = self.slack_usericon,
+                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                    thread_ts = self.recgrats
+                    )
+                with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.recod = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "ODPlot",
+                        file = file_content
+                    )
+                with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.recodc = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "ODConc",
+                        file = file_content
+                    )
+                with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.recpu = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "PUPlot",
+                        file = file_content
+                    )
+                with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.rethr = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.recgrats,
+                        title = "ODThreads",
+                        file = file_content
+                    )
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno)
+            pass
+
         graph_lock[self.sysnum-1] = False
         graph_q.pop(0)
         self.thread_locks['graphs'].release()
@@ -809,22 +831,19 @@ class Morbidostat:
         self.thread_locks['dynL'].release()
 
     def control_alg(self):
-        self.thread_locks['control_alg'].acquire()
-        global i2c_lock
-        global i2c_q
         print_buffer = 0
-        id = str(self.sysnum)+'CA'
+        # id = str(self.sysnum)+'CA'
 
-        i2c_q.append(id)
+        # i2c_q.append(id)
 
-        while i2c_q[0] is not id:
-            time.sleep(0.1)
-            print_buffer += 1
-            if print_buffer % 10 == 0: print ('[%s] {CAlg} Waiting for Locks...' % self.sysstr)
+        # while i2c_q[0] is not id:
+            # time.sleep(0.1)
+            # print_buffer += 1
+            # if print_buffer % 10 == 0: print ('[%s] {CAlg} Waiting for Locks...' % self.sysstr)
 
-        if i2c_q[0] is id:
-            i2c_lock[self.sysnum-1] = True
-            time.sleep(0.05)
+        # if i2c_q[0] is id:
+            # i2c_lock[self.sysnum-1] = True
+            # time.sleep(0.05)
 
         try:
             if self.avOD > self.OD_min:
@@ -891,8 +910,8 @@ class Morbidostat:
             pass
 
         self.last_dilutionOD = self.avOD
-        i2c_lock[self.sysnum-1] = False
-        i2c_q.pop(0)
+        # i2c_lock[self.sysnum-1] = False
+        # i2c_q.pop(0)
 
         self.thread_locks['control_alg'].release()
 
@@ -950,13 +969,13 @@ class Morbidostat:
         # Count see if the thread is locked for a long time
 
 
+        global i2c_q
 
 
-        # read OD data to be used for both controlling and saving during this loop
         if self.loops > 1:
             if not self.thread_locks['adc'].locked():
-                self.threads['adc'] = threading.Thread(target=self.get_OD)
-                self.threads['adc'].start()
+                self.thread_locks['adc'].acquire()
+                i2c_q.append(str(self.sysnum-1)+'OD')
 
             if not self.thread_locks['dynL'].locked():
                 if (self.loops % int(self.thresh_check*60/self.time_between_ODs)) == 0 and not self.OD_thr_set:
@@ -965,31 +984,31 @@ class Morbidostat:
 
             if not self.thread_locks['control_alg'].locked():
                 if self.loops % (self.loops_between_pumps) == 0:
-                    self.threads['control_alg'] = threading.Thread(target=self.control_alg)
-                    self.threads['control_alg'].start()
+                    self.thread_locks['control_alg'].acquire()
+                    i2c_q.append(str(self.sysnum-1)+'CA')
 
             if not self.thread_locks['graphs'].locked():
                 if (self.loops % int(self.time_between_graphs*60/self.time_between_ODs)) == 0:
                     self.threads['graphs'] = threading.Thread(target=self.graphOD)
                     self.threads['graphs'].start()
         else:
-            self.threads['adc'] = threading.Thread(target=self.get_OD)
-            self.threads['adc'].start()
+            self.thread_locks['adc'].acquire()
+            i2c_q.append(str(self.sysnum-1)+'OD')
 
             if (self.loops % int(self.thresh_check*60/self.time_between_ODs)) == 0 and not self.OD_thr_set:
                 self.threads['dynL'] = threading.Thread(target=self.dynLimit)
                 self.threads['dynL'].start()
 
             if self.loops % (self.loops_between_pumps) == 0:
-                self.threads['control_alg'] = threading.Thread(target=self.control_alg)
-                self.threads['control_alg'].start()
+                self.thread_locks['control_alg'].acquire()
+                i2c_q.append(str(self.sysnum-1)+'CA')
 
             if (self.loops % int(self.time_between_graphs*60/self.time_between_ODs)) == 0:
                 self.threads['graphs'] = threading.Thread(target=self.graphOD)
                 self.threads['graphs'].start()
 
 
-        # save the data to disk if it's time (threaded to preserve time b/w ODs if this takes > time_between_ODs)
+        # save the data to disk if it's time
         if (self.loops % int(self.time_between_saves*60/self.time_between_ODs)) == 0:
             if self.printing:
                 print('[%s] Saving to disk' % self.sysstr)
@@ -1008,6 +1027,8 @@ class Morbidostat:
         self.thread_locks['threads'].release()
 
 chips = IC_init()
+
+threading.Thread(target = i2c_controller).start()
 
 eve_starter()
 
