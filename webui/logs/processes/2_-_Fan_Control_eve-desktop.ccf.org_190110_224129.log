@@ -1,9 +1,0 @@
-id:175
-user_name:eve-desktop.ccf.org
-user_id:10.66.100.75-6d9654bbebd64500
-script:2 - Fan Control
-start_time:1547160089984
-command:/eve/scripts/webui-sc/fancont.py Off 5
-exit_code:0
->>>>>  OUTPUT STARTED <<<<<
-Turning Fan Off

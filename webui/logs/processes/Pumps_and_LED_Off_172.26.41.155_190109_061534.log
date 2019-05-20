@@ -1,9 +1,0 @@
-id:94
-user_name:172.26.41.155
-user_id:172.26.40.230-74fbe15917a24116
-script:Pumps and LED Off
-start_time:1547014534628
-command:su -c ./pumpsledoff.py -s /bin/sh vishhvaan
-exit_code:0
->>>>>  OUTPUT STARTED <<<<<
-Done!

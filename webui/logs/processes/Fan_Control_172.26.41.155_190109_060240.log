@@ -1,9 +1,0 @@
-id:90
-user_name:172.26.41.155
-user_id:172.26.40.230-74fbe15917a24116
-script:Fan Control
-start_time:1547013760233
-command:/eve/scripts/webui-sc/fancont.py Off 0.3
-exit_code:0
->>>>>  OUTPUT STARTED <<<<<
-Turning Fan Off

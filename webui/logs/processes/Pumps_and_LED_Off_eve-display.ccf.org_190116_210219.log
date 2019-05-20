@@ -1,9 +1,0 @@
-id:195
-user_name:eve-display.ccf.org
-user_id:10.66.100.177-9eb13dc2780543ef
-script:Pumps and LED Off
-start_time:1547672539744
-command:su -c ./pumpsledoff.py -s /bin/sh vishhvaan
-exit_code:0
->>>>>  OUTPUT STARTED <<<<<
-Done!

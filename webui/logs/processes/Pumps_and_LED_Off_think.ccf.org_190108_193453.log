@@ -1,9 +1,0 @@
-id:78
-user_name:think.ccf.org
-user_id:10.66.101.117-0f3330edfb0e49d1
-script:Pumps and LED Off
-start_time:1546976093483
-command:su -c ./pumpsledoff.py -s /bin/sh vishhvaan
-exit_code:0
->>>>>  OUTPUT STARTED <<<<<
-Done!
