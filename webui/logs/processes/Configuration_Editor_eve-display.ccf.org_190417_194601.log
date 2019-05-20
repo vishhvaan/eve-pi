@@ -1,0 +1,59 @@
+id:581
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:Configuration Editor
+start_time:1555530361382
+command:/eve/scripts/webui-sc/confeditor.py
+exit_code:0
+>>>>>  OUTPUT STARTED <<<<<
+ 0. MAIN
+ 1. EVE1
+ 2. EVE2
+ 3. EVE3
+ 4. EVE4
+ 5. View All
+ 6. Save File
+ 7. Exit
+Select section to edit/option: 0
+
+Section: MAIN
+ 0. repeat1_evar            : yes
+ 1. slack_user              : blob
+ 2. slack_channel           : morbidodebug
+ 3. graph_resolution_fac    : 5
+ 4. slack_key               : xoxb-15598920096-507190138311-P7oYWMlAUhXaVemyYyUh3LQF
+ 5. multi_icon              : https://i.imgur.com/RnzJ6Xz.jpg
+
+ 6. Back
+Select key to edit: 2
+New value: morbidotest
+
+Section: MAIN
+ 0. repeat1_evar            : yes
+ 1. slack_user              : blob
+ 2. slack_channel           : morbidotest
+ 3. graph_resolution_fac    : 5
+ 4. slack_key               : xoxb-15598920096-507190138311-P7oYWMlAUhXaVemyYyUh3LQF
+ 5. multi_icon              : https://i.imgur.com/RnzJ6Xz.jpg
+Confim Change [y,N]: y
+Config File Edited.
+
+Edit another key in this section [y,N]: n
+
+Menu
+ 0. Edit a Section
+ 1. View File
+ 2. Save File
+ 3. Exit
+Select option: 2
+
+Config Saved
+
+Menu
+ 0. Edit a Section
+ 1. View File
+ 2. Save File
+ 3. Exit
+Select option: 3
+
+Editor Closed

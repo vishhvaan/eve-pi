@@ -1,0 +1,19 @@
+id:582
+user_name:eve-display.ccf.org
+user_id:10.66.100.177-c188ec4d953a4837
+script:3 - Morbidostat Experiment
+start_time:1555530434159
+command:/eve/scripts/live/master.py
+exit_code:-15
+>>>>>  OUTPUT STARTED <<<<<
+Multiplexer Started.
+EVE1 enabled.
+EVE2 enabled.
+EVE3 enabled.
+EVE4 not enabled. Skipping.
+Starting EVEs
+EVE1 started at 15:47:20 on Wed - Apr 17, 2019
+EVE2 started at 15:47:21 on Wed - Apr 17, 2019
+EVE3 started at 15:47:22 on Wed - Apr 17, 2019
+
+>> STOPPED BY USER
