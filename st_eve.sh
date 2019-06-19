@@ -6,7 +6,6 @@ adduser eve pi
 adduser eve sudo 
 adduser eve gpio
 adduser eve i2c
-passwd eve
 
 #Change the timezone
 echo -n "Enter the timezone:"
