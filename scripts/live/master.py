@@ -559,6 +559,7 @@ class Morbidostat:
             allODs = pd.read_csv(self.outfile_OD, index_col='hour')
 
             if self.scaling: allODs[['average']] = allODs[['average']]/float(allODs[['maxod']].iloc[-1])
+            if self.scaling: allODs[['min']] = allODs[['min']]/float(allODs[['maxod']].iloc[-1])
 
             # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
             # allODs['hour'] = allODs['hour'].divide(3600)
