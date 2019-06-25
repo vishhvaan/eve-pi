@@ -1,0 +1,16 @@
+FROM ubuntu:latest
+MAINTAINER Vishhvaan Gopalakrishnan
+SHELL ["/bin/bash", "-c"]
+
+#COPY docker_install/qemu-arm /usr/bin/qemu-arm
+
+RUN apt-get update
+RUN apt-get install -y python3 python3-pip git
+
+RUN pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient pandas matplotlib configparser
+
+RUN mkdir /eve
+RUN git clone https://github.com/vishhvaan/eve-pi.git /eve
+
+CMD modprobe i2c-dev
+

@@ -28,7 +28,7 @@ echo "i2c-dev" >> /etc/modules
 
 
 #Install Packages
-apt update && sudo apt upgrade -y
+apt update && apt upgrade -y
 apt install -y git python3 python3-pip nfs-kernel-server vim tmux libatlas-base-dev
 
 umask 022
