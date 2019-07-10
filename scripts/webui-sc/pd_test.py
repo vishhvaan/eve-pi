@@ -8,7 +8,7 @@ import sys
 import digitalio
 import board
 import busio
-import adafruit_mcp230xx
+from adafruit_mcp230xx.mcp23017 import MCP23017
 import adafruit_ads1x15.ads1015 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
@@ -56,7 +56,7 @@ if adc_add:
 
 if gpio_add:
     for add in gpio_add:
-        gpioe.append(adafruit_mcp230xx.MCP23017(i2c, address=add))
+        gpioe.append(MCP23017(i2c, address=add))
 
 def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
     confsec = 'EVE' + str(sysnum)

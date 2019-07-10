@@ -8,7 +8,7 @@ import sys
 import digitalio
 import board
 import busio
-import adafruit_mcp230xx
+from adafruit_mcp230xx.mcp23017 import MCP23017
 
 import configparser
 from multiprocessing import Process
@@ -40,7 +40,7 @@ i2c = busio.I2C(board.SCL, board.SDA)
 
 if gpio_add:
     for add in gpio_add:
-        gpioe.append(adafruit_mcp230xx.MCP23017(i2c, address=add))
+        gpioe.append(MCP23017(i2c, address=add))
 
 def runner(sysnum,gpioe,gpio_add,pname):
     confsec = 'EVE' + str(sysnum)
