@@ -32,7 +32,7 @@ apt update && apt upgrade -y
 apt install -y git python3 python3-pip nfs-kernel-server vim tmux libatlas-base-dev
 
 umask 022
-pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient pandas matplotlib configparser
+pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient pandas matplotlib configparser tornado dash
 
 #Git Clone Repo
 mkdir /eve
