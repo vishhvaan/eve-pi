@@ -10,7 +10,8 @@ adduser eve i2c
 #Change the timezone
 echo -n "Enter the timezone:"
 read timez
-
+mv /etc/localtime /etc/localtime.backup
+ln -sf /usr/share/zoneinfo/$timez /etc/localtime
 echo "Changed."
 echo ""
 
@@ -29,7 +30,8 @@ echo "i2c-dev" >> /etc/modules
 
 #Install Packages
 apt update && apt upgrade -y
-apt install -y git python3 python3-pip nfs-kernel-server vim tmux libatlas-base-dev
+apt install -y git python3 python3-pip 
+#apt install -y nfs-kernel-server vim tmux libatlas-base-dev
 
 umask 022
 pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient pandas matplotlib configparser tornado dash
