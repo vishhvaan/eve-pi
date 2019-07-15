@@ -428,12 +428,20 @@ class Morbidostat:
 
         try:
             if self.pipins:
+                GPIO.setmode(GPIO.BCM)
+                GPIO.setup(self.P_LED_pins, GPIO.OUT)
+
                 GPIO.output(self.P_LED_pins,1)
                 time.sleep(0.1)
                 self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
                 time.sleep(0.1)
                 GPIO.output(self.P_LED_pins,0)
             else:
+                self.pins = [None]*(max(self.pin_list)+1)
+                self.mcp = self.gpioe[self.gpio_add.index(self.config[self.sysstr].getint('m_address'))]
+                self.pins[self.P_LED_pins] = self.mcp.get_pin(self.P_LED_pins)
+                self.pins[self.P_LED_pins].direction = digitalio.Direction.OUTPUT
+
                 self.pins[self.P_LED_pins].value = True
                 time.sleep(0.1)
                 self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
@@ -847,6 +855,21 @@ class Morbidostat:
             # time.sleep(0.05)
 
         try:
+            if self.pipins:
+                GPIO.setmode(GPIO.BCM)
+                for pin in self.pin_list:
+                    GPIO.setup(pin, GPIO.OUT)
+            else:
+                self.pins = [None]*(max(self.pin_list)+1)
+                self.mcp = self.gpioe[self.gpio_add.index(self.config[self.sysstr].getint('m_address'))]
+
+                for pin in self.pin_list:
+                    self.pins[pin] = self.mcp.get_pin(pin)
+                    self.pins[pin].direction = digitalio.Direction.OUTPUT
+                    self.pins[pin].value = False
+
+
+
             if self.avOD > self.OD_min:
                 self.pump_on(self.P_waste_pins)
                 time.sleep(self.P_waste_times)

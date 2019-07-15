@@ -3,7 +3,7 @@
 
 import time
 import RPi.GPIO as GPIO
-import adafruit_mcp230xx
+from adafruit_mcp230xx.mcp23017 import MCP23017
 import digitalio
 import board
 import busio
@@ -26,7 +26,7 @@ sysstr = 'EVE' + str(evenum)
 
 i2c = busio.I2C(board.SCL, board.SDA)
 # mcp = adafruit_mcp230xx.MCP23017(i2c, address=32)
-mcp = adafruit_mcp230xx.MCP23017(i2c, address=config[sysstr].getint('m_address'))
+mcp = MCP23017(i2c, address=config[sysstr].getint('m_address'))
 
 fant=abs(fant)
 
