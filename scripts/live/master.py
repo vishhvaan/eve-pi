@@ -30,7 +30,7 @@ from slackclient import SlackClient
 import logging
 
 import plotter
-
+import glob
 
 
 mstart_time = datetime.now()
@@ -76,7 +76,6 @@ i2c_q = []
 graph_lock = [0]*totsys
 graph_q = []
 morbidostats = list()
-
 
 def IC_init():
     adc = list()
@@ -210,6 +209,29 @@ def slackresponder():
                 # )
             pass
 
+
+def temp_sensor():
+    if config['MAIN'].getboolean('temp_sensor'):
+        base_dir = '/sys/bus/w1/devices/'
+        device_folder = glob.glob(base_dir + '28*')[0]
+        device_file = device_folder + '/w1_slave'
+
+        while True:
+            f = open(device_file, 'r')
+            lines = f.readlines()
+            f.close()
+
+            while lines[0].strip()[-3:] != 'YES':
+                time.sleep(0.2)
+                lines = read_temp_raw()
+                equals_pos = lines[1].find('t=')
+                if equals_pos != -1:
+                    temp_string = lines[1][equals_pos+2:]
+                    temp = float(temp_string) / 1000.0
+
+            time.sleep(1)
+
+
 class Morbidostat:
     def __init__(self, sysnum, actsys, chips):
         self.printing = False
@@ -285,6 +307,8 @@ class Morbidostat:
 
         self.drug_mass = 0
 
+        self.temp_sensor = self.config['MAIN'].getboolean('temp_sensor')
+
         self.total_time = self.config[self.sysstr].getfloat('Exp_time_hours')*3600 #in seconds
         self.loops_between_ODs = 1
         self.loops_between_pumps = (self.time_between_pumps*60)/self.time_between_ODs # time between pumps in loops
@@ -349,7 +373,10 @@ class Morbidostat:
         file = open(self.outfile_OD, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Current OD', 'Average OD','OD Timing'])
-        wr.writerow(['current', 'average','maxod','time','hour','threads','min'])
+        if self.temp_sensor:
+            wr.writerow(['current','average','maxod','time','hour','temp','threads','min'])
+        else:
+            wr.writerow(['current','average','maxod','time','hour','threads','min'])
         file.close()
 
         self.outfile_pump = "/mnt/morbidodata/%s/%s/pump_%s.csv" % (self.sysstr, self.start_time, self.start_time)
@@ -364,7 +391,10 @@ class Morbidostat:
         file = open(self.hr_outfile_OD, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Current OD', 'Average OD','OD Timing'])
-        wr.writerow(['current', 'average','maxod','time','hour','threads','min'])
+        if self.temp_sensor:
+            wr.writerow(['current','average','maxod','time','hour','temp','threads','min'])
+        else:
+            wr.writerow(['current','average','maxod','time','hour','threads','min'])
         file.close()
 
         self.hr_outfile_pump = "/mnt/morbidodata/%s/%s/hr_pump_%s.csv" % (self.sysstr, self.start_time, self.start_time)
@@ -488,9 +518,14 @@ class Morbidostat:
         return {'ods':self.outfile_OD, 'pumps': self.outfile_pump}
 
     def bufferdata(self):
-        odlist = [self.currOD, self.avOD, self.maxOD, self.nows, (self.elapsed_time.total_seconds())/3600, self.active_threads, self.OD_min]
+        if self.temp_sensor:
+            global temp
+            odlist = [self.currOD, self.avOD, self.maxOD, self.nows, (self.elapsed_time.total_seconds())/3600, temp, self.active_threads, self.OD_min]
+            self.hr_OD_tmplist.append(odlist)
+        else:
+            odlist = [self.currOD, self.avOD, self.maxOD, self.nows, (self.elapsed_time.total_seconds())/3600, self.active_threads, self.OD_min]
+            self.hr_OD_tmplist.append(odlist)
         pulist = [self.nut,self.drug,self.waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.drug_mass]
-        self.hr_OD_tmplist.append(odlist)
         self.hr_pump_tmplist.append(pulist)
         if self.max_nut < self.nut: self.max_nut = self.nut
         if self.max_drug < self.drug: self.max_drug = self.drug
@@ -690,6 +725,37 @@ class Morbidostat:
                     file = file_content
                 )
 
+
+            # TEMP GRAPH
+
+            if self.temp_sensor:
+                plt.rcParams["figure.dpi"] = 200
+                ODthr = (allODs[['average']]).plot(label='average', color='tab:blue')  #figsize=(10,10) in the plot
+                ODthr.set_ylabel(ylabel='Average OD')
+                lines, labels = ODthr.get_legend_handles_labels()
+
+                DM = ODthr.twinx()
+                DM.spines['right'].set_position(('axes', 1.0))
+                allODs[['temp']].plot(ax = DM, label='threads',color='tab:pink',legend=False)
+                DM.set_ylabel(ylabel='Incubator Temperature (C)')
+                line, label = DM.get_legend_handles_labels()
+                lines += line
+                labels += label
+                ODthr.legend(lines, labels, loc=2)
+                # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
+                ODfig = ODthr.get_figure()
+                ODfig.savefig("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time))
+                ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
+                plt.close('all')
+                with open("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.threadts,
+                        title = "ODTemp",
+                        file = file_content
+                    )
+
             if self.firstrec:
                 self.recmes = self.slack_client.api_call(
                     "chat.postMessage",
@@ -731,6 +797,15 @@ class Morbidostat:
                         title = "ODThreads",
                         file = file_content
                     )
+                if self.temp_sensor:
+                    with open("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                        self.retmp = self.slack_client.api_call(
+                            "files.upload",
+                            channels = self.chan,
+                            thread_ts = self.recgrats,
+                            title = "ODTemp",
+                            file = file_content
+                        )
                 # print(self.recod['file']['shares']['public'][self.chanid][0]['ts'])
                 self.firstrec = False
             else:
@@ -759,6 +834,12 @@ class Morbidostat:
                     channel = self.chanid,
                     ts = self.rethr['file']['shares']['public'][self.chanid][0]['ts']
                     )
+                if self.temp_sensor:
+                    self.slack_client.api_call(
+                        "chat.delete",
+                        channel = self.chanid,
+                        ts = self.retmp['file']['shares']['public'][self.chanid][0]['ts']
+                        )
                 self.recmes = self.slack_client.api_call(
                     "chat.postMessage",
                     channel = self.chan,
@@ -799,6 +880,15 @@ class Morbidostat:
                         title = "ODThreads",
                         file = file_content
                     )
+                if self.temp_sensor:
+                    with open("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                        self.retmp = self.slack_client.api_call(
+                            "files.upload",
+                            channels = self.chan,
+                            thread_ts = self.recgrats,
+                            title = "ODTemp",
+                            file = file_content
+                        )
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

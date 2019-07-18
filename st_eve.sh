@@ -1,6 +1,9 @@
 #!/bin/bash
 
 #Add user
+echo "Change the password for the administrative user (pi)"
+passwd pi
+echo "Creating the user that runs the experiment (eve)"
 adduser eve
 adduser eve pi
 adduser eve sudo 
@@ -8,7 +11,7 @@ adduser eve gpio
 adduser eve i2c
 
 #Change the timezone
-echo -n "Enter the timezone:"
+echo -n "Enter the timezone: "
 read timez
 mv /etc/localtime /etc/localtime.backup
 ln -sf /usr/share/zoneinfo/$timez /etc/localtime
@@ -16,7 +19,7 @@ echo "Changed."
 echo ""
 
 #Change the hostname
-echo -n "Enter the Hostname (Network Name) of the Device:"
+echo -n "Enter the Hostname (Network Name) of the Device: "
 read hostn
 hostnamectl set-hostname $hostn
 
@@ -29,7 +32,7 @@ echo "i2c-dev" >> /etc/modules
 
 
 #Install Packages
-apt update && apt upgrade -y
+apt update -y && apt upgrade -y
 apt install -y git python3 python3-pip 
 #apt install -y nfs-kernel-server vim tmux libatlas-base-dev
 
