@@ -706,7 +706,7 @@ class Morbidostat:
             # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
             ODfig = ODthr.get_figure()
             ODfig.savefig("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time))
-            ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
+            ODfig.clf(); ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
             with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                 self.slack_client.files_upload(
