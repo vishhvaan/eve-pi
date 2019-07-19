@@ -51,14 +51,14 @@ if slack_client.rtm_connect():
     print ('Multiplexer Started.')
     if (totsys == 1):
         multimess = slack_client.chat_postMessage(
-            username = 'Multiplexer',
+            username = config['MAIN']['hostname'],
             icon_url = config['MAIN']['multi_icon'],
             channel=config['MAIN']['slack_channel'],
             text = mstart_time.strftime('Started at %H:%M:%S on %a - %b %d, %Y. There is ' + str(totsys) + ' system configured.')
             )
     else:
         multimess = slack_client.chat_postMessage(
-            username = 'Multiplexer',
+            username = config['MAIN']['hostname'],
             icon_url = config['MAIN']['multi_icon'],
             channel=config['MAIN']['slack_channel'],
             text = mstart_time.strftime('Started at %H:%M:%S on %a - %b %d, %Y. There are ' + str(totsys) + ' systems configured.')
@@ -119,7 +119,7 @@ def eve_starter():
         else:
             print (confsec + ' not enabled. Skipping.')
             slack_client.chat_postMessage(
-                username = 'Multiplexer',
+                username = config['MAIN']['hostname'],
                 icon_url = config['MAIN']['multi_icon'],
                 channel=mchan,
                 text = confsec + ' is not enabled. Skipping.'
