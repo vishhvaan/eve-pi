@@ -793,34 +793,28 @@ class Morbidostat:
                 # print(self.recod['file']['shares']['public'][self.chanid][0]['ts'])
                 self.firstrec = False
             else:
-                self.slack_client.api_call(
-                    "chat.delete",
+                self.slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recmes['ts']
                     )
-                self.slack_client.api_call(
-                    "chat.delete",
+                self.slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recod['file']['shares']['public'][self.chanid][0]['ts']
                     )
-                self.slack_client.api_call(
-                    "chat.delete",
+                self.slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recodc['file']['shares']['public'][self.chanid][0]['ts']
                     )
-                self.slack_client.api_call(
-                    "chat.delete",
+                self.slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recpu['file']['shares']['public'][self.chanid][0]['ts']
                     )
-                self.slack_client.api_call(
-                    "chat.delete",
+                self.slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.rethr['file']['shares']['public'][self.chanid][0]['ts']
                     )
                 if self.temp_sensor:
-                    self.slack_client.api_call(
-                        "chat.delete",
+                    self.slack_client.chat_delete(
                         channel = self.chanid,
                         ts = self.retmp['file']['shares']['public'][self.chanid][0]['ts']
                         )
