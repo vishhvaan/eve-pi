@@ -24,7 +24,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Needed for Slack Integration
-from slackclient import SlackClient
+import slack
 
 #Logging
 import logging
@@ -46,7 +46,7 @@ for sysiter in range(totsys):
         actsys.append(sysiter+1)
 
 
-slack_client = SlackClient(config['MAIN']['slack_key'])
+slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
 if slack_client.rtm_connect():
     print ('Multiplexer Started.')
     if (totsys == 1):
@@ -341,7 +341,8 @@ class Morbidostat:
 
         self.init_time = datetime.now()
 
-        self.slack_client = SlackClient(self.config['MAIN']['slack_key'])
+        self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
+        # self.slack_client = SlackClient(self.config['MAIN']['slack_key'])
         # self.chanid = self.config['MAIN']['slack_chanid']
         self.slack_usericon = self.config[self.sysstr]['slack_icon']
         self.chan = self.config['MAIN']['slack_channel']
