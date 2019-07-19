@@ -75,6 +75,8 @@ graph_lock = [0]*totsys
 graph_q = []
 morbidostats = list()
 
+if config['MAIN'].getboolean('temp_sensor'): temp = 0
+
 def IC_init():
     adc = list()
     gpioe = list()
@@ -1115,6 +1117,8 @@ class Morbidostat:
 chips = IC_init()
 
 threading.Thread(target = i2c_controller).start()
+
+threading.Thread(target = temp_sensor).start()
 
 eve_starter()
 
