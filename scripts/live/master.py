@@ -138,6 +138,8 @@ def i2c_controller():
                 morbidostats[int(i2c_q[0][0])][0].get_OD()
             elif i2c_q[0][1] is 'C':
                 morbidostats[int(i2c_q[0][0])][0].control_alg()
+            elif i2c_q[0][1] is 'T':
+                temp_sensor_func()
             i2c_q.pop(0)
 
 
@@ -207,28 +209,31 @@ def slackresponder():
                 # )
             pass
 
-
-def temp_sensor():
+def temp_runner():
     if config['MAIN'].getboolean('temp_sensor'):
-        base_dir = '/sys/bus/w1/devices/'
-        device_folder = glob.glob(base_dir + '28*')[0]
-        device_file = device_folder + '/w1_slave'
-
         while True:
-            f = open(device_file, 'r')
-            lines = f.readlines()
-            f.close()
+            i2c_q.append('TT')
+            time.sleep(3)
 
-            while lines[0].strip()[-3:] != 'YES':
-                time.sleep(0.2)
-                lines = read_temp_raw()
-            equals_pos = lines[1].find('t=')
-            if equals_pos != -1:
-                    temp_string = lines[1][equals_pos+2:]
-                    global temp
-                    temp = float(temp_string) / 1000.0
 
-            time.sleep(1)
+def temp_sensor_func():
+    base_dir = '/sys/bus/w1/devices/'
+    device_folder = glob.glob(base_dir + '28*')[0]
+    device_file = device_folder + '/w1_slave'
+
+    f = open(device_file, 'r')
+    lines = f.readlines()
+    f.close()
+
+    while lines[0].strip()[-3:] != 'YES':
+        time.sleep(0.2)
+        lines = read_temp_raw()
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+            temp_string = lines[1][equals_pos+2:]
+            global temp
+            temp = float(temp_string) / 1000.0
+
 
 
 class Morbidostat:
@@ -629,15 +634,14 @@ class Morbidostat:
             # allODs.set_index('hour')
             # print(allODs)
             #fig = plt.figure(dpi=1000)
-            colors = getattr(getattr(pd.plotting, '_style'), '_get_standard_colors')(num_colors=2)
             plt.rcParams["figure.dpi"] = 200
-            ODplt = (allODs[['average']]).plot(label='average', color=colors[0])  #figsize=(10,10) in the plot
+            ODplt = (allODs[['average']]).plot(label='average', color='tab:blue')  #figsize=(10,10) in the plot
             ODplt.set_ylabel(ylabel='Average OD')
             lines, labels = ODplt.get_legend_handles_labels()
 
             DM = ODplt.twinx()
             DM.spines['right'].set_position(('axes', 1.0))
-            allconcs.plot(ax = DM, label='drug_mass',color=colors[1],legend=False)
+            allconcs.plot(ax = DM, label='drug_mass',color='tab:orange',legend=False)
             DM.set_ylabel(ylabel='Drug Concentration (ug/mL)')
             line, label = DM.get_legend_handles_labels()
             lines += line
@@ -658,16 +662,15 @@ class Morbidostat:
 
 
             pumpa = allpumps[['media','drug','waste']]
-            colors = getattr(getattr(pd.plotting, '_style'), '_get_standard_colors')(num_colors=4)
             PUplt,PUax = plt.subplots()
-            PUax.plot(allODs[['average']], label= 'average', color=colors[0])
+            PUax.plot(allODs[['average']], label= 'average', color='tab:blue')
             PUax.plot(allODs[['min']], label= '_nolegend_', color = 'tab:grey', linestyle= ':')
             PUax.set_ylabel(ylabel='Average OD')
             lines, labels = PUax.get_legend_handles_labels()
 
             DM = PUax.twinx()
             DM.spines['right'].set_position(('axes', 1.0))
-            pumpa.plot(ax = DM,color=colors[1:4],legend=False)
+            pumpa.plot(ax = DM,color=['tab:orange','tab:red','tab:green'],legend=False)
             DM.set_yticklabels([])
 
             line, label = DM.get_legend_handles_labels()
@@ -1113,7 +1116,7 @@ chips = IC_init()
 
 threading.Thread(target = i2c_controller).start()
 
-threading.Thread(target = temp_sensor).start()
+threading.Thread(target = temp_runner).start()
 
 eve_starter()
 
