@@ -113,7 +113,7 @@ def eve_starter():
         confsec = 'EVE' + str(sysnum)
         if config[confsec].getboolean('enabled') is True:
             print (confsec + ' enabled.')
-            morbidostats.append([Morbidostat(sysnum, len(actsys), chips), sysnum])
+            morbidostats.append([Morbidostat(sysnum, len(actsys), chips, slack_client), sysnum])
             #Morbidostat(sysnum)
             # thread.join
         else:
@@ -237,7 +237,7 @@ def temp_sensor_func():
 
 
 class Morbidostat:
-    def __init__(self, sysnum, actsys, chips):
+    def __init__(self, sysnum, actsys, chips, slack_client):
         self.printing = False
         self.sysnum = sysnum
         self.actsys = actsys
@@ -345,9 +345,8 @@ class Morbidostat:
 
         self.init_time = datetime.now()
 
-        self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
-        # self.slack_client = SlackClient(self.config['MAIN']['slack_key'])
-        # self.chanid = self.config['MAIN']['slack_chanid']
+        # self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
+        self.slack_client = slack_client
         self.slack_usericon = self.config[self.sysstr]['slack_icon']
         self.chan = self.config['MAIN']['slack_channel']
         self.slack_client.chat_postMessage(
@@ -1122,7 +1121,7 @@ eve_starter()
 
 Process(target = live_plotter).start()
 
-threading.Thread(target = slackresponder).start()
+# threading.Thread(target = slackresponder).start()
 
 
 
