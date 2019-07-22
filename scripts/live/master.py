@@ -280,6 +280,8 @@ class Morbidostat:
         self.pump_tmplist = []
         self.hr_OD_tmplist = []
         self.hr_pump_tmplist = []
+
+        self.root_dir = self.config['MAIN']['save_location']
         # self.currOD = np.zeros(num_cham)
         self.currOD = 0
         # averaged OD value
@@ -358,21 +360,22 @@ class Morbidostat:
 
     def start(self):
         self.start_time = datetime.now()
-        os.makedirs("/mnt/morbidodata/" + self.sysstr + "/" + str(self.start_time))
+        if self.root_dir[-1] == '/': self.root_dir.pop(-1)
+        os.makedirs(self.root_dir + "/" + self.sysstr + "/" + str(self.start_time))
 
         # self.elogr = logging.getLogger('self.elogr')
         # self.elogr.setLevel(logging.DEBUG)
-        # self.elogrfh = logging.FileHandler('/mnt/morbidodata/%s/%s/exceptions.txt' % (self.sysstr, self.start_time))
+        # self.elogrfh = logging.FileHandler('%s/%s/%s/exceptions.txt' % (self.root_dir, self.sysstr, self.start_time))
         # self.elogrfh.setFormatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
         # self.elogr.addHandler(self.elogrfh)
 
         # self.ilogr = logging.getLogger('self.ilogr')
         # self.ilogr.setLevel(logging.INFO)
-        # self.ilogrfh = logging.FileHandler('/mnt/morbidodata/%s/%s/info.txt' % (self.sysstr, self.start_time))
+        # self.ilogrfh = logging.FileHandler('%s/%s/%s/info.txt' % (self.root_dir, self.sysstr, self.start_time))
         # self.ilogrfh.setFormatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
         # self.ilogr.addHandler(self.ilogrfh)
 
-        self.outfile_OD = "/mnt/morbidodata/%s/%s/ODdata_%s.csv" % (self.sysstr, self.start_time, self.start_time)
+        self.outfile_OD = "%s/%s/%s/ODdata_%s.csv" % (self.root_dir, self.sysstr, self.start_time, self.start_time)
         file = open(self.outfile_OD, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Current OD', 'Average OD','OD Timing'])
@@ -382,7 +385,7 @@ class Morbidostat:
             wr.writerow(['current','average','maxod','time','hour','threads','min'])
         file.close()
 
-        self.outfile_pump = "/mnt/morbidodata/%s/%s/pump_%s.csv" % (self.sysstr, self.start_time, self.start_time)
+        self.outfile_pump = "%s/%s/%s/pump_%s.csv" % (self.root_dir, self.sysstr, self.start_time, self.start_time)
         file = open(self.outfile_pump, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Nutrient Pump', 'Drug Pump','Waste Pump','Pump Timing', 'Drug Mass'])
@@ -390,7 +393,7 @@ class Morbidostat:
         file.close()
 
         #Detailed Files
-        self.hr_outfile_OD = "/mnt/morbidodata/%s/%s/hr_ODdata_%s.csv" % (self.sysstr, self.start_time, self.start_time)
+        self.hr_outfile_OD = "%s/%s/%s/hr_ODdata_%s.csv" % (self.root_dir, self.sysstr, self.start_time, self.start_time)
         file = open(self.hr_outfile_OD, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Current OD', 'Average OD','OD Timing'])
@@ -400,7 +403,7 @@ class Morbidostat:
             wr.writerow(['current','average','maxod','time','hour','threads','min'])
         file.close()
 
-        self.hr_outfile_pump = "/mnt/morbidodata/%s/%s/hr_pump_%s.csv" % (self.sysstr, self.start_time, self.start_time)
+        self.hr_outfile_pump = "%s/%s/%s/hr_pump_%s.csv" % (self.root_dir, self.sysstr, self.start_time, self.start_time)
         file = open(self.hr_outfile_pump, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Nutrient Pump', 'Drug Pump','Waste Pump','Pump Timing', 'Drug Mass'])
@@ -613,10 +616,10 @@ class Morbidostat:
             ODplt = (allODs[['average']]).plot()  #figsize=(10,10) in the plot
             # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
             ODfig = ODplt.get_figure()
-            self.outfile_OD = "/mnt/morbidodata/%s/%s/ODdata_%s.csv" % (self.sysstr, self.start_time, self.start_time)
-            ODfig.savefig("/mnt/morbidodata/%s/%s/ODplot_%s.png"  % (self.sysstr, self.start_time, self.start_time))
+            self.outfile_OD = "%s/%s/%s/ODdata_%s.csv" % (self.root_dir, self.sysstr, self.start_time, self.start_time)
+            ODfig.savefig("%s/%s/%s/ODplot_%s.png"  % (self.root_dir, self.sysstr, self.start_time, self.start_time))
             ODfig.clf(); ODplt = None; ODfig = None; fig = None
-            with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+            with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                 self.slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
@@ -648,10 +651,10 @@ class Morbidostat:
             ODplt.legend(lines, labels, loc=2)
             # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
             ODfig = ODplt.get_figure()
-            ODfig.savefig("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), bbox_inches='tight')
+            ODfig.savefig("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), bbox_inches='tight')
             ODfig.clf(); ODplt.figure = None; ODplt = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
-            with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+            with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                 self.slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
@@ -680,10 +683,10 @@ class Morbidostat:
             # PUplt.axhline(y=self.OD_thr, color='tab:grey', linestyle=':')
 
             # PUfig = PUplt.get_figure()
-            PUplt.savefig("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time))
+            PUplt.savefig("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time))
             allpumps = None; PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
             plt.close('all')
-            with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+            with open("%s/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                 self.slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
@@ -708,10 +711,10 @@ class Morbidostat:
             ODthr.legend(lines, labels, loc=2)
             # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
             ODfig = ODthr.get_figure()
-            ODfig.savefig("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time))
+            ODfig.savefig("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time))
             ODfig.clf(); ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
-            with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+            with open("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                 self.slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
@@ -738,10 +741,10 @@ class Morbidostat:
                 ODthr.legend(lines, labels, loc=2)
                 # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
                 ODfig = ODthr.get_figure()
-                ODfig.savefig("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), bbox_inches='tight')
+                ODfig.savefig("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), bbox_inches='tight')
                 ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
                 plt.close('all')
-                with open("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.threadts,
@@ -757,28 +760,28 @@ class Morbidostat:
                     text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
                     thread_ts = self.recgrats
                     )
-                with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.recod = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODPlot",
                         file = file_content
                     )
-                with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.recodc = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODConc",
                         file = file_content
                     )
-                with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.recpu = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "PUPlot",
                         file = file_content
                     )
-                with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("/%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.rethr = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
@@ -786,7 +789,7 @@ class Morbidostat:
                         file = file_content
                     )
                 if self.temp_sensor:
-                    with open("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                         self.retmp = self.slack_client.files_upload(
                             channels = self.chan,
                             thread_ts = self.recgrats,
@@ -828,28 +831,28 @@ class Morbidostat:
                     text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
                     thread_ts = self.recgrats
                     )
-                with open("/mnt/morbidodata/%s/%s/ODplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.recod = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODPlot",
                         file = file_content
                     )
-                with open("/mnt/morbidodata/%s/%s/ODconc_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.recodc = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODConc",
                         file = file_content
                     )
-                with open("/mnt/morbidodata/%s/%s/PUplot_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.recpu = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "PUPlot",
                         file = file_content
                     )
-                with open("/mnt/morbidodata/%s/%s/ODthreads_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                with open("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     self.rethr = self.slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
@@ -857,7 +860,7 @@ class Morbidostat:
                         file = file_content
                     )
                 if self.temp_sensor:
-                    with open("/mnt/morbidodata/%s/%s/ODtemp_%s.png" % (self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                         self.retmp = self.slack_client.files_upload(
                             channels = self.chan,
                             thread_ts = self.recgrats,
