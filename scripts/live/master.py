@@ -852,7 +852,7 @@ class Morbidostat:
                         ts = self.retmp['file']['shares']['public'][self.chanid][0]['ts']
                         )
                 self.recmes = self.slack_client.api_call(
-                    "chat.postMessage"
+                    "chat.postMessage",
                     channel = self.chan,
                     username=self.sysstr,
                     icon_url = self.slack_usericon,
