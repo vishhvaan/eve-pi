@@ -24,8 +24,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Needed for Slack Integration
-# import slack
-from slackclient import SlackClient
+import slack
 
 #Logging
 import logging
@@ -47,21 +46,18 @@ for sysiter in range(totsys):
         actsys.append(sysiter+1)
 
 
-# slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
-slack_client = SlackClient(config['MAIN']['slack_key'])
+slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
 if slack_client.rtm_connect():
     print ('Multiplexer Started.')
     if (totsys == 1):
-        multimess = slack_client.api_call(
-            "chat.postMessage",
+        multimess = slack_client.chat_postMessage(
             username = config['MAIN']['hostname'],
             icon_url = config['MAIN']['multi_icon'],
             channel=config['MAIN']['slack_channel'],
             text = mstart_time.strftime('Started at %H:%M:%S on %a - %b %d, %Y. There is ' + str(totsys) + ' system configured.')
             )
     else:
-        multimess = slack_client.api_call(
-            "chat.postMessage",
+        multimess = slack_client.chat_postMessage(
             username = config['MAIN']['hostname'],
             icon_url = config['MAIN']['multi_icon'],
             channel=config['MAIN']['slack_channel'],
@@ -117,13 +113,12 @@ def eve_starter():
         confsec = 'EVE' + str(sysnum)
         if config[confsec].getboolean('enabled') is True:
             print (confsec + ' enabled.')
-            morbidostats.append([Morbidostat(sysnum, len(actsys), chips, slack_client), sysnum])
+            morbidostats.append([Morbidostat(sysnum, len(actsys), chips), sysnum])
             #Morbidostat(sysnum)
             # thread.join
         else:
             print (confsec + ' not enabled. Skipping.')
-            slack_client.api_call(
-                "chat.postMessage",
+            slack_client.chat_postMessage(
                 username = config['MAIN']['hostname'],
                 icon_url = config['MAIN']['multi_icon'],
                 channel=mchan,
@@ -184,8 +179,7 @@ def slackresponder():
                         event.get('type') == 'message'
                     ):
                         # print(event)
-                        slack_client.api_call(
-                            "chat.postMessage",
+                        slack_client.chat_postMessage(
                             username = 'Multiplexer',
                             icon_url = config['MAIN']['multi_icon'],
                             channel=mchan,
@@ -243,7 +237,7 @@ def temp_sensor_func():
 
 
 class Morbidostat:
-    def __init__(self, sysnum, actsys, chips, slack_client):
+    def __init__(self, sysnum, actsys, chips):
         self.printing = False
         self.sysnum = sysnum
         self.actsys = actsys
@@ -353,12 +347,12 @@ class Morbidostat:
 
         self.init_time = datetime.now()
 
-        self.slack_client = SlackClient(self.config['MAIN']['slack_key'])
         # self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
+        # self.slack_client = slack_client
         self.slack_usericon = self.config[self.sysstr]['slack_icon']
         self.chan = self.config['MAIN']['slack_channel']
-        self.slack_client.api_call(
-            "chat.postMessage",
+        global slack_client
+        slack_client.chat_postMessage(
             channel = self.chan,
             username=self.sysstr,
             icon_url = self.slack_usericon,
@@ -427,16 +421,15 @@ class Morbidostat:
         # self.ilogr.info(self.start_time.strftime(self.sysstr + ' started at %H:%M:%S on %a - %b %d, %Y'))
         threading.Thread(target=self.on_timer).start()
 
-        self.initalmessage = self.slack_client.api_call(
-            "chat.postMessage",
+        global slack_client
+        self.initalmessage = slack_client.chat_postMessage(
             channel = self.chan,
             username=self.sysstr,
             icon_url = self.slack_usericon,
             text = self.start_time.strftime('Experiment started at %H:%M:%S on %a - %b %d, %Y')
             )
 
-        self.recgra = self.slack_client.api_call(
-            "chat.postMessage",
+        self.recgra = slack_client.chat_postMessage(
             channel = self.chan,
             username=self.sysstr,
             icon_url = self.slack_usericon,
@@ -603,12 +596,12 @@ class Morbidostat:
             print('[%s] Generating graph' % self.sysstr)
 
         try:
-            self.slack_client.api_call(
-                "chat.postMessage",
+            global slack_client
+            slack_client.chat_postMessage(
                 channel = self.chan,
                 username=self.sysstr,
                 icon_url = self.slack_usericon,
-                text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                text = 'Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD),
                 thread_ts = self.threadts
                 )
 
@@ -630,7 +623,7 @@ class Morbidostat:
             ODfig.savefig("%s/%s/%s/ODplot_%s.png"  % (self.root_dir, self.sysstr, self.start_time, self.start_time))
             ODfig.clf(); ODplt = None; ODfig = None; fig = None
             with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "ODPlot",
@@ -665,7 +658,7 @@ class Morbidostat:
             ODfig.clf(); ODplt.figure = None; ODplt = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
             with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "ODConc",
@@ -697,7 +690,7 @@ class Morbidostat:
             allpumps = None; PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
             plt.close('all')
             with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "PUPlot",
@@ -725,7 +718,7 @@ class Morbidostat:
             ODfig.clf(); ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
             with open("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                slack_client.files_upload(
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "ODThreads",
@@ -755,7 +748,7 @@ class Morbidostat:
                 ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
                 plt.close('all')
                 with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.slack_client.files_upload(
+                    slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.threadts,
                         title = "ODTemp",
@@ -763,37 +756,36 @@ class Morbidostat:
                     )
 
             if self.firstrec:
-                self.recmes = self.slack_client.api_call(
-                    "chat.postMessage",
+                self.recmes = slack_client.chat_postMessage(
                     channel = self.chan,
                     username=self.sysstr,
                     icon_url = self.slack_usericon,
-                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                    text = 'Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD),
                     thread_ts = self.recgrats
                     )
                 with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recod = self.slack_client.files_upload(
+                    self.recod = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODPlot",
                         file = file_content
                     )
                 with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recodc = self.slack_client.files_upload(
+                    self.recodc = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODConc",
                         file = file_content
                     )
                 with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recpu = self.slack_client.files_upload(
+                    self.recpu = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "PUPlot",
                         file = file_content
                     )
                 with open("/%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.rethr = self.slack_client.files_upload(
+                    self.rethr = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODThreads",
@@ -801,7 +793,7 @@ class Morbidostat:
                     )
                 if self.temp_sensor:
                     with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                        self.retmp = self.slack_client.files_upload(
+                        self.retmp = slack_client.files_upload(
                             channels = self.chan,
                             thread_ts = self.recgrats,
                             title = "ODTemp",
@@ -810,38 +802,32 @@ class Morbidostat:
                 # print(self.recod['file']['shares']['public'][self.chanid][0]['ts'])
                 self.firstrec = False
             else:
-                self.slack_client.api_call(
-                    "chat_delete",
+                slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recmes['ts']
                     )
-                self.slack_client.api_call(
-                    "chat_delete",
+                slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recod['file']['shares']['public'][self.chanid][0]['ts']
                     )
-                self.slack_client.api_call(
-                    "chat_delete",
+                slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recodc['file']['shares']['public'][self.chanid][0]['ts']
                     )
-                self.slack_client.api_call(
-                    "chat_delete",
+                slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.recpu['file']['shares']['public'][self.chanid][0]['ts']
                     )
-                self.slack_client.api_call(
-                    "chat_delete",
+                slack_client.chat_delete(
                     channel = self.chanid,
                     ts = self.rethr['file']['shares']['public'][self.chanid][0]['ts']
                     )
                 if self.temp_sensor:
-                    self.slack_client.api_call(
-                        "chat_delete",
+                    slack_client.chat_delete(
                         channel = self.chanid,
                         ts = self.retmp['file']['shares']['public'][self.chanid][0]['ts']
                         )
-                self.recmes = self.slack_client.api_call(
+                self.recmes = slack_client.chat_postMessage(
                     channel = self.chan,
                     username=self.sysstr,
                     icon_url = self.slack_usericon,
@@ -849,28 +835,28 @@ class Morbidostat:
                     thread_ts = self.recgrats
                     )
                 with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recod = self.slack_client.files_upload(
+                    self.recod = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODPlot",
                         file = file_content
                     )
                 with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recodc = self.slack_client.files_upload(
+                    self.recodc = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODConc",
                         file = file_content
                     )
                 with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recpu = self.slack_client.files_upload(
+                    self.recpu = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "PUPlot",
                         file = file_content
                     )
                 with open("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.rethr = self.slack_client.files_upload(
+                    self.rethr = slack_client.files_upload(
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODThreads",
@@ -878,7 +864,7 @@ class Morbidostat:
                     )
                 if self.temp_sensor:
                     with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                        self.retmp = self.slack_client.files_upload(
+                        self.retmp = slack_client.files_upload(
                             channels = self.chan,
                             thread_ts = self.recgrats,
                             title = "ODTemp",
@@ -940,6 +926,7 @@ class Morbidostat:
             # time.sleep(0.05)
 
         try:
+            global slack_client
             if self.pipins:
                 GPIO.setmode(GPIO.BCM)
                 for pin in self.pin_list:
@@ -973,8 +960,7 @@ class Morbidostat:
 
                     self.drug_mass = self.drug_mass + 2.5
 
-                    self.slack_client.api_call(
-                        "chat.postMessage",
+                    slack_client.chat_postMessage(
                         channel = self.chan,
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
@@ -991,8 +977,7 @@ class Morbidostat:
                     self.pump_off(self.P_nut_pins)
                     self.nut = 1
 
-                    self.slack_client.api_call(
-                        "chat.postMessage",
+                    slack_client.chat_postMessage(
                         channel = self.chan,
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
@@ -1005,8 +990,7 @@ class Morbidostat:
 
                 # self.drug_mass = 0 if self.drug_mass < 0
 
-                self.slack_client.api_call(
-                        "chat.postMessage",
+                slack_client.chat_postMessage(
                         channel = self.chan,
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
@@ -1039,6 +1023,7 @@ class Morbidostat:
             return "0 seconds"
 
     def on_timer(self):
+        global slack_client
         self.loops += 1
         if self.loops < self.total_time/self.time_between_ODs:
             threading.Timer(self.time_between_ODs,self.on_timer).start()
@@ -1048,8 +1033,7 @@ class Morbidostat:
             print('[%s] Experiment Complete at %02s:%02s:%02s ' % (self.sysstr, self.now.hour, self.now.minute, self.now.second))
             # GPIO.output(P_fan_pins,0)
 
-            self.slack_client.api_call(
-                "chat.postMessage",
+            slack_client.chat_postMessage(
                 channel = self.chan,
                 username=self.sysstr,
                 icon_url = self.slack_usericon,
