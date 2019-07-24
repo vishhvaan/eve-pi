@@ -37,14 +37,14 @@ apt install -y git python3 python3-pip libatlas-base-dev
 #apt install -y nfs-kernel-server vim tmux
 
 umask 022
-pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient pandas matplotlib configparser tornado dash
+pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient==1.3.2 pandas matplotlib configparser tornado dash
 
 #Git Clone Repo
 mkdir /eve
 git clone https://github.com/vishhvaan/eve-pi.git /eve
 
 #Copy Service to Location
-cp /eve/webui/webui.service /lib/systemd/system/eve_webui.service
+cp /eve/webui/eve_webui.service /lib/systemd/system/eve_webui.service
 chmod 644 /lib/systemd/system/eve_webui.service
 systemctl enable eve_webui
 
