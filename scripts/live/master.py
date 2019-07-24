@@ -630,7 +630,8 @@ class Morbidostat:
             ODfig.savefig("%s/%s/%s/ODplot_%s.png"  % (self.root_dir, self.sysstr, self.start_time, self.start_time))
             ODfig.clf(); ODplt = None; ODfig = None; fig = None
             with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                self.slack_client.api_call(
+                    "files.upload",
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "ODPlot",
@@ -665,7 +666,8 @@ class Morbidostat:
             ODfig.clf(); ODplt.figure = None; ODplt = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
             with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                self.slack_client.api_call(
+                    "files.upload",
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "ODConc",
@@ -697,7 +699,8 @@ class Morbidostat:
             allpumps = None; PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
             plt.close('all')
             with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                self.slack_client.api_call(
+                    "files.upload",
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "PUPlot",
@@ -725,7 +728,8 @@ class Morbidostat:
             ODfig.clf(); ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
             plt.close('all')
             with open("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                self.slack_client.files_upload(
+                self.slack_client.api_call(
+                    "files.upload",
                     channels = self.chan,
                     thread_ts = self.threadts,
                     title = "ODThreads",
@@ -755,7 +759,8 @@ class Morbidostat:
                 ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
                 plt.close('all')
                 with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.slack_client.files_upload(
+                    self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.threadts,
                         title = "ODTemp",
@@ -772,28 +777,32 @@ class Morbidostat:
                     thread_ts = self.recgrats
                     )
                 with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recod = self.slack_client.files_upload(
+                    self.recod = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODPlot",
                         file = file_content
                     )
                 with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recodc = self.slack_client.files_upload(
+                    self.recodc = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODConc",
                         file = file_content
                     )
                 with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recpu = self.slack_client.files_upload(
+                    self.recpu = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "PUPlot",
                         file = file_content
                     )
                 with open("/%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.rethr = self.slack_client.files_upload(
+                    self.rethr = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODThreads",
@@ -801,7 +810,8 @@ class Morbidostat:
                     )
                 if self.temp_sensor:
                     with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                        self.retmp = self.slack_client.files_upload(
+                        self.retmp = self.slack_client.api_call(
+                            "files.upload",
                             channels = self.chan,
                             thread_ts = self.recgrats,
                             title = "ODTemp",
@@ -811,37 +821,38 @@ class Morbidostat:
                 self.firstrec = False
             else:
                 self.slack_client.api_call(
-                    "chat_delete",
+                    "chat.delete",
                     channel = self.chanid,
                     ts = self.recmes['ts']
                     )
                 self.slack_client.api_call(
-                    "chat_delete",
+                    "chat.delete",
                     channel = self.chanid,
                     ts = self.recod['file']['shares']['public'][self.chanid][0]['ts']
                     )
                 self.slack_client.api_call(
-                    "chat_delete",
+                    "chat.delete",
                     channel = self.chanid,
                     ts = self.recodc['file']['shares']['public'][self.chanid][0]['ts']
                     )
                 self.slack_client.api_call(
-                    "chat_delete",
+                    "chat.delete",
                     channel = self.chanid,
                     ts = self.recpu['file']['shares']['public'][self.chanid][0]['ts']
                     )
                 self.slack_client.api_call(
-                    "chat_delete",
+                    "chat.delete",
                     channel = self.chanid,
                     ts = self.rethr['file']['shares']['public'][self.chanid][0]['ts']
                     )
                 if self.temp_sensor:
                     self.slack_client.api_call(
-                        "chat_delete",
+                        "chat.delete",
                         channel = self.chanid,
                         ts = self.retmp['file']['shares']['public'][self.chanid][0]['ts']
                         )
                 self.recmes = self.slack_client.api_call(
+                    "chat.postMessage"
                     channel = self.chan,
                     username=self.sysstr,
                     icon_url = self.slack_usericon,
@@ -849,28 +860,32 @@ class Morbidostat:
                     thread_ts = self.recgrats
                     )
                 with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recod = self.slack_client.files_upload(
+                    self.recod = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODPlot",
                         file = file_content
                     )
                 with open("%s/%s/%s/ODconc_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recodc = self.slack_client.files_upload(
+                    self.recodc = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODConc",
                         file = file_content
                     )
                 with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.recpu = self.slack_client.files_upload(
+                    self.recpu = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "PUPlot",
                         file = file_content
                     )
                 with open("%s/%s/%s/ODthreads_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                    self.rethr = self.slack_client.files_upload(
+                    self.rethr = self.slack_client.api_call(
+                        "files.upload",
                         channels = self.chan,
                         thread_ts = self.recgrats,
                         title = "ODThreads",
@@ -878,7 +893,8 @@ class Morbidostat:
                     )
                 if self.temp_sensor:
                     with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
-                        self.retmp = self.slack_client.files_upload(
+                        self.retmp = self.slack_client.api_call(
+                            "files.upload",
                             channels = self.chan,
                             thread_ts = self.recgrats,
                             title = "ODTemp",
