@@ -317,7 +317,7 @@ class Morbidostat:
         self.max_drug = self.drug
         self.max_waste = self.waste
 
-        self.drug_mass = 0
+        self.vial_drug_mass = 0
 
         self.temp_sensor = self.config['MAIN'].getboolean('temp_sensor')
 
@@ -352,6 +352,10 @@ class Morbidostat:
                 self.pins[pin].value = False
 
         self.init_time = datetime.now()
+
+        self.drug_name = self.config[self.sysstr]['drug']
+        self.drug_conc = self.config[self.sysstr].getfloat('drug_conc')
+        self.drug_vol = self.config[self.sysstr].getfloat('drug_vol')
 
         self.slack_client = SlackClient(self.config['MAIN']['slack_key'])
         # self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
@@ -396,7 +400,7 @@ class Morbidostat:
         file = open(self.outfile_pump, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Nutrient Pump', 'Drug Pump','Waste Pump','Pump Timing', 'Drug Mass'])
-        wr.writerow(['media', 'drug','waste','pump_time','hour','drug_mass'])
+        wr.writerow(['media', 'drug','waste','pump_time','hour','vial_drug_mass'])
         file.close()
 
         #Detailed Files
@@ -414,7 +418,7 @@ class Morbidostat:
         file = open(self.hr_outfile_pump, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Nutrient Pump', 'Drug Pump','Waste Pump','Pump Timing', 'Drug Mass'])
-        wr.writerow(['media', 'drug','waste','pump_time','hour','drug_mass'])
+        wr.writerow(['media', 'drug','waste','pump_time','hour','vial_drug_mass'])
         file.close()
 
 
@@ -538,7 +542,7 @@ class Morbidostat:
         else:
             odlist = [self.currOD, self.avOD, self.maxOD, self.nows, (self.elapsed_time.total_seconds())/3600, self.active_threads, self.OD_min]
             self.hr_OD_tmplist.append(odlist)
-        pulist = [self.nut,self.drug,self.waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.drug_mass]
+        pulist = [self.nut,self.drug,self.waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.vial_drug_mass]
         self.hr_pump_tmplist.append(pulist)
         if self.max_nut < self.nut: self.max_nut = self.nut
         if self.max_drug < self.drug: self.max_drug = self.drug
@@ -547,7 +551,7 @@ class Morbidostat:
         self.drug = 1
         self.waste = 2
         if (self.loops % self.graph_loops) == 0:
-            pulist = [self.max_nut,self.max_drug,self.max_waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.drug_mass]
+            pulist = [self.max_nut,self.max_drug,self.max_waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.vial_drug_mass]
             self.OD_tmplist.append(odlist)
             self.pump_tmplist.append(pulist)
             self.max_nut = self.nut
@@ -638,10 +642,10 @@ class Morbidostat:
                     file = file_content
                 )
 
-            allpumps = pd.read_csv(self.outfile_pump, index_col='hour')   # cols: 'media', 'drug','waste','pump_time','hour','drug_mass'
+            allpumps = pd.read_csv(self.outfile_pump, index_col='hour')   # cols: 'media', 'drug','waste','pump_time','hour','vial_drug_mass'
 
-            allconcs = allpumps[['drug_mass']]/12
-            allconcs.rename(columns={'drug_mass':'drug_conc'}, inplace=True)
+            allconcs = allpumps[['vial_drug_mass']]/12
+            allconcs.rename(columns={'vial_drug_mass':'drug_conc'}, inplace=True)
             # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
             # allODs['hour'] = allODs['hour'].divide(3600)
             # allODs.set_index('hour')
@@ -654,8 +658,8 @@ class Morbidostat:
 
             DM = ODplt.twinx()
             DM.spines['right'].set_position(('axes', 1.0))
-            allconcs.plot(ax = DM, label='drug_mass',color='tab:orange',legend=False)
-            DM.set_ylabel(ylabel='Drug Concentration (ug/mL)')
+            allconcs.plot(ax = DM, label='vial_drug_mass',color='tab:orange',legend=False)
+            DM.set_ylabel(ylabel="%s Concentration (ug/mL)" % (self.drug.capitalize()))
             line, label = DM.get_legend_handles_labels()
             lines += line
             labels += label
@@ -977,17 +981,17 @@ class Morbidostat:
                 self.pump_off(self.P_waste_pins)
 
                 self.waste = 3
-                self.drug_mass = self.drug_mass - (self.drug_mass/12)
+                self.vial_drug_mass = self.vial_drug_mass - (self.vial_drug_mass/12)
 
                 if self.avOD > self.OD_thr and self.avOD > self.last_dilutionOD:
-                    print('[%s] OD Threshold exceeded, pumping cefepime' % self.sysstr)
+                    print('[%s] OD Threshold exceeded, pumping %s' % (self.sysstr,self.drug))
 
                     self.pump_on(self.P_drug_pins)
                     time.sleep(self.P_drug_times)
                     self.pump_off(self.P_drug_pins)
                     self.drug = 2
 
-                    self.drug_mass = self.drug_mass + 2.5
+                    self.vial_drug_mass = self.vial_drug_mass + self.drug_conc*self.drug_vol
 
                     drugamsg = self.slack_client.api_call(
                         "chat.postMessage",
@@ -995,7 +999,7 @@ class Morbidostat:
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
                         thread_ts = self.threadts,
-                        text = "OD = %0.3f, pumping cefepime. Cefepime concentration: %f ug/mL" % (self.avOD, (self.drug_mass)/12)
+                        text = "OD = %0.3f, pumping %s. %s concentration: %f ug/mL" % (self.avOD, self.drug.capitalize(), (self.vial_drug_mass)/12)
                         )
 
 
@@ -1013,13 +1017,13 @@ class Morbidostat:
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
                         thread_ts = self.threadts,
-                        text = "OD = %0.3f, pumping nutrient. Cefepime concentration: %f ug/mL" % (self.avOD, (self.drug_mass)/12)
+                        text = "OD = %0.3f, pumping nutrient. %s concentration: %f ug/mL" % (self.avOD, self.drug.capitalize(), (self.vial_drug_mass)/12)
                         )
 
 
             else: #report even when pumps aren't activated yet
 
-                # self.drug_mass = 0 if self.drug_mass < 0
+                # self.vial_drug_mass = 0 if self.vial_drug_mass < 0
 
                 thrbmsg = self.slack_client.api_call(
                         "chat.postMessage",
