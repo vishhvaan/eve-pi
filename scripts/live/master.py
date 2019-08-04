@@ -38,8 +38,6 @@ mstart_time = datetime.now()
 config = configparser.ConfigParser()
 config.read('eve-conf.ini')
 
-mchan = config['MAIN']['slack_channel']
-
 totsys = (''.join(config.sections())).count('EVE')
 actsys = []
 for sysiter in range(totsys):
@@ -78,8 +76,14 @@ i2c_q = []
 graph_lock = [0]*totsys
 graph_q = []
 morbidostats = list()
+comb_mesg = []
+comb_saveloc = ''
+comb_lat_sw = ['First','']
 
 if config['MAIN'].getboolean('temp_sensor'): temp = 0.0
+
+odcsvs = []
+pumpcsvs = []
 
 def IC_init():
     adc = list()
@@ -126,13 +130,44 @@ def eve_starter():
                 "chat.postMessage",
                 username = config['MAIN']['hostname'],
                 icon_url = config['MAIN']['multi_icon'],
-                channel=mchan,
+                channel = config['MAIN']['slack_channel'],
                 text = confsec + ' is not enabled. Skipping.'
                 )
 
     print ('Starting EVEs')
     for starti in range(len(morbidostats)):
        morbidostats[starti][0].start()
+
+    if config['MAIN'].getboolean('comb_graph') and len(actsys) > 1:
+        combgen = slack_client.api_call(
+            "chat.postMessage",
+            username = config['MAIN']['hostname'],
+            icon_url = config['MAIN']['multi_icon'],
+            channel = config['MAIN']['slack_channel'],
+            text = 'Combined Graphs'
+            )
+        comblat = slack_client.api_call(
+            "chat.postMessage",
+            username = config['MAIN']['hostname'],
+            icon_url = config['MAIN']['multi_icon'],
+            channel = config['MAIN']['slack_channel'],
+            text = 'Latest Combined Graphs'
+            )
+
+        global comb_mesg
+        comb_mesg = [combgen['ts'], comblat['ts']]
+
+
+def graph_controller():
+    while True:
+        if len(graph_q) is 0:
+            time.sleep(20)
+        else:
+            if graph_q[0] is 'C':
+                comb_grapher()
+            else:
+                morbidostats[graph_q[0]][0].graphOD()
+            graph_q.pop(0)
 
 def i2c_controller():
     while True:
@@ -143,8 +178,6 @@ def i2c_controller():
                 morbidostats[int(i2c_q[0][0])][0].get_OD()
             elif i2c_q[0][1] is 'C':
                 morbidostats[int(i2c_q[0][0])][0].control_alg()
-            elif i2c_q[0][1] is 'T':
-                temp_sensor_func()
             i2c_q.pop(0)
 
 
@@ -160,14 +193,123 @@ def live_plotter():
 
     time.sleep(max_time*60+5)
 
-    odcsvs = []
-    pumpcsvs = []
+    global odcsvs
+    global pumpcsvs
     for starti in range(len(morbidostats)):
        temp_locs = morbidostats[starti][0].file_locs()
        odcsvs.append(temp_locs['ods'])
        pumpcsvs.append(temp_locs['pumps'])
 
-    plotter.Plotter(actsys, odcsvs, pumpcsvs, config['MAIN']['hostname'])
+    Process(target = plotter.Plotter, args = (actsys, odcsvs, pumpcsvs, config['MAIN']['hostname'])).start()
+
+    if config['MAIN'].getboolean('comb_graph') and len(actsys) > 1: threading.Thread(target = comb_graph_scheduler).start()
+
+def comb_graph_scheduler():
+    global comb_saveloc
+    root_dir = config['MAIN']['save_location']
+    comb_saveloc = root_dir + '/Combined/' + str(datetime.now()) + '/'
+    os.makedirs(comb_saveloc)
+
+    while True:
+        time.sleep(config['MAIN'].getfloat('comb_graph_freq')*60)
+        global graph_q
+        graph_q.append('C')
+
+def comb_grapher():
+    ods = []
+    leg = []
+    print('Generating Combined Graphs')
+
+    fig = plt.figure(dpi=140)
+    ax = plt.gca()
+    for i in actsys: leg.append('EVE'+str(i))
+    for i in odcsvs:
+        ods.append(pd.read_csv(i,index_col='hour'))
+        ods[-1][['average']].plot(ax=ax,figsize=(7,5))
+    ax.legend(leg)
+    ax.set_ylabel('Raw OD')
+    ax.set_xlabel('Time(h)')
+    global comb_saveloc
+    fig.savefig(comb_saveloc + 'RawOD.png')
+
+    fig2 = plt.figure(dpi=140)
+    ax2 = plt.gca()
+    for i in ods:
+        i[['average']].divide(float(i.iloc[-1][['maxod']])).plot(ax=ax2,figsize=(7,5))
+    ax2.legend(leg)
+    ax2.set_ylabel('Scaled OD')
+    ax2.set_xlabel('Time(h)')
+    fig2.savefig(comb_saveloc + 'ScaledOD.png')
+
+    global comb_mesg
+    global comb_lat_sw
+    with open(comb_saveloc + 'RawOD.png', "rb") as file_content:
+        combgen_pic = slack_client.api_call(
+            "files.upload",
+            channels = config['MAIN']['slack_channel'],
+            thread_ts = comb_mesg[0],
+            title = "RawOD",
+            file = file_content
+        )
+    with open(comb_saveloc + 'ScaledOD.png', "rb") as file_content:
+        combgen_pics = slack_client.api_call(
+            "files.upload",
+            channels = config['MAIN']['slack_channel'],
+            thread_ts = comb_mesg[0],
+            title = "ScaledOD",
+            file = file_content
+        )
+
+    if comb_lat_sw[0] is 'First':
+        with open(comb_saveloc + 'RawOD.png', "rb") as file_content:
+            comblat_pic = slack_client.api_call(
+                "files.upload",
+                channels = config['MAIN']['slack_channel'],
+                thread_ts = comb_mesg[1],
+                title = "RawOD",
+                file = file_content
+            )
+        with open(comb_saveloc + 'ScaledOD.png', "rb") as file_content:
+            comblat_pics = slack_client.api_call(
+                "files.upload",
+                channels = config['MAIN']['slack_channel'],
+                thread_ts = comb_mesg[1],
+                title = "RawOD",
+                file = file_content
+            )
+        comb_lat_sw = [comblat_pic['file']['shares']['public'][chanid][0]['ts'], comblat_pics['file']['shares']['public'][chanid][0]['ts']]
+    else:
+        delcomb = slack_client.api_call(
+            "chat.delete",
+            channel = chanid,
+            ts = comb_lat_sw[0]
+            )
+        delcombs = slack_client.api_call(
+            "chat.delete",
+            channel = chanid,
+            ts = comb_lat_sw[1]
+            )
+
+        with open(comb_saveloc + 'RawOD.png', "rb") as file_content:
+            comblat_pic = slack_client.api_call(
+                "files.upload",
+                channels = config['MAIN']['slack_channel'],
+                thread_ts = comb_mesg[1],
+                title = "RawOD",
+                file = file_content
+            )
+        with open(comb_saveloc + 'ScaledOD.png', "rb") as file_content:
+            comblat_pics = slack_client.api_call(
+                "files.upload",
+                channels = config['MAIN']['slack_channel'],
+                thread_ts = comb_mesg[1],
+                title = "RawOD",
+                file = file_content
+            )
+        comb_lat_sw = [comblat_pic['file']['shares']['public'][chanid][0]['ts'], comblat_pics['file']['shares']['public'][chanid][0]['ts']]
+
+
+
 
 def slackresponder():
     while True:
@@ -215,30 +357,32 @@ def slackresponder():
                 # )
             pass
 
-def temp_runner():
-    if config['MAIN'].getboolean('temp_sensor'):
-        while True:
-            i2c_q.append('TT')
-            time.sleep(3)
+# def temp_runner():
+    # if config['MAIN'].getboolean('temp_sensor'):
+        # while True:
+            # i2c_q.append('TT')
+            # time.sleep(3)
 
 
 def temp_sensor_func():
-    base_dir = '/sys/bus/w1/devices/'
-    device_folder = glob.glob(base_dir + '28*')[0]
-    device_file = device_folder + '/w1_slave'
+    while True:
+        base_dir = '/sys/bus/w1/devices/'
+        device_folder = glob.glob(base_dir + '28*')[0]
+        device_file = device_folder + '/w1_slave'
 
-    f = open(device_file, 'r')
-    lines = f.readlines()
-    f.close()
+        f = open(device_file, 'r')
+        lines = f.readlines()
+        f.close()
 
-    while lines[0].strip()[-3:] != 'YES':
-        time.sleep(0.2)
-        lines = read_temp_raw()
-    equals_pos = lines[1].find('t=')
-    if equals_pos != -1:
-            temp_string = lines[1][equals_pos+2:]
-            global temp
-            temp = float(temp_string) / 1000.0
+        while lines[0].strip()[-3:] != 'YES':
+            time.sleep(0.2)
+            lines = read_temp_raw()
+        equals_pos = lines[1].find('t=')
+        if equals_pos != -1:
+                temp_string = lines[1][equals_pos+2:]
+                global temp
+                temp = float(temp_string) / 1000.0
+        time.sleep(3)
 
 
 
@@ -456,22 +600,8 @@ class Morbidostat:
         self.firstrec = True
 
     def get_OD(self):
-        # global i2c_lock
 
         print_buffer = 0
-
-        # i2c_q.append(id)
-
-        # while i2c_q[0] is not id and not sum(i2c_lock):
-            # time.sleep(0.1)
-            # print_buffer += 1
-            # if print_buffer % 15 == 0:
-                # print ('[%s] {GetOD} Waiting for Locks...' % self.sysstr)
-                # print(i2c_q)
-
-        # if i2c_q[0] is id:
-            # i2c_lock[self.sysnum-1] = True
-            # time.sleep(0.05)
 
         try:
             if self.pipins:
@@ -497,9 +627,6 @@ class Morbidostat:
         except:
             print ('[%s] OD - WARNING ADC REQUEST CRASHED' % self.sysstr)
             pass
-
-        # i2c_lock[self.sysnum-1] = False
-        # i2c_q.pop(0)
 
         self.avOD_buffer = self.avOD_buffer + [self.currOD]
         self.avOD_buffer.pop(0)
@@ -589,22 +716,8 @@ class Morbidostat:
         self.thread_locks['save'].release()
 
     def graphOD(self):
-        self.thread_locks['graphs'].acquire()
-        global graph_lock
-        global graph_q
 
-        id = str(self.sysnum)+'G'
-
-        graph_q.append(id)
-        time.sleep(0.1)
-
-        while graph_q[0] is not id:
-            time.sleep(30)
-
-        if graph_q[0] is id:
-            graph_lock[self.sysnum-1] = True
-            time.sleep(2)
-            print('[%s] Generating graph' % self.sysstr)
+        print('[%s] Generating graph' % self.sysstr)
 
         try:
             elapmsg = self.slack_client.api_call(
@@ -659,7 +772,7 @@ class Morbidostat:
             DM = ODplt.twinx()
             DM.spines['right'].set_position(('axes', 1.0))
             allconcs.plot(ax = DM, label='vial_drug_mass',color='tab:orange',legend=False)
-            DM.set_ylabel(ylabel="%s Concentration (ug/mL)" % (self.drug.capitalize()))
+            DM.set_ylabel('%s Concentration (ug/mL)' % self.drug_name.capitalize())
             line, label = DM.get_legend_handles_labels()
             lines += line
             labels += label
@@ -910,8 +1023,6 @@ class Morbidostat:
             print(exc_type, fname, exc_tb.tb_lineno)
             pass
 
-        graph_lock[self.sysnum-1] = False
-        graph_q.pop(0)
         self.thread_locks['graphs'].release()
 
     def dynLimit(self):
@@ -984,7 +1095,7 @@ class Morbidostat:
                 self.vial_drug_mass = self.vial_drug_mass - (self.vial_drug_mass/12)
 
                 if self.avOD > self.OD_thr and self.avOD > self.last_dilutionOD:
-                    print('[%s] OD Threshold exceeded, pumping %s' % (self.sysstr,self.drug))
+                    print('[%s] OD Threshold exceeded, pumping %s' % (self.sysstr,self.drug_name))
 
                     self.pump_on(self.P_drug_pins)
                     time.sleep(self.P_drug_times)
@@ -999,7 +1110,7 @@ class Morbidostat:
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
                         thread_ts = self.threadts,
-                        text = "OD = %0.3f, pumping %s. %s concentration: %f ug/mL" % (self.avOD, self.drug.capitalize(), (self.vial_drug_mass)/12)
+                        text = "OD = %0.3f, pumping %s. Drug concentration: %f ug/mL" % (self.avOD, self.drug_name, (self.vial_drug_mass)/12)
                         )
 
 
@@ -1017,7 +1128,7 @@ class Morbidostat:
                         username=self.sysstr,
                         icon_url = self.slack_usericon,
                         thread_ts = self.threadts,
-                        text = "OD = %0.3f, pumping nutrient. %s concentration: %f ug/mL" % (self.avOD, self.drug.capitalize(), (self.vial_drug_mass)/12)
+                        text = "OD = %0.3f, pumping nutrient. %s concentration: %f ug/mL" % (self.avOD, self.drug_name.capitalize(), (self.vial_drug_mass)/12)
                         )
 
 
@@ -1099,7 +1210,7 @@ class Morbidostat:
 
 
         global i2c_q
-
+        global graph_q
 
         if self.loops > 1:
             if not self.thread_locks['adc'].locked():
@@ -1118,8 +1229,8 @@ class Morbidostat:
 
             if not self.thread_locks['graphs'].locked():
                 if (self.loops % int(self.time_between_graphs*60/self.time_between_ODs)) == 0:
-                    self.threads['graphs'] = threading.Thread(target=self.graphOD)
-                    self.threads['graphs'].start()
+                    self.thread_locks['graphs'].acquire()
+                    graph_q.append(self.sysnum-1)
         else:
             self.thread_locks['adc'].acquire()
             i2c_q.append(str(self.sysnum-1)+'OD')
@@ -1133,8 +1244,8 @@ class Morbidostat:
                 i2c_q.append(str(self.sysnum-1)+'CA')
 
             if (self.loops % int(self.time_between_graphs*60/self.time_between_ODs)) == 0:
-                self.threads['graphs'] = threading.Thread(target=self.graphOD)
-                self.threads['graphs'].start()
+                self.thread_locks['graphs'].acquire()
+                graph_q.append(self.sysnum-1)
 
 
         # save the data to disk if it's time
@@ -1159,13 +1270,17 @@ chips = IC_init()
 
 threading.Thread(target = i2c_controller).start()
 
-threading.Thread(target = temp_runner).start()
+threading.Thread(target = graph_controller).start()
+
+if config['MAIN'].getboolean('temp_sensor'): threading.Thread(target = temp_sensor_func).start()
 
 eve_starter()
 
-Process(target = live_plotter).start()
+threading.Thread(target = live_plotter).start()
+
 
 # threading.Thread(target = slackresponder).start()
+
 
 
 
