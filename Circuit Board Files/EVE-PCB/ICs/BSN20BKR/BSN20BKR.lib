@@ -1,0 +1,50 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# BSN20BKR
+#
+DEF BSN20BKR U 0 40 N N 1 L N
+F0 "U" -200 300 50 H V L BNN
+F1 "BSN20BKR" -201 201 50 H V L BNN
+F2 "BSN20_215" 0 0 50 H I L BNN
+F3 "SOT-23 Nexperia" 0 0 50 H I L BNN
+F4 "BSN20BKR" 0 0 50 H I L BNN
+F5 "https://www.digikey.com/product-detail/en/nexperia-usa-inc/BSN20BKR/1727-2341-1-ND/5423815?utm_source=snapeda&utm_medium=aggregator&utm_campaign=symbol" 0 0 50 H I L BNN
+F6 "Nexperia USA" 0 0 50 H I L BNN
+F7 "N-Channel 60 V 2.8 Ohm 310 mW 0.49 nC Surface Mount Trench MosFet - SOT-23" 0 0 50 H I L BNN
+F8 "1727-2341-1-ND" 0 0 50 H I L BNN
+DRAW
+P 2 0 0 10 -30 -170 0 -170 N
+P 2 0 0 10 0 -170 30 -170 N
+P 2 0 0 10 -125 -170 -100 -170 N
+P 2 0 0 10 -100 -170 -75 -170 N
+P 2 0 0 6 0 -170 0 -100 N
+P 2 0 0 6 0 -100 100 -100 N
+P 2 0 0 10 75 -170 100 -170 N
+P 2 0 0 10 100 -170 125 -170 N
+P 2 0 0 10 -100 -200 100 -200 N
+P 2 0 0 6 100 -100 100 -170 N
+P 2 0 0 6 -100 -50 -20 -50 N
+P 2 0 0 6 -20 -50 100 -50 N
+P 2 0 0 6 100 -100 100 -50 N
+P 2 0 0 6 -100 -170 -100 -50 N
+P 2 0 0 6 -30 -20 -20 -30 N
+P 2 0 0 6 -20 -30 -20 -50 N
+P 2 0 0 6 -20 -50 -20 -70 N
+P 2 0 0 6 -20 -70 -10 -80 N
+C 100 -100 14 0 0 0 N
+C -100 -100 14 0 0 0 N
+T 0 170 -250 50 0 0 0 G Normal 0 R T
+T 0 210 -10 50 0 0 0 S Normal 0 R T
+T 0 -140 -10 50 0 0 0 D Normal 0 R T
+P 3 0 0 6 -20 -50 10 -70 10 -30 F
+P 3 0 0 6 0 -160 -30 -120 30 -120 F
+X S 2 200 -100 100 L 40 40 0 0 P 
+X G 1 100 -300 100 U 40 40 0 0 P 
+X D 3 -200 -100 100 R 40 40 0 0 P 
+ENDDRAW
+ENDDEF
+#
+# End Library

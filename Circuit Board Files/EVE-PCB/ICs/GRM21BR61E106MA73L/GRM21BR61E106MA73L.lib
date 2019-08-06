@@ -1,0 +1,26 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# GRM21BR61E106MA73L
+#
+DEF GRM21BR61E106MA73L C 0 40 Y N 1 L N
+F0 "C" 0 150 50 H V L BNN
+F1 "GRM21BR61E106MA73L" 0 -200 50 H V L BNN
+F2 "CAPC2012X135N" 0 0 50 H I L BNN
+F3 "0805 25 V 10 uF ±20% Tolerance X5R Multilayer Ceramic Capacitor" 0 0 50 H I L BNN
+F4 "0805 Murata" 0 0 50 H I L BNN
+F5 "https://www.digikey.com/product-detail/en/murata-electronics-north-america/GRM21BR61E106MA73L/490-10748-1-ND/5251352?utm_source=snapeda&utm_medium=aggregator&utm_campaign=symbol" 0 0 50 H I L BNN
+F6 "GRM21BR61E106MA73L" 0 0 50 H I L BNN
+F7 "Murata" 0 0 50 H I L BNN
+F8 "490-10748-1-ND" 0 0 50 H I L BNN
+DRAW
+S 0 -75 25 75 0 0 0 F
+S 75 -75 100 75 0 0 0 F
+X 1 1 200 0 100 L 40 40 0 0 P 
+X 2 2 -100 0 100 R 40 40 0 0 P 
+ENDDRAW
+ENDDEF
+#
+# End Library

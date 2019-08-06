@@ -1,0 +1,36 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# ADS1015IDGSR
+#
+DEF ADS1015IDGSR U 0 40 Y Y 1 L N
+F0 "U" -412 562 50 H V L BNN
+F1 "ADS1015IDGSR" -370 -768 50 H V L BNN
+F2 "SOP50P490X110-10N" 0 0 50 H I L BNN
+F3 "Texas Instruments" 0 0 50 H I L BNN
+F4 "296-41185-1-ND" 0 0 50 H I L BNN
+F5 "12-Bit ADC with Integrated MUX, PGA, Comparator, Oscillator, and Reference 10-VSSOP -40 to 125" 0 0 50 H I L BNN
+F6 "https://www.digikey.com/product-detail/en/texas-instruments/ADS1015IDGSR/296-41185-1-ND/5222640?utm_source=snapeda&utm_medium=aggregator&utm_campaign=symbol" 0 0 50 H I L BNN
+F7 "MSOP-10 Texas Instruments" 0 0 50 H I L BNN
+F8 "ADS1015IDGSR" 0 0 50 H I L BNN
+DRAW
+P 2 0 0 16 -400 500 -400 -600 N
+P 2 0 0 16 -400 -600 500 -600 N
+P 2 0 0 16 500 -600 500 500 N
+P 2 0 0 16 500 500 -400 500 N
+X VDD 8 700 400 200 L 40 40 0 0 W 
+X AIN0 4 -600 0 200 R 40 40 0 0 I 
+X AIN1 5 -600 -100 200 R 40 40 0 0 I 
+X ADDR 1 -600 300 200 R 40 40 0 0 I 
+X SCL 10 700 -100 200 L 40 40 0 0 I C
+X ALERT/RDY 2 700 100 200 L 40 40 0 0 O 
+X AIN2 6 -600 -200 200 R 40 40 0 0 I 
+X AIN3 7 -600 -300 200 R 40 40 0 0 I 
+X GND 3 700 -500 200 L 40 40 0 0 W 
+X SDA 9 700 -200 200 L 40 40 0 0 B 
+ENDDRAW
+ENDDEF
+#
+# End Library
