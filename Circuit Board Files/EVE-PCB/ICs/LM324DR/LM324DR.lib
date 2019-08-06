@@ -1,0 +1,40 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# LM324DR
+#
+DEF LM324DR U 0 40 Y Y 1 L N
+F0 "U" -211 700 50 H V L BNN
+F1 "LM324DR" -141 -1086 50 H V L BNN
+F2 "SOIC127P600X175-14N" 0 0 50 H I L BNN
+F3 "SOIC-14 Rohm" 0 0 50 H I L BNN
+F4 "LM324DR" 0 0 50 H I L BNN
+F5 "https://www.digikey.com/product-detail/en/rohm-semiconductor/LM324DR/LM324DRRS-ND/4003944?utm_source=snapeda&utm_medium=aggregator&utm_campaign=symbol" 0 0 50 H I L BNN
+F6 "Rohm" 0 0 50 H I L BNN
+F7 "OP Amp Quad GP ±16V/32V 14-Pin SOIC T/R" 0 0 50 H I L BNN
+F8 "LM324DRRS-ND" 0 0 50 H I L BNN
+DRAW
+P 2 0 0 16 -500 600 -500 -900 N
+P 2 0 0 16 -500 -900 500 -900 N
+P 2 0 0 16 500 -900 500 600 N
+P 2 0 0 16 500 600 -500 600 N
+X VCC 4 -700 400 200 R 40 40 0 0 W 
+X 1IN+ 3 -700 200 200 R 40 40 0 0 I 
+X 1IN- 2 -700 100 200 R 40 40 0 0 I 
+X 2IN- 6 -700 0 200 R 40 40 0 0 I 
+X 2IN+ 5 -700 -100 200 R 40 40 0 0 I 
+X 3IN+ 10 -700 -200 200 R 40 40 0 0 I 
+X 3IN- 9 -700 -300 200 R 40 40 0 0 I 
+X 4IN+ 12 -700 -400 200 R 40 40 0 0 I 
+X 4IN- 13 -700 -500 200 R 40 40 0 0 I 
+X GND 11 -700 -700 200 R 40 40 0 0 P 
+X 1OUT 1 700 400 200 L 40 40 0 0 O 
+X 2OUT 7 700 300 200 L 40 40 0 0 O 
+X 3OUT 8 700 200 200 L 40 40 0 0 O 
+X 4OUT 14 700 100 200 L 40 40 0 0 O 
+ENDDRAW
+ENDDEF
+#
+# End Library

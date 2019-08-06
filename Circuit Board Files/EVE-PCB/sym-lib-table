@@ -1,0 +1,13 @@
+(sym_lib_table
+  (lib (name LM324DR)(type Legacy)(uri ${KIPRJMOD}/ICs/LM324DR/LM324DR.lib)(options "")(descr ""))
+  (lib (name ADS1015IDGSR)(type Legacy)(uri ${KIPRJMOD}/ICs/ADS1015IDGSR/ADS1015IDGSR.lib)(options "")(descr ""))
+  (lib (name MCP23017T-E_SO)(type Legacy)(uri ${KIPRJMOD}/ICs/MCP23017T-E_SO/MCP23017T-E_SO.lib)(options "")(descr ""))
+  (lib (name BSN20BKR)(type Legacy)(uri ${KIPRJMOD}/ICs/BSN20BKR/BSN20BKR.lib)(options "")(descr ""))
+  (lib (name 2019-04-04_21-33-34)(type Legacy)(uri ${KIPRJMOD}/ICs/UL_ULN2803ADWR/2019-04-04_21-33-34.lib)(options "")(descr ""))
+  (lib (name raspberrypi-gpio-40pin)(type Legacy)(uri ${KIPRJMOD}/ICs/raspberrypi-gpio-40pin.lib)(options "")(descr ""))
+  (lib (name SamacSys_Parts)(type Legacy)(uri "X:/Google Drive/CCLCM/Scott Lab/EVE Build/erl/SamacSys_Parts.lib")(options "")(descr ""))
+  (lib (name 2019-04-05_19-12-15)(type Legacy)(uri ${KIPRJMOD}/ICs/UL_BAT54WS7F/2019-04-05_19-12-15.lib)(options "")(descr ""))
+  (lib (name 2019-04-05_19-22-07)(type Legacy)(uri ${KIPRJMOD}/ICs/UL_BAT43WS7F/2019-04-05_19-22-07.lib)(options "")(descr ""))
+  (lib (name PJ-002A)(type Legacy)(uri ${KIPRJMOD}/ICs/PJ-002A/PJ-002A.lib)(options "")(descr ""))
+  (lib (name 2019-04-08_16-42-18)(type Legacy)(uri ${KIPRJMOD}/ICs/UL_S1KB13F/2019-04-08_16-42-18.lib)(options "")(descr ""))
+)

@@ -1,0 +1,11 @@
+(fp_lib_table
+  (lib (name GRM21BR61E106MA73L)(type Legacy)(uri ${KIPRJMOD}/ICs/GRM21BR61E106MA73L/GRM21BR61E106MA73L.mod)(options "")(descr ""))
+  (lib (name GRM0335C1E101JA01D)(type Legacy)(uri ${KIPRJMOD}/ICs/GRM0335C1E101JA01D/GRM0335C1E101JA01D.mod)(options "")(descr ""))
+  (lib (name LM324DR)(type Legacy)(uri ${KIPRJMOD}/ICs/LM324DR/LM324DR.mod)(options "")(descr ""))
+  (lib (name MCP23017T-E_SO)(type Legacy)(uri ${KIPRJMOD}/ICs/MCP23017T-E_SO/MCP23017T-E_SO.mod)(options "")(descr ""))
+  (lib (name PJ-002A)(type Legacy)(uri ${KIPRJMOD}/ICs/PJ-002A/PJ-002A.mod)(options "")(descr ""))
+  (lib (name ADS1015IDGSR)(type Legacy)(uri ${KIPRJMOD}/ICs/ADS1015IDGSR/ADS1015IDGSR.mod)(options "")(descr ""))
+  (lib (name BSN20BKR)(type Legacy)(uri ${KIPRJMOD}/ICs/BSN20BKR/BSN20BKR.mod)(options "")(descr ""))
+  (lib (name footprints)(type KiCad)(uri ${KIPRJMOD}/ICs/footprints.pretty)(options "")(descr ""))
+  (lib (name SamacSys_Parts)(type KiCad)(uri "X:/Google Drive/CCLCM/Scott Lab/EVE Build/erl/SamacSys_Parts.pretty")(options "")(descr ""))
+)
