@@ -16,7 +16,7 @@ Head over to [Start Building] folder to find the 3D stls and circuit schematics 
 
 # Installation
 
-1. Download and flash the Raspbian Buster OS on an SD card.
+1. Download and flash the [Raspbian] Buster OS on an SD card.
 2. Insert the SD Card into the Pi and connect the Pi to a display, keyboard, and the local area network.
 3. Note the IP address of the device with the command:
 ```sh
@@ -37,13 +37,48 @@ $ bash <(curl -s https://raw.githubusercontent.com/vishhvaan/eve-pi/master/st_ev
 
 ## Install for Docker for ARM Devices
  
-Official images coming soon to Docker Hub!
+Pre-built images coming soon to Docker Hub!
 
 ### Build the Docker Image
+
+Use the Dockerfiles in the repo to build images yourself. Use the images to spin up containers in the Pi with EVE WebUI and all the programs built-in.
+
 #### On ARM Devices
 
-#### On x86/x64 Devices
-Emulate the ARM environment with QEMU.
+1. [Install Docker] on the Raspberry Pi.
+2. Install git on the Raspberry Pi.
+```sh
+$ sudo apt install -y git
+```  
+2. Clone the repository to the home directory.
+```sh
+$ sudo git clone https://github.com/vishhvaan/eve-pi.git /eve
+```  
+3. Move to the correct directory.
+```sh
+$ cd /eve
+``` 
+4. Run the Docker build command.
+```sh
+$ docker build -t eve:pi .
+```  
+5. Create a container.
+```sh
+$ docker create --name = eve1 \
+    -p 80:80 \
+    -p 8050:8050 \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    -v /eve/data:/data \
+    eve:pi
+```  
+6. Start the container.
+```sh
+$ docker start eve1
+```  
+
+#### On UNIX-based x86/x64 Devices
+Emulate the ARM environment with QEMU. Build images with the Dockerfile.arm32v7.
 
 ### Shout Outs
 The EVE uses a number of open source projects to work properly:
@@ -52,6 +87,7 @@ The EVE uses a number of open source projects to work properly:
   - [slack-api] - Uses the Slack API for Python for experiment monitoring
   - [plotly] - Uses Dash for real-time plotting
   - [KiCAD] - For Circuit Schematics and PCB Designs
+  - [Docker] - For creating self-contained application platforms
 
 
 
@@ -73,4 +109,7 @@ MIT
    [Start Building]: <https://github.com/vishhvaan/eve-pi/tree/master/Start%20Building>
    [plotly]: <https://plot.ly/dash/>
    [KiCad]: <http://www.kicad-pcb.org/>
+   [Install Docker]: <https://github.com/docker/docker-install>
+   [Raspbian]: <https://www.raspberrypi.org/downloads/raspbian/>
+   [Docker]: <https://github.com/docker/docker-ce>
 
