@@ -9,7 +9,7 @@ The EVE is an open framework for an automated continuous culture system.
   - Replicate functionality of a morbidostat/chemostat/turbidostat
   - Vesatile & easily modifiable for different purposes
 
-It was meant to be used for the study of population dynamics and evolution.
+This device is meant to be used for the study of population dynamics and evolution.
 
 # Build it!
 Head over to [Start Building] folder to find the 3D stls and circuit schematics (along with KiCAD project). 
