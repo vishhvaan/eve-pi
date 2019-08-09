@@ -11,30 +11,47 @@ The EVE is an open framework for an automated continuous culture system.
 
 It was meant to be used for the study of population dynamics and evolution.
 
-# Start Building
-Head over to 
+# Build it!
+Head over to [Start Building] folder to find the 3D stls and circuit schematics (along with KiCAD project). 
 
 # Installation
 
-
+1. Download and flash the Raspbian Buster OS on an SD card.
+2. Insert the SD Card into the Pi and connect the Pi to a display, keyboard, and the local area network.
+3. Note the IP address of the device with the command:
+```sh
+$ ifconfig
+```
+4. Enter super user mode with the command:
+```sh
+$ sudo su
+```  
+5. Run the setup script by entering the command: 
+```sh
+$ bash <(curl -s https://raw.githubusercontent.com/vishhvaan/eve-pi/master/st_eve.sh)
+```
+6. Follow the on-screen instructions to install the software.
+7. If the Pi has a browser, navigate to the web interface by accessing: http://localhost.
+8. On a browser on the network, navigate to the web interface by accessing the IP address or hostname of the device (e.g. http://eve.local_domain.net).
 
 
 ## Install for Docker for ARM Devices
  
 Official images coming soon to Docker Hub!
 
-### Build a Docker Image
+### Build the Docker Image
 #### On ARM Devices
 
 #### On x86/x64 Devices
 Emulate the ARM environment with QEMU.
 
-### The Shoulders of Giants
+### Shout Outs
 The EVE uses a number of open source projects to work properly:
 
-  - script-server - 
-  - SlackAPI - Slack API for Python
-  - 
+  - [script-server] -  Script server to run programs on the Pi
+  - [slack-api] - Uses the Slack API for Python for experiment monitoring
+  - [plotly] - Uses Dash for real-time plotting
+  - [KiCAD] - For Circuit Schematics and PCB Designs
 
 
 
@@ -52,4 +69,8 @@ MIT
 
 
    [script-server]: <https://github.com/bugy/script-server>
+   [slack-api]: <https://github.com/slackapi/python-slackclient>
+   [Start Building]: <https://github.com/vishhvaan/eve-pi/tree/master/Start%20Building>
+   [plotly]: <https://plot.ly/dash/>
+   [KiCad]: <http://www.kicad-pcb.org/>
 
