@@ -2,6 +2,7 @@
 
 [logo]: https://github.com/vishhvaan/eve-pi/raw/master/eve.png "The EVoltionary biorEactor"
 
+
 The EVE is an open framework for an automated continuous culture system.
 
   - Easy to use for programmers and non-programmers
@@ -90,12 +91,12 @@ The EVE uses a number of open source projects to work properly:
   - [Docker] - For creating self-contained application platforms
 
 
-
 ## New Features
  
   - Configurable save locations (USB or Network)
   - Combined graphs of culture units
 
+![GitHub All Releases](https://img.shields.io/github/downloads/vishhvaan/eve-pi/total)
 
 License
 ----
