@@ -4,6 +4,7 @@
 import time
 import RPi.GPIO as GPIO
 import sys
+from datetime import datetime
 
 import digitalio
 import board
@@ -14,17 +15,25 @@ from adafruit_ads1x15.analog_in import AnalogIn
 
 import configparser
 from multiprocessing import Process
+import os
+import csv
 
 config = configparser.ConfigParser()
 config.read('eve-conf.ini')
 
+
 try:
-    chkt = float(sys.argv[2])
+    frac = float(sys.argv[2])
 except ValueError:
     sys.exit("Please type a number.")
 
 try:
-    loops = int(sys.argv[3])
+    chkt = float(sys.argv[3])
+except ValueError:
+    sys.exit("Please type a number.")
+
+try:
+    loops = int(sys.argv[4])
 except ValueError:
     sys.exit("Please type a integer.")
 
@@ -58,12 +67,16 @@ if gpio_add:
     for add in gpio_add:
         gpioe.append(MCP23017(i2c, address=add))
 
-def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
+
+
+def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops,outfile):
     confsec = 'EVE' + str(sysnum)
     print(confsec)
     pipins = config[confsec].getboolean('Pi_pins')
     P_LED_pins = config[confsec].getint('P_LED_pins')
     photod = AnalogIn(adc[adc_add.index(config[confsec].getint('a_address'))], getattr(ADS,'P'+ str(config[confsec].getint('Analogin'))))
+
+    odlist = []
 
     if pipins:
         GPIO.setmode(GPIO.BCM)
@@ -81,6 +94,7 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
 
     for i in list(range(loops)):
         print("{:>5}\t{:>5.3f}".format(photod.value, photod.voltage))
+        odlist.append(photod.voltage)
         time.sleep(chkt)
 
 
@@ -92,41 +106,35 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
         led_pin.value = False
         time.sleep(0.1)
 
+    # print(odlist)
+
+    with open(outfile, 'a') as file:
+        wr = csv.writer(file)
+        wr.writerows(map(lambda x: [x], odlist))
+        file.close()
 
 
 
+evestr = sys.argv[1]
+evesys = int(evestr)
+print('CU Selected: %s' % evesys)
+confsec = 'EVE' + evestr
+if not config[confsec].getboolean('enabled'):
+    print("CU not enabled")
+    sys.exit()
+
+print()
+root_dir = config['MAIN']['save_location']
+if root_dir[-1] == '/': root_dir.pop(-1)
+now = datetime.now()
+cdate = now.strftime("%x").replace('/','')
+outfile = "%s/Calibration Curves/%s/%s/%s.csv" % (root_dir, confsec, cdate, frac)
+folder = "%s/Calibration Curves/%s/%s" % (root_dir, confsec, cdate)
+if not os.path.exists(folder): os.makedirs(folder)
 
 
-
-evesys = sys.argv[1]
-# print('EEs Selected:')
-
-totsys_l = sys.argv[1]
-print('EVEs Selected:')
-
-if totsys_l == 'all':
-    totsys_l = list(range(totsys+1))
-    totsys_l.pop(0)
-    evesys = []
-    for sysiter in totsys_l:
-        confsec = 'EVE' + str(sysiter)
-        if config[confsec].getboolean('enabled'):
-            evesys.append(sysiter)
-else:
-    totsys_l = totsys_l.split(',')
-    totsys_l = list(map(int, totsys_l))
-    evesys = []
-    for sysiter in totsys_l:
-        confsec = 'EVE' + str(sysiter)
-        if config[confsec].getboolean('enabled'):
-            evesys.append(sysiter)
-print(evesys)
-
-for sys in evesys:
-    sysstr = 'EVE' + str(sys)
-    runner(sys,gpioe,gpio_add,adc,adc_add,chkt,loops)
-    print()
-
+runner(evesys,gpioe,gpio_add,adc,adc_add,chkt,loops,outfile)
+print()
 print("Done")
 
 
