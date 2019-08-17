@@ -1,0 +1,24 @@
+{
+  "name": "OD Calibration Curves",
+  "script_path": "cali_curves.py",
+  "description": "Record data for the calibration curves.\n If the script is prematurely stopped, run the 'Pumps and LED Off' script",
+  "working_directory": "/eve/scripts/webui-sc",
+  "parameters": [
+    {
+      "name": "CU #",
+      "default": "1"
+    },
+    {
+      "name": "Fraction of Concentrated Solution",
+      "default": "1"
+    },
+    {
+      "name": "Check Period",
+      "default": "0.5"
+    },
+    {
+      "name": "Check Loops",
+      "default": "25"
+    }
+  ]
+}
