@@ -22,14 +22,14 @@ except ValueError:
     sys.exit("Please type a number.")
 
 pumpt=abs(pumpt)
-totsys = (''.join(config.sections())).count('EVE')
+totsys = (''.join(config.sections())).count('CU')
 
 gpioe = list()
 gpio_add = list()
 
 for sysitr in range(totsys):
     sysnum = sysitr + 1
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     if config[confsec].getboolean('enabled'):
         if not config[confsec].getboolean('Pi_pins'):
             gpio_add.append(config[confsec].getint('m_address'))
@@ -43,7 +43,7 @@ if gpio_add:
         gpioe.append(MCP23017(i2c, address=add))
 
 def runner(sysnum,gpioe,gpio_add,pname):
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     pipins = config[confsec].getboolean('Pi_pins')
     P_drug_pins = config[confsec].getint('P_drug_pins')
     P_nut_pins = config[confsec].getint('P_nut_pins')
@@ -94,7 +94,7 @@ def runner(sysnum,gpioe,gpio_add,pname):
     print("Started ...")
 
 def stopper(sysnum,gpioe,gpio_add,pname):
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     pipins = config[confsec].getboolean('Pi_pins')
     P_drug_pins = config[confsec].getint('P_drug_pins')
     P_nut_pins = config[confsec].getint('P_nut_pins')
@@ -123,14 +123,14 @@ def stopper(sysnum,gpioe,gpio_add,pname):
 
 
 totsys_l = sys.argv[1]
-print('EVEs Selected:')
+print('CUs Selected:')
 
 if totsys_l == 'all':
     totsys_l = list(range(totsys+1))
     totsys_l.pop(0)
     evesys = []
     for sysiter in totsys_l:
-        confsec = 'EVE' + str(sysiter)
+        confsec = 'CU' + str(sysiter)
         if config[confsec].getboolean('enabled'):
             evesys.append(sysiter)
 else:
@@ -138,7 +138,7 @@ else:
     totsys_l = list(map(int, totsys_l))
     evesys = []
     for sysiter in totsys_l:
-        confsec = 'EVE' + str(sysiter)
+        confsec = 'CU' + str(sysiter)
         if config[confsec].getboolean('enabled'):
             evesys.append(sysiter)
 print(evesys)
@@ -147,14 +147,14 @@ print('Started')
 print('Pin Lists:')
 
 for sys in evesys:
-    sysstr = 'EVE' + str(sys)
+    sysstr = 'CU' + str(sys)
     runner(sys,gpioe,gpio_add,pname)
 
 print('Running ...')
 time.sleep(pumpt)
 
 for sys in evesys:
-    sysstr = 'EVE' + str(sys)
+    sysstr = 'CU' + str(sys)
     stopper(sys,gpioe,gpio_add,pname)
 
 

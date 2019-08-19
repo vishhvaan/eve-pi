@@ -21,8 +21,8 @@ except ValueError:
 config = configparser.ConfigParser()
 config.read('../test/multiplex/eve-conf.ini')
 
-totsys = (''.join(config.sections())).count('EVE')
-sysstr = 'EVE' + str(evenum)
+totsys = (''.join(config.sections())).count('CU')
+sysstr = 'CU' + str(evenum)
 
 i2c = busio.I2C(board.SCL, board.SDA)
 # mcp = adafruit_mcp230xx.MCP23017(i2c, address=32)

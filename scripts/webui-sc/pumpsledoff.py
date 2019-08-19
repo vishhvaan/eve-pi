@@ -17,14 +17,14 @@ config = configparser.ConfigParser()
 config.read('eve-conf.ini')
 
 
-totsys = (''.join(config.sections())).count('EVE')
+totsys = (''.join(config.sections())).count('CU')
 
 gpioe = list()
 gpio_add = list()
 
 for sysitr in range(totsys):
     sysnum = sysitr + 1
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     if config[confsec].getboolean('enabled'):
         if not config[confsec].getboolean('Pi_pins'):
             gpio_add.append(config[confsec].getint('m_address'))
@@ -38,7 +38,7 @@ if gpio_add:
         gpioe.append(MCP23017(i2c, address=add))
 
 def runner(sysnum,gpioe,gpio_add):
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     pipins = config[confsec].getboolean('Pi_pins')
     P_drug_pins = config[confsec].getint('P_drug_pins')
     P_nut_pins = config[confsec].getint('P_nut_pins')
@@ -75,14 +75,14 @@ totsys_l = list(range(totsys+1))
 totsys_l.pop(0)
 evesys = []
 for sysiter in totsys_l:
-    confsec = 'EVE' + str(sysiter)
+    confsec = 'CU' + str(sysiter)
     if config[confsec].getboolean('enabled'):
         evesys.append(sysiter)
-print('EVEs Enabled:')
+print('CUs Enabled:')
 print(evesys)
 print('Started')
 print('Pin Lists:')
 
 for sysiter in evesys:
-    sysstr = 'EVE' + str(sysiter)
+    sysstr = 'CU' + str(sysiter)
     runner(sysiter,gpioe,gpio_add)

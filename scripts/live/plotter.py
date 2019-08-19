@@ -29,8 +29,8 @@ class Plotter:
         # for i in range(len(self.outpumps)): self.allpumps.append(pd.read_csv(self.outpumps[i]))
 
         for i in sysarr:
-            self.evenames.append('EVE' + str(i))
-            self.evesel.append({'label':'EVE' + str(i), 'value': 'EVE' + str(i)})
+            self.evenames.append('CU' + str(i))
+            self.evesel.append({'label':'CU' + str(i), 'value': 'CU' + str(i)})
 
         tabs_styles = {
             'height': '44px'

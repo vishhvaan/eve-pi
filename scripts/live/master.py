@@ -38,10 +38,10 @@ mstart_time = datetime.now()
 config = configparser.ConfigParser()
 config.read('eve-conf.ini')
 
-totsys = (''.join(config.sections())).count('EVE')
+totsys = (''.join(config.sections())).count('CU')
 actsys = []
 for sysiter in range(totsys):
-    if config['EVE' + str(sysiter+1)].getboolean('enabled'):
+    if config['CU' + str(sysiter+1)].getboolean('enabled'):
         actsys.append(sysiter+1)
 
 
@@ -94,7 +94,7 @@ def IC_init():
 
     for sysitr in range(totsys):
         sysnum = sysitr + 1
-        confsec = 'EVE' + str(sysnum)
+        confsec = 'CU' + str(sysnum)
         if config[confsec].getboolean('enabled'):
             adc_add.append(config[confsec].getint('a_address'))
             if not config[confsec].getboolean('Pi_pins'):
@@ -118,7 +118,7 @@ def IC_init():
 def eve_starter():
     for sysitr in range(totsys):
         sysnum = sysitr + 1
-        confsec = 'EVE' + str(sysnum)
+        confsec = 'CU' + str(sysnum)
         if config[confsec].getboolean('enabled') is True:
             print (confsec + ' enabled.')
             morbidostats.append([Morbidostat(sysnum, len(actsys), chips, slack_client), sysnum])
@@ -134,7 +134,7 @@ def eve_starter():
                 text = confsec + ' is not enabled. Skipping.'
                 )
 
-    print ('Starting EVEs')
+    print ('Starting CUs')
     for starti in range(len(morbidostats)):
        morbidostats[starti][0].start()
 
@@ -185,7 +185,7 @@ def live_plotter():
     max_time = 0
     for sysitr in range(totsys):
         sysnum = sysitr + 1
-        confsec = 'EVE' + str(sysnum)
+        confsec = 'CU' + str(sysnum)
         if config[confsec].getboolean('enabled') is True:
             temp_time = config[confsec].getfloat('time_between_saves')
             if temp_time > max_time:
@@ -222,7 +222,7 @@ def comb_grapher():
 
     fig = plt.figure(dpi=140)
     ax = plt.gca()
-    for i in actsys: leg.append('EVE'+str(i))
+    for i in actsys: leg.append('CU'+str(i))
     for i in odcsvs:
         ods.append(pd.read_csv(i,index_col='hour'))
         ods[-1][['average']].plot(ax=ax,figsize=(7,5))
@@ -318,7 +318,7 @@ def slackresponder():
             for event in events:
                 for sysitr in range(len(morbidostats)):
                     sysnum = morbidostats[sysitr][1]
-                    evename = 'EVE' + str(sysnum)
+                    evename = 'CU' + str(sysnum)
                     if (
                         event.get('channel') == chanid and
                         event.get('text') == evename and
@@ -395,7 +395,7 @@ class Morbidostat:
         self.gpioe = chips['gpioe']
         self.adc_add = chips['adc_add']
         self.gpio_add = chips['gpio_add']
-        self.sysstr = 'EVE' + str(self.sysnum)
+        self.sysstr = 'CU' + str(self.sysnum)
 
         self.threads = {}
         self.thread_locks = {'save' : threading.Lock(), 'adc' : threading.Lock(), 'dynL' : threading.Lock(), 'control_alg' : threading.Lock(), 'graphs' : threading.Lock(), 'threads' : threading.Lock()}
