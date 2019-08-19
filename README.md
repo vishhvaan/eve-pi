@@ -96,7 +96,7 @@ The EVE uses a number of open source projects to work properly:
   - Configurable save locations (USB or Network)
   - Combined graphs of culture units
 
-![GitHub All Releases](https://img.shields.io/github/downloads/vishhvaan/eve-pi/total)
+<!--![GitHub All Releases](https://img.shields.io/github/downloads/vishhvaan/eve-pi/total)-->
 
 License
 ----

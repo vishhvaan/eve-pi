@@ -38,7 +38,7 @@ except ValueError:
     sys.exit("Please type a integer.")
 
 chkt=abs(chkt)
-totsys = (''.join(config.sections())).count('EVE')
+totsys = (''.join(config.sections())).count('CU')
 
 adc = list()
 gpioe = list()
@@ -48,7 +48,7 @@ gpio_add = list()
 
 for sysitr in range(totsys):
     sysnum = sysitr + 1
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     if config[confsec].getboolean('enabled'):
         adc_add.append(config[confsec].getint('a_address'))
         if not config[confsec].getboolean('Pi_pins'):
@@ -70,7 +70,7 @@ if gpio_add:
 
 
 def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops,outfile):
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     print(confsec)
     pipins = config[confsec].getboolean('Pi_pins')
     P_LED_pins = config[confsec].getint('P_LED_pins')
@@ -118,7 +118,7 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops,outfile):
 evestr = sys.argv[1]
 evesys = int(evestr)
 print('CU Selected: %s' % evesys)
-confsec = 'EVE' + evestr
+confsec = 'CU' + evestr
 if not config[confsec].getboolean('enabled'):
     print("CU not enabled")
     sys.exit()

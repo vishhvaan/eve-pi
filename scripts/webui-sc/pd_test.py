@@ -29,7 +29,7 @@ except ValueError:
     sys.exit("Please type a integer.")
 
 chkt=abs(chkt)
-totsys = (''.join(config.sections())).count('EVE')
+totsys = (''.join(config.sections())).count('CU')
 
 adc = list()
 gpioe = list()
@@ -39,7 +39,7 @@ gpio_add = list()
 
 for sysitr in range(totsys):
     sysnum = sysitr + 1
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     if config[confsec].getboolean('enabled'):
         adc_add.append(config[confsec].getint('a_address'))
         if not config[confsec].getboolean('Pi_pins'):
@@ -59,7 +59,7 @@ if gpio_add:
         gpioe.append(MCP23017(i2c, address=add))
 
 def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
-    confsec = 'EVE' + str(sysnum)
+    confsec = 'CU' + str(sysnum)
     print(confsec)
     pipins = config[confsec].getboolean('Pi_pins')
     P_LED_pins = config[confsec].getint('P_LED_pins')
@@ -99,17 +99,16 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
 
 
 evesys = sys.argv[1]
-# print('EEs Selected:')
 
 totsys_l = sys.argv[1]
-print('EVEs Selected:')
+print('CUs Selected:')
 
 if totsys_l == 'all':
     totsys_l = list(range(totsys+1))
     totsys_l.pop(0)
     evesys = []
     for sysiter in totsys_l:
-        confsec = 'EVE' + str(sysiter)
+        confsec = 'CU' + str(sysiter)
         if config[confsec].getboolean('enabled'):
             evesys.append(sysiter)
 else:
@@ -117,13 +116,13 @@ else:
     totsys_l = list(map(int, totsys_l))
     evesys = []
     for sysiter in totsys_l:
-        confsec = 'EVE' + str(sysiter)
+        confsec = 'CU' + str(sysiter)
         if config[confsec].getboolean('enabled'):
             evesys.append(sysiter)
 print(evesys)
 
 for sys in evesys:
-    sysstr = 'EVE' + str(sys)
+    sysstr = 'CU' + str(sys)
     runner(sys,gpioe,gpio_add,adc,adc_add,chkt,loops)
     print()
 
