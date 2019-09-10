@@ -984,7 +984,7 @@ class Morbidostat:
                     self.redilr = self.slack_client.api_call(
                         "files.upload",
                         channels = self.chan,
-                        thread_ts = self.threadts,
+                        thread_ts = self.recgrats,
                         title = "ODDilR",
                         file = file_content
                     )
