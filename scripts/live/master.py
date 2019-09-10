@@ -121,7 +121,10 @@ def eve_starter():
         confsec = 'CU' + str(sysnum)
         if config[confsec].getboolean('enabled') is True:
             print (confsec + ' enabled.')
-            morbidostats.append([Morbidostat(sysnum, len(actsys), chips, slack_client), sysnum])
+            if config['MAIN'].getboolean('repeat1_evar'):
+                morbidostats.append([Morbidostat([sysnum, 1], len(actsys), chips, slack_client), sysnum])
+            else:
+                morbidostats.append([Morbidostat([sysnum, sysnum], len(actsys), chips, slack_client), sysnum])
             #Morbidostat(sysnum)
             # thread.join
         else:
@@ -231,6 +234,8 @@ def comb_grapher():
     ax.set_xlabel('Time(h)')
     global comb_saveloc
     fig.savefig(comb_saveloc + 'RawOD.png')
+    plt.close('all')
+    fig = None; ax = None
 
     fig2 = plt.figure(dpi=140)
     ax2 = plt.gca()
@@ -240,6 +245,8 @@ def comb_grapher():
     ax2.set_ylabel('Scaled OD')
     ax2.set_xlabel('Time(h)')
     fig2.savefig(comb_saveloc + 'ScaledOD.png')
+    plt.close('all')
+    fig2 = None; ax2 = None
 
     global comb_mesg
     global comb_lat_sw
@@ -389,13 +396,15 @@ def temp_sensor_func():
 class Morbidostat:
     def __init__(self, sysnum, actsys, chips, slack_client):
         self.printing = False
-        self.sysnum = sysnum
+        self.sysnum = sysnum[0]
+        self.varnum = sysnum[1]
         self.actsys = actsys
         self.adc= chips['adc']
         self.gpioe = chips['gpioe']
         self.adc_add = chips['adc_add']
         self.gpio_add = chips['gpio_add']
         self.sysstr = 'CU' + str(self.sysnum)
+        self.varstr = 'CU' + str(self.varnum)
 
         self.threads = {}
         self.thread_locks = {'save' : threading.Lock(), 'adc' : threading.Lock(), 'dynL' : threading.Lock(), 'control_alg' : threading.Lock(), 'graphs' : threading.Lock(), 'threads' : threading.Lock()}
@@ -404,25 +413,25 @@ class Morbidostat:
         self.config.read('eve-conf.ini')
 
         # Define Experiment Variables
-        self.time_between_pumps = self.config[self.sysstr].getfloat('time_between_pumps')
-        self.OD_thr = self.config[self.sysstr].getfloat('OD_thr')
+        self.time_between_pumps = self.config[self.varstr].getfloat('time_between_pumps')
+        self.OD_thr = self.config[self.varstr].getfloat('OD_thr')
         self.OD_thr_set = False
-        self.OD_min = self.config[self.sysstr].getfloat('OD_min')
-        self.OD_err = self.config[self.sysstr].getfloat('OD_error')
-        self.time_between_ODs = self.config[self.sysstr].getfloat('time_between_ODs') # how often to gather OD data, in seconds
-        self.time_between_graphs = self.config[self.sysstr].getfloat('time_between_graphs') # how often to graph, in minutes
+        self.OD_min = self.config[self.varstr].getfloat('OD_min')
+        self.OD_err = self.config[self.varstr].getfloat('OD_error')
+        self.time_between_ODs = self.config[self.varstr].getfloat('time_between_ODs') # how often to gather OD data, in seconds
+        self.time_between_graphs = self.config[self.varstr].getfloat('time_between_graphs') # how often to graph, in minutes
         # OD_thr is the threshold above which to activate drug pump  [vish bench tests: empty: 3.5V, Clear Vial: 0.265V, Very Cloudy Vial: 2.15V]
 
         #time_between_writes = 1  # how often to write out OD data, in minutes
         #loops_between_writes = (time_between_writes*60)/time_between_ODs # time bewteen writes in loops
-        self.time_between_saves = self.config[self.sysstr].getfloat('time_between_saves')
+        self.time_between_saves = self.config[self.varstr].getfloat('time_between_saves')
 
         # Set Up I2C to Read OD Data
         # Create the I2C bus
 
-        self.P_drug_times = self.config[self.sysstr].getfloat('P_drug_times')
-        self.P_nut_times = self.config[self.sysstr].getfloat('P_nut_times')
-        self.P_waste_times = self.config[self.sysstr].getfloat('P_waste_times')
+        self.P_drug_times = self.config[self.varstr].getfloat('P_drug_times')
+        self.P_nut_times = self.config[self.varstr].getfloat('P_nut_times')
+        self.P_waste_times = self.config[self.varstr].getfloat('P_waste_times')
 
         self.running_data = []  # the list which will hold our 2-tuples of time and OD
         self.pump_data = []
@@ -435,13 +444,13 @@ class Morbidostat:
         # self.currOD = np.zeros(num_cham)
         self.currOD = 0
         # averaged OD value
-        self.scaling = self.config[self.sysstr].getboolean('scaling')
+        self.scaling = self.config[self.varstr].getboolean('scaling')
         self.avOD = 0
         self.maxOD = 0
-        self.OD_av_length = self.config[self.sysstr].getint('OD_av_length')
+        self.OD_av_length = self.config[self.varstr].getint('OD_av_length')
         # OD averaging buffer
         self.avOD_buffer = [0] * self.OD_av_length #need to change for multiplexing
-        self.thresh_check = self.config[self.sysstr].getfloat('time_thresh')
+        self.thresh_check = self.config[self.varstr].getfloat('time_thresh')
         self.growthOD = []
         self.growthrate = []
         self.growthrate2 = []
@@ -462,10 +471,15 @@ class Morbidostat:
         self.max_waste = self.waste
 
         self.vial_drug_mass = 0
+        self.culture_vol = self.config[self.varstr].getint('culture_vol')
+        self.pump_flo_rate = self.config[self.varstr].getint('pump_flo_rate')
+        self.pump_act_times = []
+        self.dil_rate = 0
+        self.max_dil_rate = 0
 
         self.temp_sensor = self.config['MAIN'].getboolean('temp_sensor')
 
-        self.total_time = self.config[self.sysstr].getfloat('Exp_time_hours')*3600 #in seconds
+        self.total_time = self.config[self.varstr].getfloat('Exp_time_hours')*3600 #in seconds
         self.loops_between_ODs = 1
         self.loops_between_pumps = (self.time_between_pumps*60)/self.time_between_ODs # time between pumps in loops
 
@@ -482,24 +496,13 @@ class Morbidostat:
 	# P_fan_pins = self.config[self.sysstr].getint('P_fan_pins')
         self.pin_list = [self.P_drug_pins, self.P_nut_pins, self.P_waste_pins, self.P_LED_pins]
 
-        if self.pipins:
-            GPIO.setmode(GPIO.BCM)
-            for pin in self.pin_list:
-                GPIO.setup(pin, GPIO.OUT)
-        else:
-            self.pins = [None]*(max(self.pin_list)+1)
-            self.mcp = self.gpioe[self.gpio_add.index(self.config[self.sysstr].getint('m_address'))]
-
-            for pin in self.pin_list:
-                self.pins[pin] = self.mcp.get_pin(pin)
-                self.pins[pin].direction = digitalio.Direction.OUTPUT
-                self.pins[pin].value = False
+        self.init_pins(self.pin_list)
 
         self.init_time = datetime.now()
 
-        self.drug_name = self.config[self.sysstr]['drug']
-        self.drug_conc = self.config[self.sysstr].getfloat('drug_conc')
-        self.drug_vol = self.config[self.sysstr].getfloat('drug_vol')
+        self.drug_name = self.config[self.varstr]['drug']
+        self.drug_conc = self.config[self.varstr].getfloat('drug_conc')
+        self.drug_vol = self.config[self.varstr].getfloat('drug_vol')
 
         self.slack_client = SlackClient(self.config['MAIN']['slack_key'])
         # self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
@@ -544,7 +547,7 @@ class Morbidostat:
         file = open(self.outfile_pump, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Nutrient Pump', 'Drug Pump','Waste Pump','Pump Timing', 'Drug Mass'])
-        wr.writerow(['media', 'drug','waste','pump_time','hour','vial_drug_mass'])
+        wr.writerow(['media', 'drug','waste','pump_time','hour','vial_drug_mass','dil_rate'])
         file.close()
 
         #Detailed Files
@@ -562,7 +565,7 @@ class Morbidostat:
         file = open(self.hr_outfile_pump, 'a')
         wr = csv.writer(file)
         # wr.writerow(['Nutrient Pump', 'Drug Pump','Waste Pump','Pump Timing', 'Drug Mass'])
-        wr.writerow(['media', 'drug','waste','pump_time','hour','vial_drug_mass'])
+        wr.writerow(['media', 'drug','waste','pump_time','hour','vial_drug_mass','dil_rate'])
         file.close()
 
 
@@ -599,26 +602,36 @@ class Morbidostat:
         self.recgrats = self.recgra['ts']
         self.firstrec = True
 
+        self.selection = self.config[self.varstr]['selection_alg']
+        self.vial_conc = self.config[self.varstr].getfloat('vial_conc')
+
+    def init_pins(self,pin_list):
+        if self.pipins:
+            GPIO.setmode(GPIO.BCM)
+            for pin in pin_list:
+                GPIO.setup(pin, GPIO.OUT)
+        else:
+            self.pins = [None]*(max(pin_list)+1)
+            self.mcp = self.gpioe[self.gpio_add.index(self.config[self.sysstr].getint('m_address'))]
+
+            for pin in self.pin_list:
+                self.pins[pin] = self.mcp.get_pin(pin)
+                self.pins[pin].direction = digitalio.Direction.OUTPUT
+                self.pins[pin].value = False
+
     def get_OD(self):
 
         print_buffer = 0
+        self.init_pins([self.P_LED_pins])
 
         try:
             if self.pipins:
-                GPIO.setmode(GPIO.BCM)
-                GPIO.setup(self.P_LED_pins, GPIO.OUT)
-
                 GPIO.output(self.P_LED_pins,1)
                 time.sleep(0.1)
                 self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
                 time.sleep(0.1)
                 GPIO.output(self.P_LED_pins,0)
             else:
-                self.pins = [None]*(max(self.pin_list)+1)
-                self.mcp = self.gpioe[self.gpio_add.index(self.config[self.sysstr].getint('m_address'))]
-                self.pins[self.P_LED_pins] = self.mcp.get_pin(self.P_LED_pins)
-                self.pins[self.P_LED_pins].direction = digitalio.Direction.OUTPUT
-
                 self.pins[self.P_LED_pins].value = True
                 time.sleep(0.1)
                 self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
@@ -669,21 +682,23 @@ class Morbidostat:
         else:
             odlist = [self.currOD, self.avOD, self.maxOD, self.nows, (self.elapsed_time.total_seconds())/3600, self.active_threads, self.OD_min]
             self.hr_OD_tmplist.append(odlist)
-        pulist = [self.nut,self.drug,self.waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.vial_drug_mass]
+        pulist = [self.nut,self.drug,self.waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.vial_drug_mass,self.dil_rate]
         self.hr_pump_tmplist.append(pulist)
         if self.max_nut < self.nut: self.max_nut = self.nut
         if self.max_drug < self.drug: self.max_drug = self.drug
         if self.max_waste < self.waste: self.max_waste = self.waste
+        if self.max_dil_rate < self.dil_rate: self.max_dil_rate = self.dil_rate
         self.nut = 0
         self.drug = 1
         self.waste = 2
         if (self.loops % self.graph_loops) == 0:
-            pulist = [self.max_nut,self.max_drug,self.max_waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.vial_drug_mass]
+            pulist = [self.max_nut,self.max_drug,self.max_waste,self.nows,(self.elapsed_time.total_seconds())/3600,self.vial_drug_mass,self.max_dil_rate]
             self.OD_tmplist.append(odlist)
             self.pump_tmplist.append(pulist)
             self.max_nut = self.nut
             self.max_drug = self.drug
             self.max_waste = self.waste
+            self.max_dil_rate = self.dil_rate
 
     def savefunc(self):
         self.thread_locks['save'].acquire()
@@ -757,7 +772,7 @@ class Morbidostat:
 
             allpumps = pd.read_csv(self.outfile_pump, index_col='hour')   # cols: 'media', 'drug','waste','pump_time','hour','vial_drug_mass'
 
-            allconcs = allpumps[['vial_drug_mass']]/12
+            allconcs = allpumps[['vial_drug_mass']]/self.culture_vol
             allconcs.rename(columns={'vial_drug_mass':'drug_conc'}, inplace=True)
             # allODs['hour'] = allODs['time'] - allODs['time'].iloc[0]
             # allODs['hour'] = allODs['hour'].divide(3600)
@@ -813,7 +828,7 @@ class Morbidostat:
 
             # PUfig = PUplt.get_figure()
             PUplt.savefig("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time))
-            allpumps = None; PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
+            PUplt.figure = None; PUplt = None; allconcs= None; colors = None; DM = None; pumpa = None
             plt.close('all')
             with open("%s/%s/%s/PUplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                 pumsg = self.slack_client.api_call(
@@ -873,7 +888,7 @@ class Morbidostat:
                 # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
                 ODfig = ODthr.get_figure()
                 ODfig.savefig("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), bbox_inches='tight')
-                ODfig.clf(); allODs = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
+                ODfig.clf(); ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
                 plt.close('all')
                 with open("%s/%s/%s/ODtemp_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
                     tempmsp = self.slack_client.api_call(
@@ -883,6 +898,36 @@ class Morbidostat:
                         title = "ODTemp",
                         file = file_content
                     )
+
+            # DIL RATE GRAPH
+
+            plt.rcParams["figure.dpi"] = 200
+            ODthr = (allODs[['average']]).plot(label='average', color='tab:blue')  #figsize=(10,10) in the plot
+            ODthr.set_ylabel(ylabel='Average OD')
+            lines, labels = ODthr.get_legend_handles_labels()
+
+            DM = ODthr.twinx()
+            DM.spines['right'].set_position(('axes', 1.0))
+            allpumps[['dil_rate']].plot(ax = DM, label='threads',color='tab:grey',legend=False)
+            DM.set_ylabel(ylabel='Dilution Rate (Hz)')
+            line, label = DM.get_legend_handles_labels()
+            lines += line
+            labels += label
+            ODthr.legend(lines, labels, loc=2)
+            # ODplt = (allODs[['current']]).plot()  #figsize=(10,10) in the plot
+            ODfig = ODthr.get_figure()
+            ODfig.savefig("%s/%s/%s/ODdilR_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time))
+            ODfig.clf(); allODs = None; allpumps = None; ODthr.figure = None; ODthr = None; ODfig = None; fig = None; allconcs= None; colors = None; DM = None
+            plt.close('all')
+            with open("%s/%s/%s/ODdilR_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                dilrmsg = self.slack_client.api_call(
+                    "files.upload",
+                    channels = self.chan,
+                    thread_ts = self.threadts,
+                    title = "ODDilR",
+                    file = file_content
+                )
+
 
             if self.firstrec:
                 self.recmes = self.slack_client.api_call(
@@ -935,6 +980,14 @@ class Morbidostat:
                             file = file_content
                         )
                 # print(self.recod['file']['shares']['public'][self.chanid][0]['ts'])
+                with open("%s/%s/%s/ODdilR_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.redilr = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.threadts,
+                        title = "ODDilR",
+                        file = file_content
+                    )
                 self.firstrec = False
             else:
                 delmsg = self.slack_client.api_call(
@@ -968,6 +1021,11 @@ class Morbidostat:
                         channel = self.chanid,
                         ts = self.retmp['file']['shares']['public'][self.chanid][0]['ts']
                         )
+                deldilr = self.slack_client.api_call(
+                    "chat.delete",
+                    channel = self.chanid,
+                    ts = self.redilr['file']['shares']['public'][self.chanid][0]['ts']
+                    )
                 self.recmes = self.slack_client.api_call(
                     "chat.postMessage",
                     channel = self.chan,
@@ -1017,6 +1075,14 @@ class Morbidostat:
                             title = "ODTemp",
                             file = file_content
                         )
+                with open("%s/%s/%s/ODdilR_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
+                    self.redilr = self.slack_client.api_call(
+                        "files.upload",
+                        channels = self.chan,
+                        thread_ts = self.threadts,
+                        title = "ODDilR",
+                        file = file_content
+                    )
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -1056,104 +1122,115 @@ class Morbidostat:
         self.thread_locks['dynL'].release()
 
     def control_alg(self):
-        print_buffer = 0
-        # id = str(self.sysnum)+'CA'
-
-        # i2c_q.append(id)
-
-        # while i2c_q[0] is not id:
-            # time.sleep(0.1)
-            # print_buffer += 1
-            # if print_buffer % 10 == 0: print ('[%s] {CAlg} Waiting for Locks...' % self.sysstr)
-
-        # if i2c_q[0] is id:
-            # i2c_lock[self.sysnum-1] = True
-            # time.sleep(0.05)
-
         try:
-            if self.pipins:
-                GPIO.setmode(GPIO.BCM)
-                for pin in self.pin_list:
-                    GPIO.setup(pin, GPIO.OUT)
-            else:
-                self.pins = [None]*(max(self.pin_list)+1)
-                self.mcp = self.gpioe[self.gpio_add.index(self.config[self.sysstr].getint('m_address'))]
 
-                for pin in self.pin_list:
-                    self.pins[pin] = self.mcp.get_pin(pin)
-                    self.pins[pin].direction = digitalio.Direction.OUTPUT
-                    self.pins[pin].value = False
+            print_buffer = 0
+            self.init_pins(self.pin_list)
 
+            if self.selection == 'toprak':
 
+                if self.avOD > self.OD_min:
+                    self.pump_waste()
 
-            if self.avOD > self.OD_min:
-                self.pump_on(self.P_waste_pins)
-                time.sleep(self.P_waste_times)
-                self.pump_off(self.P_waste_pins)
+                    if self.avOD > self.OD_thr and self.avOD > self.last_dilutionOD:
+                        self.pump_drug()
 
-                self.waste = 3
-                self.vial_drug_mass = self.vial_drug_mass - (self.vial_drug_mass/12)
+                    else:
+                        self.pump_media()
 
-                if self.avOD > self.OD_thr and self.avOD > self.last_dilutionOD:
-                    print('[%s] OD Threshold exceeded, pumping %s' % (self.sysstr,self.drug_name))
+                else: #report even when pumps aren't activated yet
+                    self.no_pump()
 
-                    self.pump_on(self.P_drug_pins)
-                    time.sleep(self.P_drug_times)
-                    self.pump_off(self.P_drug_pins)
-                    self.drug = 2
+            elif self.selection == 'constant':
 
-                    self.vial_drug_mass = self.vial_drug_mass + self.drug_conc*self.drug_vol
+                if self.avOD > self.OD_min:
+                    self.pump_waste()
 
-                    drugamsg = self.slack_client.api_call(
-                        "chat.postMessage",
-                        channel = self.chan,
-                        username=self.sysstr,
-                        icon_url = self.slack_usericon,
-                        thread_ts = self.threadts,
-                        text = "OD = %0.3f, pumping %s. Drug concentration: %f ug/mL" % (self.avOD, self.drug_name, (self.vial_drug_mass)/12)
-                        )
+                    if self.vial_drug_mass/self.culture_vol < self.vial_conc:
+                        self.pump_drug()
 
+                    else:
+                        self.pump_media()
 
-                else:
-                    print('[%s] OD below threshold, pumping nutrient' % self.sysstr)
+                else: #report even when pumps aren't activated yet
+                    self.no_pump()
 
-                    self.pump_on(self.P_nut_pins)
-                    time.sleep(self.P_nut_times)
-                    self.pump_off(self.P_nut_pins)
-                    self.nut = 1
+            self.dil_rate_calc()
 
-                    thramgs = self.slack_client.api_call(
-                        "chat.postMessage",
-                        channel = self.chan,
-                        username=self.sysstr,
-                        icon_url = self.slack_usericon,
-                        thread_ts = self.threadts,
-                        text = "OD = %0.3f, pumping nutrient. %s concentration: %f ug/mL" % (self.avOD, self.drug_name.capitalize(), (self.vial_drug_mass)/12)
-                        )
+            self.last_dilutionOD = self.avOD
 
-
-            else: #report even when pumps aren't activated yet
-
-                # self.vial_drug_mass = 0 if self.vial_drug_mass < 0
-
-                thrbmsg = self.slack_client.api_call(
-                        "chat.postMessage",
-                        channel = self.chan,
-                        username=self.sysstr,
-                        icon_url = self.slack_usericon,
-                        thread_ts = self.threadts,
-                        text = "OD = %0.3f, OD below nutrient pump threshold." % (self.avOD)
-                        )
         except Exception as e:
             print ('[%s] CA - WARNING ADC REQUEST CRASHED' % self.sysstr)
             print(e)
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno)
             pass
 
-        self.last_dilutionOD = self.avOD
-        # i2c_lock[self.sysnum-1] = False
-        # i2c_q.pop(0)
-
         self.thread_locks['control_alg'].release()
+
+    def pump_waste(self):
+        self.pump_on(self.P_waste_pins)
+        time.sleep(self.P_waste_times)
+        self.pump_off(self.P_waste_pins)
+        self.waste = 3
+        self.vial_drug_mass = self.vial_drug_mass - (self.vial_drug_mass/self.culture_vol)
+
+    def pump_drug(self):
+        print('[%s] OD Threshold exceeded, pumping %s' % (self.sysstr,self.drug_name))
+        self.pump_on(self.P_drug_pins)
+        time.sleep(self.P_drug_times)
+        self.pump_off(self.P_drug_pins)
+        self.drug = 2
+        self.pump_act_times.append(self.P_drug_times)
+
+        self.vial_drug_mass = self.vial_drug_mass + self.drug_conc * self.drug_vol
+
+        drugamsg = self.slack_client.api_call(
+            "chat.postMessage",
+            channel = self.chan,
+            username=self.sysstr,
+            icon_url = self.slack_usericon,
+            thread_ts = self.threadts,
+            text = "OD = %0.3f, pumping %s. Drug concentration: %f ug/mL" % (self.avOD, self.drug_name, (self.vial_drug_mass)/self.culture_vol)
+            )
+
+    def pump_media(self):
+        print('[%s] OD below threshold, pumping nutrient' % self.sysstr)
+        self.pump_on(self.P_nut_pins)
+        time.sleep(self.P_nut_times)
+        self.pump_off(self.P_nut_pins)
+        self.nut = 1
+        self.pump_act_times.append(self.P_nut_times)
+
+        thramgs = self.slack_client.api_call(
+            "chat.postMessage",
+            channel = self.chan,
+            username=self.sysstr,
+            icon_url = self.slack_usericon,
+            thread_ts = self.threadts,
+            text = "OD = %0.3f, pumping nutrient. %s concentration: %f ug/mL" % (self.avOD, self.drug_name.capitalize(), (self.vial_drug_mass)/self.culture_vol)
+            )
+
+    def no_pump(self):
+        self.pump_act_times.append(0)
+        # self.vial_drug_mass = 0 if self.vial_drug_mass < 0
+
+        thrbmsg = self.slack_client.api_call(
+                "chat.postMessage",
+                channel = self.chan,
+                username=self.sysstr,
+                icon_url = self.slack_usericon,
+                thread_ts = self.threadts,
+                text = "OD = %0.3f, OD below nutrient pump threshold." % (self.avOD)
+                )
+
+    def dil_rate_calc(self):
+        if len(self.pump_act_times) > 3:
+            self.pump_act_times.pop(0)
+
+        self.dil_rate = self.pump_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
+        # self.dil_rate_smo = self.pump_flo_rate * np.mean(self.pump_act_times)/(self.time_between_pumps * self.culture_vol)
 
     def secondsToText(self,secs):
         if secs:

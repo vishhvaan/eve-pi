@@ -124,7 +124,7 @@ class Plotter:
                         ),
                         go.Scatter(
                             x=odtemp['hour'],
-                            y=pumptemp['drug_mass']/12,
+                            y=pumptemp['vial_drug_mass']/12,
                             text='Concentration',
                             name='['+evenum+'] Concentration',
                             mode = 'lines',
@@ -270,7 +270,7 @@ class Plotter:
                             ),
                         go.Scatter(
                             x=odtemp['hour'],
-                            y=pumptemp['drug_mass']/12,
+                            y=pumptemp['vial_drug_mass']/12,
                             text='Concentration',
                             name='['+evenum+'] Concentration',
                             mode = 'lines',
