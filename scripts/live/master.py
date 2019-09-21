@@ -472,7 +472,9 @@ class Morbidostat:
 
         self.vial_drug_mass = 0
         self.culture_vol = self.config[self.varstr].getint('culture_vol')
-        self.pump_flo_rate = self.config[self.varstr].getint('pump_flo_rate')
+        self.drug_flo_rate = self.config[self.varstr].getint('drug_flo_rate')
+        self.nut_flo_rate = self.config[self.varstr].getint('nut_flo_rate')
+        self.waste_flo_rate = self.config[self.varstr].getint('waste_flo_rate')
         self.pump_act_times = []
         self.dil_rate = 0
         self.max_dil_rate = 0
@@ -508,6 +510,18 @@ class Morbidostat:
         # self.slack_client = slack.WebClient(token = config['MAIN']['slack_key'])
         self.slack_usericon = self.config[self.sysstr]['slack_icon']
         self.chan = self.config['MAIN']['slack_channel']
+
+        if self.P_drug_times * self.drug_pump_flo_rate != self.P_waste_times * waste_pump_flo_rate or self.P_nut_times * self.nut_pump_flo_rate != self.P_waste_times * waste_pump_flo_rate:
+            print('[%s] WARNING: Net volume of the CU will change over time with the currently configured pump times.' % self.sysstr)
+            volwarn = self.slack_client.api_call(
+                "chat.postMessage",
+                channel = self.chan,
+                username=self.sysstr,
+                icon_url = self.slack_usericon,
+                text = 'WARNING: Net volume of the CU will change over time with the currently configured pump times.'
+                )
+
+
         initmsg = self.slack_client.api_call(
             "chat.postMessage",
             channel = self.chan,
@@ -1184,7 +1198,7 @@ class Morbidostat:
         self.drug = 2
         self.pump_act_times.append(self.P_drug_times)
 
-        self.vial_drug_mass = self.vial_drug_mass + self.drug_conc * self.P_drug_times * self.pump_flo_rate
+        self.vial_drug_mass = self.vial_drug_mass + self.drug_conc * self.P_drug_times * self.drug_flo_rate
 
         drugamsg = self.slack_client.api_call(
             "chat.postMessage",
@@ -1229,7 +1243,13 @@ class Morbidostat:
         if len(self.pump_act_times) > 3:
             self.pump_act_times.pop(0)
 
-        self.dil_rate = self.pump_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
+        if self.drug == 2:
+            self.dil_rate = self.drug_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
+        elif self.nut == 1:
+            self.dil_rate = self.nut_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
+        else:
+            self.dil_rate= 0
+
         # self.dil_rate_smo = self.pump_flo_rate * np.mean(self.pump_act_times)/(self.time_between_pumps * self.culture_vol)
 
     def secondsToText(self,secs):
