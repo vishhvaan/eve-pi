@@ -7,5 +7,5 @@
   (lib (name ADS1015IDGSR)(type Legacy)(uri ${KIPRJMOD}/ICs/ADS1015IDGSR/ADS1015IDGSR.mod)(options "")(descr ""))
   (lib (name BSN20BKR)(type Legacy)(uri ${KIPRJMOD}/ICs/BSN20BKR/BSN20BKR.mod)(options "")(descr ""))
   (lib (name footprints)(type KiCad)(uri ${KIPRJMOD}/ICs/footprints.pretty)(options "")(descr ""))
-  (lib (name SamacSys_Parts)(type KiCad)(uri "X:/Google Drive/CCLCM/Scott Lab/EVE Build/erl/SamacSys_Parts.pretty")(options "")(descr ""))
+  (lib (name SamacSys_Parts)(type KiCad)(uri ${KIPRJMOD}/ICs/erl/SamacSys_Parts.pretty)(options "")(descr ""))
 )

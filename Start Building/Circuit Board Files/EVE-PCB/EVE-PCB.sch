@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:EVE-PCB-cache
-EELAYER 26 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -19,7 +18,7 @@ SDA
 Text Label 3300 1550 2    50   ~ 0
 SCL
 $Comp
-L power:GND #PWR0101
+L EVE-PCB-rescue:GND-power #PWR0101
 U 1 1 5CAF017E
 P 3250 1950
 F 0 "#PWR0101" H 3250 1700 50  0001 C CNN
@@ -38,7 +37,7 @@ PD3_NEG
 Text Label 4400 2000 0    50   ~ 0
 PD4_NEG
 $Comp
-L Device:R R1
+L EVE-PCB-rescue:R-Device R1
 U 1 1 5CAF996E
 P 7700 1150
 F 0 "R1" V 7493 1150 50  0000 C CNN
@@ -57,7 +56,7 @@ AIN2
 Text Label 6650 1400 2    50   ~ 0
 AIN3
 $Comp
-L Device:R R2
+L EVE-PCB-rescue:R-Device R2
 U 1 1 5CAFA8CC
 P 7700 1550
 F 0 "R2" V 7493 1550 50  0000 C CNN
@@ -68,7 +67,7 @@ F 3 "~" H 7700 1550 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R3
+L EVE-PCB-rescue:R-Device R3
 U 1 1 5CAFB32D
 P 7700 1950
 F 0 "R3" V 7493 1950 50  0000 C CNN
@@ -79,7 +78,7 @@ F 3 "~" H 7700 1950 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R4
+L EVE-PCB-rescue:R-Device R4
 U 1 1 5CAFB4DE
 P 7700 2350
 F 0 "R4" V 7493 2350 50  0000 C CNN
@@ -114,7 +113,7 @@ F 8 "LM324DRRS-ND" H 5750 1500 50  0001 L BNN "Field8"
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0102
+L EVE-PCB-rescue:GND-power #PWR0102
 U 1 1 5CB02683
 P 4900 2400
 F 0 "#PWR0102" H 4900 2150 50  0001 C CNN
@@ -161,7 +160,7 @@ F 8 "ADS1015IDGSR" H 2400 1450 50  0001 L BNN "Field8"
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0103
+L EVE-PCB-rescue:GND-power #PWR0103
 U 1 1 5CB0A15A
 P 1550 1150
 F 0 "#PWR0103" H 1550 900 50  0001 C CNN
@@ -188,7 +187,7 @@ F 8 "1727-2341-1-ND" H 9700 1000 50  0001 L BNN "Field8"
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R5
+L EVE-PCB-rescue:R-Device R5
 U 1 1 5CB13406
 P 10000 1300
 F 0 "R5" V 9793 1300 50  0000 C CNN
@@ -203,7 +202,7 @@ SCL-3.3
 Wire Wire Line
 	9900 1100 10000 1100
 $Comp
-L power:+3V3 #PWR0105
+L EVE-PCB-rescue:+3V3-power #PWR0105
 U 1 1 5CB13B9F
 P 10400 1500
 F 0 "#PWR0105" H 10400 1350 50  0001 C CNN
@@ -226,7 +225,7 @@ Connection ~ 10000 1500
 Text Label 9100 1100 0    50   ~ 0
 SCL
 $Comp
-L power:+5V #PWR0106
+L EVE-PCB-rescue:+5V-power #PWR0106
 U 1 1 5CB15101
 P 9000 1500
 F 0 "#PWR0106" H 9000 1350 50  0001 C CNN
@@ -237,7 +236,7 @@ F 3 "" H 9000 1500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R6
+L EVE-PCB-rescue:R-Device R6
 U 1 1 5CB15AFC
 P 9400 1300
 F 0 "R6" V 9193 1300 50  0000 C CNN
@@ -285,7 +284,7 @@ Wire Wire Line
 Wire Wire Line
 	3200 1050 3200 900 
 $Comp
-L Device:R R7
+L EVE-PCB-rescue:R-Device R7
 U 1 1 5CB348CD
 P 3550 1700
 F 0 "R7" V 3343 1700 50  0000 C CNN
@@ -326,7 +325,7 @@ F 8 "1727-2341-1-ND" H 9700 1850 50  0001 L BNN "Field8"
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R9
+L EVE-PCB-rescue:R-Device R9
 U 1 1 5CB4AB1F
 P 10000 2150
 F 0 "R9" V 9793 2150 50  0000 C CNN
@@ -341,7 +340,7 @@ SDA-3.3
 Wire Wire Line
 	9900 1950 10000 1950
 $Comp
-L power:+3V3 #PWR0108
+L EVE-PCB-rescue:+3V3-power #PWR0108
 U 1 1 5CB4AB28
 P 10400 2350
 F 0 "#PWR0108" H 10400 2200 50  0001 C CNN
@@ -363,7 +362,7 @@ Connection ~ 10000 2350
 Text Label 9100 1950 0    50   ~ 0
 SDA
 $Comp
-L power:+5V #PWR0109
+L EVE-PCB-rescue:+5V-power #PWR0109
 U 1 1 5CB4AB37
 P 9000 2350
 F 0 "#PWR0109" H 9000 2200 50  0001 C CNN
@@ -374,7 +373,7 @@ F 3 "" H 9000 2350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R8
+L EVE-PCB-rescue:R-Device R8
 U 1 1 5CB4AB3D
 P 9400 2150
 F 0 "R8" V 9193 2150 50  0000 C CNN
@@ -462,7 +461,7 @@ Wire Wire Line
 Wire Wire Line
 	9100 1950 9400 1950
 $Comp
-L power:+5V #PWR0111
+L EVE-PCB-rescue:+5V-power #PWR0111
 U 1 1 5CAD3B2B
 P 4900 1100
 F 0 "#PWR0111" H 4900 950 50  0001 C CNN
@@ -473,7 +472,7 @@ F 3 "" H 4900 1100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR0112
+L EVE-PCB-rescue:+5V-power #PWR0112
 U 1 1 5CAD789A
 P 3800 1700
 F 0 "#PWR0112" H 3800 1550 50  0001 C CNN
@@ -484,7 +483,7 @@ F 3 "" H 3800 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR0113
+L EVE-PCB-rescue:+5V-power #PWR0113
 U 1 1 5CADB22B
 P 3200 900
 F 0 "#PWR0113" H 3200 750 50  0001 C CNN
@@ -495,7 +494,7 @@ F 3 "" H 3200 900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Raspberry_Pi_2_3 J1
+L EVE-PCB-rescue:Raspberry_Pi_2_3-Connector J1
 U 1 1 5CAE0D0F
 P 6150 4350
 F 0 "J1" H 6150 5828 50  0000 C CNN
@@ -506,7 +505,7 @@ F 3 "https://www.raspberrypi.org/documentation/hardware/raspberrypi/schematics/r
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3V3 #PWR02
+L EVE-PCB-rescue:+3V3-power #PWR02
 U 1 1 5CAE0D83
 P 7050 3050
 F 0 "#PWR02" H 7050 2900 50  0001 C CNN
@@ -550,7 +549,7 @@ Wire Wire Line
 	6250 3050 6350 3050
 Connection ~ 6350 3050
 $Comp
-L power:GND #PWR01
+L EVE-PCB-rescue:GND-power #PWR01
 U 1 1 5CB31D3A
 P 7000 5700
 F 0 "#PWR01" H 7000 5450 50  0001 C CNN
@@ -646,7 +645,7 @@ F 9 "CP-002A-ND" H 1000 4100 50  0001 L BNN "Field9"
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0104
+L EVE-PCB-rescue:GND-power #PWR0104
 U 1 1 5CDD5CE7
 P 1750 4400
 F 0 "#PWR0104" H 1750 4150 50  0001 C CNN
@@ -665,7 +664,7 @@ Wire Wire Line
 Wire Wire Line
 	1350 4000 1200 4000
 $Comp
-L Device:D D17
+L EVE-PCB-rescue:D-Device D17
 U 1 1 5CE0AEF1
 P 1500 3850
 F 0 "D17" H 1500 3634 50  0000 C CNN
@@ -699,7 +698,7 @@ Wire Wire Line
 Wire Wire Line
 	2200 4300 1750 4300
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CE2DC86
 P 2000 3700
 AR Path="/5CA7DFAE/5CE2DC86" Ref="#PWR?"  Part="1" 
@@ -718,7 +717,7 @@ Wire Wire Line
 Wire Wire Line
 	2200 4050 2200 4300
 $Comp
-L Device:C C2
+L EVE-PCB-rescue:C-Device C2
 U 1 1 5CE50296
 P 3650 4100
 F 0 "C2" H 3765 4146 50  0000 L CNN
@@ -729,7 +728,7 @@ F 3 "~" H 3650 4100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR0110
+L EVE-PCB-rescue:+5V-power #PWR0110
 U 1 1 5CE53FA4
 P 3650 3700
 F 0 "#PWR0110" H 3650 3550 50  0001 C CNN
@@ -750,7 +749,7 @@ Connection ~ 2200 4300
 Wire Wire Line
 	3650 3700 3650 3950
 $Comp
-L Device:C C3
+L EVE-PCB-rescue:C-Device C3
 U 1 1 5CE84515
 P 4150 4100
 F 0 "C3" H 4265 4146 50  0000 L CNN
@@ -775,7 +774,7 @@ Connection ~ 1350 4200
 Wire Wire Line
 	1650 3850 1750 3850
 $Comp
-L Device:C C1
+L EVE-PCB-rescue:C-Device C1
 U 1 1 5CAC5E05
 P 1750 4100
 F 0 "C1" H 1865 4146 50  0000 L CNN

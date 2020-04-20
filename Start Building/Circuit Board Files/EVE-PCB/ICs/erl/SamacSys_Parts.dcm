@@ -1,0 +1,99 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP 1841539
+D Phoenix Contact PCB Terminal Block
+K
+F https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1841539&library=usen&tab=1
+$ENDCMP
+#
+$CMP ULN2803ADWR
+D Darlington Transistor Array
+K
+F http://www.ti.com/lit/gpn/uln2803a
+$ENDCMP
+#
+$CMP BAT30F4
+D STMICROELECTRONICS - BAT30F4 - DIODE, SCHOTTKY, 30V, 0201 FLIPCHIP
+K
+F https://componentsearchengine.com/Datasheets/1/BAT30F4.pdf
+$ENDCMP
+#
+$CMP UA7805CKCT
+D Linear Voltage Regulator 5V 1.5A TO-220 Texas Instruments UA78xx UA7805CKCT, Single Linear Voltage Regulator, 1.5A 5 V, 3-Pin TO-220
+K
+F http://www.ti.com/lit/ds/symlink/ua7805.pdf
+$ENDCMP
+#
+$CMP GRM31CE70G107ME39L
+D Chip Capacitor value VALUE1
+K
+F https://componentsearchengine.com/Datasheets/1/GRM31CE70G107ME39L.pdf
+$ENDCMP
+#
+$CMP GRM21BR61E106MA73L
+D Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 10uF 25volts X5R 20%
+K
+F https://componentsearchengine.com/Datasheets/1/GRM21BR61E106MA73L.pdf
+$ENDCMP
+#
+$CMP MCT06030C1004FP500
+D Thin Film Resistors - SMD .1W 1Mohm 1% 0603 50ppm Auto
+K
+F https://componentsearchengine.com/Datasheets/1/MCT06030C1004FP500.pdf
+$ENDCMP
+#
+$CMP CRCW020110K0FNED
+D Thick Film Resistors - SMD 1/20watt 10Kohms 1% 200ppm
+K
+F https://componentsearchengine.com/Datasheets/1/CRCW020110K0FNED.pdf
+$ENDCMP
+#
+$CMP CRCW0201150RFKED
+D Thick Film Resistors - SMD 1/20watt 150ohms 1% 100ppm
+K
+F https://componentsearchengine.com/Datasheets/1/CRCW0201150RFKED.pdf
+$ENDCMP
+#
+$CMP B160-13-F
+D Schottky Diode 1A 60V 0.7Vf SMA Diodes Inc B160-13-F, SMT Schottky Diode, 60V 1A, 2-Pin DO-214AC
+K
+F https://componentsearchengine.com/Datasheets/1/B160-13-F.pdf
+$ENDCMP
+#
+$CMP RC0201FR-07130RL
+D YAGEO RC0201 VALUE1
+K
+F https://www.mouser.com/datasheet/2/447/PYu-RC_Group_51_RoHS_L_10-1527934.pdf
+$ENDCMP
+#
+$CMP RC0201FR-071ML
+D YAGEO RC0201 VALUE1
+K
+F https://www.mouser.com/datasheet/2/447/PYu-RC_Group_51_RoHS_L_10-1527934.pdf
+$ENDCMP
+#
+$CMP RC0201JR-0710KL
+D THICK FILM CHIP RESISTORS
+K
+F https://componentsearchengine.com/Datasheets/1/RC0201JR-0710KL.pdf
+$ENDCMP
+#
+$CMP RC0201FR-0710KL
+D Thick Film Resistors - SMD 10K OHM 1%
+K
+F https://componentsearchengine.com/Datasheets/1/RC0201FR-0710KL.pdf
+$ENDCMP
+#
+$CMP RC0201FR-07402RL
+D YAGEO RC0201 VALUE1
+K
+F https://www.mouser.com/datasheet/2/447/PYu-RC_Group_51_RoHS_L_10-1527934.pdf
+$ENDCMP
+#
+#End Doc Library

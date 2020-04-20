@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:EVE-PCB-cache
-EELAYER 26 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -34,7 +33,7 @@ F 8 "MCP23017T-E/SO" H 2250 3800 50  0001 L BNN "Field8"
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CA9821A
 P 3100 4700
 AR Path="/5CA9821A" Ref="#PWR?"  Part="1" 
@@ -55,7 +54,7 @@ Wire Wire Line
 	1550 3300 1550 3400
 Connection ~ 1550 3300
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CA98225
 P 1050 3300
 AR Path="/5CA98225" Ref="#PWR?"  Part="1" 
@@ -83,7 +82,7 @@ SDA
 Wire Wire Line
 	1050 3300 1550 3300
 $Comp
-L power:+5V #PWR?
+L EVE-PCB-rescue:+5V-power #PWR?
 U 1 1 5CB343B8
 P 800 3500
 AR Path="/5CB343B8" Ref="#PWR?"  Part="1" 
@@ -100,7 +99,7 @@ Wire Wire Line
 Wire Wire Line
 	2950 4700 3100 4700
 $Comp
-L power:+5V #PWR?
+L EVE-PCB-rescue:+5V-power #PWR?
 U 1 1 5CB346D2
 P 3100 2900
 AR Path="/5CB346D2" Ref="#PWR?"  Part="1" 
@@ -213,7 +212,7 @@ NoConn ~ 5600 3350
 NoConn ~ 4600 3250
 NoConn ~ 4600 3350
 $Comp
-L power:+12V #PWR011
+L EVE-PCB-rescue:+12V-power #PWR011
 U 1 1 5CB549FF
 P 5950 3450
 F 0 "#PWR011" H 5950 3300 50  0001 C CNN
@@ -226,7 +225,7 @@ $EndComp
 Wire Wire Line
 	5950 3450 5600 3450
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CB54F53
 P 4200 3450
 AR Path="/5CB54F53" Ref="#PWR?"  Part="1" 
@@ -274,7 +273,7 @@ LED1_POS
 Text Label 3100 1550 2    50   ~ 0
 FAN1_POS
 $Comp
-L power:+12V #PWR04
+L EVE-PCB-rescue:+12V-power #PWR04
 U 1 1 5CB5F5B6
 P 2600 1000
 F 0 "#PWR04" H 2600 850 50  0001 C CNN
@@ -323,7 +322,7 @@ A_MEDIA1
 Text Label 5800 800  2    50   ~ 0
 A_DRUGS1
 $Comp
-L Device:R R11
+L EVE-PCB-rescue:R-Device R11
 U 1 1 5CB6FCFC
 P 5150 1800
 F 0 "R11" V 4943 1800 50  0000 C CNN
@@ -336,7 +335,7 @@ $EndComp
 Wire Wire Line
 	5300 1800 5800 1800
 $Comp
-L Diode:BAT43 D4
+L EVE-PCB-rescue:BAT43-Diode D4
 U 1 1 5CB8FF05
 P 8350 2000
 F 0 "D4" H 8350 2216 50  0000 C CNN
@@ -357,7 +356,7 @@ MEDIA1_NEG
 Text Label 9000 1650 2    50   ~ 0
 WASTE1_NEG
 $Comp
-L power:+12V #PWR013
+L EVE-PCB-rescue:+12V-power #PWR013
 U 1 1 5CB9FE50
 P 8000 900
 F 0 "#PWR013" H 8000 750 50  0001 C CNN
@@ -368,7 +367,7 @@ F 3 "" H 8000 900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D3
+L EVE-PCB-rescue:BAT43-Diode D3
 U 1 1 5CB9FE57
 P 8350 1650
 F 0 "D3" H 8350 1866 50  0000 C CNN
@@ -381,7 +380,7 @@ $EndComp
 Wire Wire Line
 	8500 2000 9000 2000
 $Comp
-L Diode:BAT43 D2
+L EVE-PCB-rescue:BAT43-Diode D2
 U 1 1 5CBAC3A9
 P 8350 1300
 F 0 "D2" H 8350 1516 50  0000 C CNN
@@ -392,7 +391,7 @@ F 3 "http://www.vishay.com/docs/85660/bat42.pdf" H 8350 1300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D1
+L EVE-PCB-rescue:BAT43-Diode D1
 U 1 1 5CBAEDCC
 P 8350 950
 F 0 "D1" H 8350 1166 50  0000 C CNN
@@ -428,7 +427,7 @@ Wire Wire Line
 Wire Wire Line
 	9000 950  8500 950 
 $Comp
-L Device:R R10
+L EVE-PCB-rescue:R-Device R10
 U 1 1 5CBC545D
 P 5150 1500
 F 0 "R10" V 4943 1500 50  0000 C CNN
@@ -451,7 +450,7 @@ Wire Wire Line
 Wire Wire Line
 	4450 800  5800 800 
 $Comp
-L Diode:BAT43 D8
+L EVE-PCB-rescue:BAT43-Diode D8
 U 1 1 5CBD943B
 P 9800 2000
 F 0 "D8" H 9800 2216 50  0000 C CNN
@@ -470,7 +469,7 @@ MEDIA2_NEG
 Text Label 10450 1650 2    50   ~ 0
 WASTE2_NEG
 $Comp
-L power:+12V #PWR014
+L EVE-PCB-rescue:+12V-power #PWR014
 U 1 1 5CBD9446
 P 9450 900
 F 0 "#PWR014" H 9450 750 50  0001 C CNN
@@ -481,7 +480,7 @@ F 3 "" H 9450 900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D7
+L EVE-PCB-rescue:BAT43-Diode D7
 U 1 1 5CBD944C
 P 9800 1650
 F 0 "D7" H 9800 1866 50  0000 C CNN
@@ -494,7 +493,7 @@ $EndComp
 Wire Wire Line
 	9950 2000 10450 2000
 $Comp
-L Diode:BAT43 D6
+L EVE-PCB-rescue:BAT43-Diode D6
 U 1 1 5CBD9454
 P 9800 1300
 F 0 "D6" H 9800 1516 50  0000 C CNN
@@ -505,7 +504,7 @@ F 3 "http://www.vishay.com/docs/85660/bat42.pdf" H 9800 1300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D5
+L EVE-PCB-rescue:BAT43-Diode D5
 U 1 1 5CBD945B
 P 9800 950
 F 0 "D5" H 9800 1166 50  0000 C CNN
@@ -565,7 +564,7 @@ A_MEDIA2
 Text Label 7550 800  2    50   ~ 0
 A_DRUGS2
 $Comp
-L Device:R R13
+L EVE-PCB-rescue:R-Device R13
 U 1 1 5CBDAD58
 P 6900 1800
 F 0 "R13" V 6693 1800 50  0000 C CNN
@@ -580,7 +579,7 @@ Wire Wire Line
 Wire Wire Line
 	6750 1800 6200 1800
 $Comp
-L Device:R R12
+L EVE-PCB-rescue:R-Device R12
 U 1 1 5CBDAD61
 P 6900 1500
 F 0 "R12" V 6693 1500 50  0000 C CNN
@@ -613,7 +612,7 @@ LED2_POS
 Text Label 4050 1550 2    50   ~ 0
 FAN2_POS
 $Comp
-L power:+12V #PWR07
+L EVE-PCB-rescue:+12V-power #PWR07
 U 1 1 5CBDEDD4
 P 3550 1000
 F 0 "#PWR07" H 3550 850 50  0001 C CNN
@@ -764,7 +763,7 @@ NoConn ~ 5600 5000
 NoConn ~ 4600 4900
 NoConn ~ 4600 5000
 $Comp
-L power:+12V #PWR012
+L EVE-PCB-rescue:+12V-power #PWR012
 U 1 1 5CC2A1A2
 P 5950 5100
 F 0 "#PWR012" H 5950 4950 50  0001 C CNN
@@ -777,7 +776,7 @@ $EndComp
 Wire Wire Line
 	5950 5100 5600 5100
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CC2A1A9
 P 4200 5100
 AR Path="/5CC2A1A9" Ref="#PWR?"  Part="1" 
@@ -903,7 +902,7 @@ Wire Wire Line
 Text Label 3100 1750 2    50   ~ 0
 PD1_POS
 $Comp
-L power:GND #PWR05
+L EVE-PCB-rescue:GND-power #PWR05
 U 1 1 5CCCBCCC
 P 2600 1750
 F 0 "#PWR05" H 2600 1500 50  0001 C CNN
@@ -918,7 +917,7 @@ Wire Wire Line
 Text Label 4050 1750 2    50   ~ 0
 PD2_POS
 $Comp
-L power:GND #PWR08
+L EVE-PCB-rescue:GND-power #PWR08
 U 1 1 5CCEE678
 P 3550 1750
 F 0 "#PWR08" H 3550 1500 50  0001 C CNN

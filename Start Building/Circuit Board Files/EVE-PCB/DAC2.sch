@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:EVE-PCB-cache
-EELAYER 26 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -15,27 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L MCP23017T-E_SO:MCP23017T-E_SO U?
-U 1 1 5CD88604
-P 2400 3950
-AR Path="/5CD88604" Ref="U?"  Part="1" 
-AR Path="/5CB20BFC/5CD88604" Ref="U?"  Part="1" 
-AR Path="/5CA7DFAE/5CD88604" Ref="U?"  Part="1" 
-AR Path="/5CA80A88/5CD88604" Ref="U6"  Part="1" 
-F 0 "U6" H 2400 5117 50  0000 C CNN
-F 1 "MCP23017T-E_SO" H 2400 5026 50  0000 C CNN
-F 2 "MCP23017T-E_SO:SOIC127P1030X265-28N" H 2400 3950 50  0001 L BNN
-F 3 "Microchip" H 2400 3950 50  0001 L BNN
-F 4 "MCP23017T-E/SOCT-ND" H 2400 3950 50  0001 L BNN "Field4"
-F 5 "16-bit Input/Output Expander, I2C interface, Pb-free28 SOIC .300in T/R" H 2400 3950 50  0001 L BNN "Field5"
-F 6 "https://www.digikey.com/product-detail/en/microchip-technology/MCP23017T-E-SO/MCP23017T-E-SOCT-ND/5358289?utm_source=snapeda&utm_medium=aggregator&utm_campaign=symbol" H 2400 3950 50  0001 L BNN "Field6"
-F 7 "SOIC-28 Microchip" H 2400 3950 50  0001 L BNN "Field7"
-F 8 "MCP23017T-E/SO" H 2400 3950 50  0001 L BNN "Field8"
-	1    2400 3950
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CD8860B
 P 3250 4850
 AR Path="/5CD8860B" Ref="#PWR?"  Part="1" 
@@ -52,12 +31,10 @@ $EndComp
 NoConn ~ 3100 3250
 NoConn ~ 3100 3350
 Wire Wire Line
-	1700 3350 1700 3450
-Wire Wire Line
 	1700 3450 1700 3550
 Connection ~ 1700 3450
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CD88616
 P 1200 3450
 AR Path="/5CD88616" Ref="#PWR?"  Part="1" 
@@ -86,25 +63,23 @@ SDA
 Wire Wire Line
 	1200 3450 1700 3450
 $Comp
-L power:+5V #PWR?
+L EVE-PCB-rescue:+5V-power #PWR?
 U 1 1 5CD88623
-P 950 3650
+P 900 3250
 AR Path="/5CD88623" Ref="#PWR?"  Part="1" 
 AR Path="/5CA7DFAE/5CD88623" Ref="#PWR?"  Part="1" 
 AR Path="/5CA80A88/5CD88623" Ref="#PWR015"  Part="1" 
-F 0 "#PWR015" H 950 3500 50  0001 C CNN
-F 1 "+5V" H 965 3823 50  0000 C CNN
-F 2 "" H 950 3650 50  0001 C CNN
-F 3 "" H 950 3650 50  0001 C CNN
-	1    950  3650
+F 0 "#PWR015" H 900 3100 50  0001 C CNN
+F 1 "+5V" H 915 3423 50  0000 C CNN
+F 2 "" H 900 3250 50  0001 C CNN
+F 3 "" H 900 3250 50  0001 C CNN
+	1    900  3250
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1700 3650 1400 3650
-Wire Wire Line
 	3100 4850 3250 4850
 $Comp
-L power:+5V #PWR?
+L EVE-PCB-rescue:+5V-power #PWR?
 U 1 1 5CD8862B
 P 3250 3050
 AR Path="/5CD8862B" Ref="#PWR?"  Part="1" 
@@ -198,7 +173,7 @@ NoConn ~ 5750 3500
 NoConn ~ 4750 3400
 NoConn ~ 4750 3500
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CD8866E
 P 6100 3600
 AR Path="/5CA7DFAE/5CD8866E" Ref="#PWR?"  Part="1" 
@@ -213,7 +188,7 @@ $EndComp
 Wire Wire Line
 	6100 3600 5750 3600
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CD88675
 P 4350 3600
 AR Path="/5CD88675" Ref="#PWR?"  Part="1" 
@@ -262,7 +237,7 @@ LED3_POS
 Text Label 3250 1700 2    50   ~ 0
 FAN3_POS
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CD8868C
 P 2750 1150
 AR Path="/5CA7DFAE/5CD8868C" Ref="#PWR?"  Part="1" 
@@ -313,7 +288,7 @@ A_MEDIA3
 Text Label 5950 950  2    50   ~ 0
 A_DRUGS3
 $Comp
-L Device:R R?
+L EVE-PCB-rescue:R-Device R?
 U 1 1 5CD886A7
 P 5300 1950
 AR Path="/5CA7DFAE/5CD886A7" Ref="R?"  Part="1" 
@@ -328,7 +303,7 @@ $EndComp
 Wire Wire Line
 	5450 1950 5950 1950
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD886AF
 P 8500 2150
 AR Path="/5CA7DFAE/5CD886AF" Ref="D?"  Part="1" 
@@ -351,7 +326,7 @@ MEDIA3_NEG
 Text Label 9150 1800 2    50   ~ 0
 WASTE3_NEG
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CD886BB
 P 8150 1050
 AR Path="/5CA7DFAE/5CD886BB" Ref="#PWR?"  Part="1" 
@@ -364,7 +339,7 @@ F 3 "" H 8150 1050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD886C1
 P 8500 1800
 AR Path="/5CA7DFAE/5CD886C1" Ref="D?"  Part="1" 
@@ -379,7 +354,7 @@ $EndComp
 Wire Wire Line
 	8650 2150 9150 2150
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD886C9
 P 8500 1450
 AR Path="/5CA7DFAE/5CD886C9" Ref="D?"  Part="1" 
@@ -392,7 +367,7 @@ F 3 "http://www.vishay.com/docs/85660/bat42.pdf" H 8500 1450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD886D0
 P 8500 1100
 AR Path="/5CA7DFAE/5CD886D0" Ref="D?"  Part="1" 
@@ -430,7 +405,7 @@ Wire Wire Line
 Wire Wire Line
 	9150 1100 8650 1100
 $Comp
-L Device:R R?
+L EVE-PCB-rescue:R-Device R?
 U 1 1 5CD886E5
 P 5300 1650
 AR Path="/5CA7DFAE/5CD886E5" Ref="R?"  Part="1" 
@@ -455,7 +430,7 @@ Wire Wire Line
 Wire Wire Line
 	4600 950  5950 950 
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD886F2
 P 9950 2150
 AR Path="/5CA7DFAE/5CD886F2" Ref="D?"  Part="1" 
@@ -476,7 +451,7 @@ MEDIA4_NEG
 Text Label 10600 1800 2    50   ~ 0
 WASTE4_NEG
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CD886FD
 P 9600 1050
 AR Path="/5CA7DFAE/5CD886FD" Ref="#PWR?"  Part="1" 
@@ -489,7 +464,7 @@ F 3 "" H 9600 1050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD88703
 P 9950 1800
 AR Path="/5CA7DFAE/5CD88703" Ref="D?"  Part="1" 
@@ -504,7 +479,7 @@ $EndComp
 Wire Wire Line
 	10100 2150 10600 2150
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD8870B
 P 9950 1450
 AR Path="/5CA7DFAE/5CD8870B" Ref="D?"  Part="1" 
@@ -517,7 +492,7 @@ F 3 "http://www.vishay.com/docs/85660/bat42.pdf" H 9950 1450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Diode:BAT43 D?
+L EVE-PCB-rescue:BAT43-Diode D?
 U 1 1 5CD88712
 P 9950 1100
 AR Path="/5CA7DFAE/5CD88712" Ref="D?"  Part="1" 
@@ -579,7 +554,7 @@ A_MEDIA4
 Text Label 7700 950  2    50   ~ 0
 A_DRUGS4
 $Comp
-L Device:R R?
+L EVE-PCB-rescue:R-Device R?
 U 1 1 5CD88733
 P 7050 1950
 AR Path="/5CA7DFAE/5CD88733" Ref="R?"  Part="1" 
@@ -596,7 +571,7 @@ Wire Wire Line
 Wire Wire Line
 	6900 1950 6350 1950
 $Comp
-L Device:R R?
+L EVE-PCB-rescue:R-Device R?
 U 1 1 5CD8873C
 P 7050 1650
 AR Path="/5CA7DFAE/5CD8873C" Ref="R?"  Part="1" 
@@ -623,15 +598,15 @@ Wire Wire Line
 Text Label 4200 1300 2    50   ~ 0
 DRUG4_POS
 Text Label 4200 1400 2    50   ~ 0
-MEDIA2_POS
+MEDIA4_POS
 Text Label 4200 1500 2    50   ~ 0
-WASTE2_POS
+WASTE4_POS
 Text Label 4200 1600 2    50   ~ 0
-LED2_POS
+LED4_POS
 Text Label 4200 1700 2    50   ~ 0
-FAN2_POS
+FAN4_POS
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CD8874E
 P 3700 1150
 AR Path="/5CA7DFAE/5CD8874E" Ref="#PWR?"  Part="1" 
@@ -676,11 +651,7 @@ NoConn ~ 3100 4550
 NoConn ~ 1700 4700
 NoConn ~ 1700 4550
 Wire Wire Line
-	1400 3650 1400 3750
-Wire Wire Line
-	1400 3750 950  3750
-Wire Wire Line
-	950  3750 950  3650
+	900  3350 900  3250
 Wire Wire Line
 	1300 3850 1700 3850
 Wire Wire Line
@@ -764,7 +735,7 @@ NoConn ~ 5750 5150
 NoConn ~ 4750 5050
 NoConn ~ 4750 5150
 $Comp
-L power:+12V #PWR?
+L EVE-PCB-rescue:+12V-power #PWR?
 U 1 1 5CD887A9
 P 6100 5250
 AR Path="/5CA7DFAE/5CD887A9" Ref="#PWR?"  Part="1" 
@@ -779,7 +750,7 @@ $EndComp
 Wire Wire Line
 	6100 5250 5750 5250
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CD887B0
 P 4350 5250
 AR Path="/5CD887B0" Ref="#PWR?"  Part="1" 
@@ -906,7 +877,7 @@ Wire Wire Line
 Text Label 3250 1900 2    50   ~ 0
 PD3_POS
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CD887EE
 P 2750 1900
 AR Path="/5CA7DFAE/5CD887EE" Ref="#PWR?"  Part="1" 
@@ -921,9 +892,9 @@ $EndComp
 Wire Wire Line
 	2750 1900 3250 1900
 Text Label 4200 1900 2    50   ~ 0
-PD2_POS
+PD4_POS
 $Comp
-L power:GND #PWR?
+L EVE-PCB-rescue:GND-power #PWR?
 U 1 1 5CD887F6
 P 3700 1900
 AR Path="/5CA7DFAE/5CD887F6" Ref="#PWR?"  Part="1" 
@@ -997,4 +968,35 @@ Wire Wire Line
 	3500 4250 3100 4250
 Wire Wire Line
 	3500 4350 3100 4350
+$Comp
+L MCP23017T-E_SO:MCP23017T-E_SO U?
+U 1 1 5CD88604
+P 2400 3950
+AR Path="/5CD88604" Ref="U?"  Part="1" 
+AR Path="/5CB20BFC/5CD88604" Ref="U?"  Part="1" 
+AR Path="/5CA7DFAE/5CD88604" Ref="U?"  Part="1" 
+AR Path="/5CA80A88/5CD88604" Ref="U6"  Part="1" 
+F 0 "U6" H 2400 5117 50  0000 C CNN
+F 1 "MCP23017T-E_SO" H 2400 5026 50  0000 C CNN
+F 2 "MCP23017T-E_SO:SOIC127P1030X265-28N" H 2400 3950 50  0001 L BNN
+F 3 "Microchip" H 2400 3950 50  0001 L BNN
+F 4 "MCP23017T-E/SOCT-ND" H 2400 3950 50  0001 L BNN "Field4"
+F 5 "16-bit Input/Output Expander, I2C interface, Pb-free28 SOIC .300in T/R" H 2400 3950 50  0001 L BNN "Field5"
+F 6 "https://www.digikey.com/product-detail/en/microchip-technology/MCP23017T-E-SO/MCP23017T-E-SOCT-ND/5358289?utm_source=snapeda&utm_medium=aggregator&utm_campaign=symbol" H 2400 3950 50  0001 L BNN "Field6"
+F 7 "SOIC-28 Microchip" H 2400 3950 50  0001 L BNN "Field7"
+F 8 "MCP23017T-E/SO" H 2400 3950 50  0001 L BNN "Field8"
+	1    2400 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1700 3650 1400 3650
+Wire Wire Line
+	1700 3350 900  3350
+Connection ~ 900  3350
+Wire Wire Line
+	1400 3650 1400 3700
+Wire Wire Line
+	1400 3700 900  3700
+Wire Wire Line
+	900  3700 900  3350
 $EndSCHEMATC
