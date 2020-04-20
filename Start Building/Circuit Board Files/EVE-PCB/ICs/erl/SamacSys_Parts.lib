@@ -1,0 +1,366 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#SamacSys ECAD Model NE555DR
+#/6648/2/2.37/8/4/Integrated Circuit
+DEF NE555DR IC 0 30 Y Y 1 F N
+F0 "IC" 1050 600 50 H V L CNN
+F1 "NE555DR" 1050 500 50 H V L CNN
+F2 "SOIC127P600X175-8N" 1050 400 50 H I L CNN
+F3 "http://www.ti.com/lit/ds/symlink/ne555.pdf" 1050 300 50 H I L CNN
+F4 "Single Precision Timer" 1050 200 50 H I L CNN "Description"
+F5 "1.75" 1050 100 50 H I L CNN "Height"
+F6 "Texas Instruments" 1050 0 50 H I L CNN "Manufacturer_Name"
+F7 "NE555DR" 1050 -100 50 H I L CNN "Manufacturer_Part_Number"
+F8 "595-NE555DR" 1050 -200 50 H I L CNN "Mouser Part Number"
+F9 "https://www.mouser.com/Search/Refine.aspx?Keyword=595-NE555DR" 1050 -300 50 H I L CNN "Mouser Price/Stock"
+F10 "1218414" 1050 -400 50 H I L CNN "RS Part Number"
+F11 "http//uk.rs-online.com/web/p/products/1218414" 1050 -500 50 H I L CNN "RS Price/Stock"
+DRAW
+X GND 1 600 -1000 200 U 50 50 0 0 B
+X TRIG 2 0 -400 200 R 50 50 0 0 B
+X OUT 3 1200 -200 200 L 50 50 0 0 B
+X ~RESET 4 0 0 200 R 50 50 0 0 B
+X CONT 5 500 600 200 D 50 50 0 0 B
+X THRES 6 0 -300 200 R 50 50 0 0 B
+X DISCH 7 0 -100 200 R 50 50 0 0 B
+X VCC 8 700 600 200 D 50 50 0 0 B
+P 5 0 1 6 200 400 1000 400 1000 -800 200 -800 200 400 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model 1841539
+#/287472/128060/2.38/12/3/Inductor
+DEF 1841539 L 0 30 Y Y 1 F N
+F0 "L" 750 300 50 H V L CNN
+F1 "1841539" 750 200 50 H V L CNN
+F2 "SHDR12W60P935X350_2X6_2250X1800X2420P" 750 100 50 H I L CNN
+F3 "https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1841539&library=usen&tab=1" 750 0 50 H I L CNN
+F4 "Phoenix Contact PCB Terminal Block" 750 -100 50 H I L CNN "Description"
+F5 "24.2" 750 -200 50 H I L CNN "Height"
+F6 "651-1841539" 750 -300 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=651-1841539" 750 -400 50 H I L CNN "Mouser Price/Stock"
+F8 "Phoenix Contact" 750 -500 50 H I L CNN "Manufacturer_Name"
+F9 "1841539" 750 -600 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X 1 1 0 0 200 R 50 50 0 0 B
+X 2 2 0 -100 200 R 50 50 0 0 B
+X 3 3 0 -200 200 R 50 50 0 0 B
+X 4 4 0 -300 200 R 50 50 0 0 B
+X 5 5 0 -400 200 R 50 50 0 0 B
+X 6 6 0 -500 200 R 50 50 0 0 B
+X 7 7 900 0 200 L 50 50 0 0 B
+X 8 8 900 -100 200 L 50 50 0 0 B
+X 9 9 900 -200 200 L 50 50 0 0 B
+X 10 10 900 -300 200 L 50 50 0 0 B
+X 11 11 900 -400 200 L 50 50 0 0 B
+X 12 12 900 -500 200 L 50 50 0 0 B
+P 5 0 1 6 200 100 700 100 700 -600 200 -600 200 100 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model ULN2803ADWR
+#/234188/128060/2.38/18/3/Transistor
+DEF ULN2803ADWR Q 0 30 Y Y 1 F N
+F0 "Q" 850 300 50 H V L CNN
+F1 "ULN2803ADWR" 850 200 50 H V L CNN
+F2 "SOIC127P1030X265-18N" 850 100 50 H I L CNN
+F3 "http://www.ti.com/lit/gpn/uln2803a" 850 0 50 H I L CNN
+F4 "Darlington Transistor Array" 850 -100 50 H I L CNN "Description"
+F5 "2.65" 850 -200 50 H I L CNN "Height"
+F6 "595-ULN2803ADWR" 850 -300 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=595-ULN2803ADWR" 850 -400 50 H I L CNN "Mouser Price/Stock"
+F8 "Texas Instruments" 850 -500 50 H I L CNN "Manufacturer_Name"
+F9 "ULN2803ADWR" 850 -600 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X 1B 1 0 0 200 R 50 50 0 0 B
+X 2B 2 0 -100 200 R 50 50 0 0 B
+X 3B 3 0 -200 200 R 50 50 0 0 B
+X 4B 4 0 -300 200 R 50 50 0 0 B
+X 5B 5 0 -400 200 R 50 50 0 0 B
+X 6B 6 0 -500 200 R 50 50 0 0 B
+X 7B 7 0 -600 200 R 50 50 0 0 B
+X 8B 8 0 -700 200 R 50 50 0 0 B
+X GND 9 0 -800 200 R 50 50 0 0 B
+X 1C 18 1000 0 200 L 50 50 0 0 B
+X 2C 17 1000 -100 200 L 50 50 0 0 B
+X 3C 16 1000 -200 200 L 50 50 0 0 B
+X 4C 15 1000 -300 200 L 50 50 0 0 B
+X 5C 14 1000 -400 200 L 50 50 0 0 B
+X 6C 13 1000 -500 200 L 50 50 0 0 B
+X 7C 12 1000 -600 200 L 50 50 0 0 B
+X 8C 11 1000 -700 200 L 50 50 0 0 B
+X COM 10 1000 -800 200 L 50 50 0 0 B
+P 5 0 1 6 200 100 800 100 800 -900 200 -900 200 100 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model BAT30F4
+#/632717/128060/2.38/2/4/Diode
+DEF BAT30F4 D 0 30 Y Y 1 F N
+F0 "D" 450 200 50 H V L CNN
+F1 "BAT30F4" 450 100 50 H V L CNN
+F2 "0201" 450 0 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/BAT30F4.pdf" 450 -100 50 H I L CNN
+F4 "STMICROELECTRONICS - BAT30F4 - DIODE, SCHOTTKY, 30V, 0201 FLIPCHIP" 450 -200 50 H I L CNN "Description"
+F5 "" 450 -300 50 H I L CNN "Height"
+F6 "511-BAT30F4" 450 -400 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=511-BAT30F4" 450 -500 50 H I L CNN "Mouser Price/Stock"
+F8 "STMicroelectronics" 450 -600 50 H I L CNN "Manufacturer_Name"
+F9 "BAT30F4" 450 -700 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 600 0 200 L 50 50 0 0 B
+P 4 0 1 6 200 0 400 100 400 -100 200 0 N
+P 2 0 1 6 200 100 200 -100 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model UA7805CKCT
+#/269606/128060/2.38/3/3/Transistor
+DEF UA7805CKCT Q 0 30 Y Y 1 F N
+F0 "Q" 1150 300 50 H V L CNN
+F1 "UA7805CKCT" 1150 200 50 H V L CNN
+F2 "TO254P465X1016X1883-3P" 1150 100 50 H I L CNN
+F3 "http://www.ti.com/lit/ds/symlink/ua7805.pdf" 1150 0 50 H I L CNN
+F4 "Linear Voltage Regulator 5V 1.5A TO-220 Texas Instruments UA78xx UA7805CKCT, Single Linear Voltage Regulator, 1.5A 5 V, 3-Pin TO-220" 1150 -100 50 H I L CNN "Description"
+F5 "4.65" 1150 -200 50 H I L CNN "Height"
+F6 "595-UA7805CKCT" 1150 -300 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=595-UA7805CKCT" 1150 -400 50 H I L CNN "Mouser Price/Stock"
+F8 "Texas Instruments" 1150 -500 50 H I L CNN "Manufacturer_Name"
+F9 "UA7805CKCT" 1150 -600 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X INPUT 1 0 0 200 R 50 50 0 0 B
+X COMMON 2 0 -100 200 R 50 50 0 0 B
+X OUTPUT 3 1300 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 100 1100 100 1100 -200 200 -200 200 100 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model GRM31CE70G107ME39L
+#/1348046/128060/2.38/2/5/Capacitor
+DEF GRM31CE70G107ME39L C 0 30 Y Y 1 F N
+F0 "C" 350 250 50 H V L CNN
+F1 "GRM31CE70G107ME39L" 350 150 50 H V L CNN
+F2 "CAPC3216X180N" 350 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/GRM31CE70G107ME39L.pdf" 350 -50 50 H I L CNN
+F4 "Chip Capacitor value VALUE1" 350 -150 50 H I L CNN "Description"
+F5 "1.8" 350 -250 50 H I L CNN "Height"
+F6 "81-GRM31CE70G107ME9L" 350 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=81-GRM31CE70G107ME9L" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "Murata Electronics" 350 -550 50 H I L CNN "Manufacturer_Name"
+F9 "GRM31CE70G107ME39L" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 500 0 200 L 50 50 0 0 B
+P 2 0 1 6 220 100 220 -100 N
+P 2 0 1 6 280 100 280 -100 N
+P 2 0 1 6 200 0 220 0 N
+P 2 0 1 6 280 0 300 0 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model GRM21BR61E106MA73L
+#/640264/128060/2.38/2/5/Capacitor
+DEF GRM21BR61E106MA73L C 0 30 Y Y 1 F N
+F0 "C" 350 250 50 H V L CNN
+F1 "GRM21BR61E106MA73L" 350 150 50 H V L CNN
+F2 "CAPC2012X145N" 350 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/GRM21BR61E106MA73L.pdf" 350 -50 50 H I L CNN
+F4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 0805 10uF 25volts X5R 20%" 350 -150 50 H I L CNN "Description"
+F5 "1.45" 350 -250 50 H I L CNN "Height"
+F6 "81-GRM21BR61E106MA3L" 350 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=81-GRM21BR61E106MA3L" 350 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "Murata Electronics" 350 -550 50 H I L CNN "Manufacturer_Name"
+F9 "GRM21BR61E106MA73L" 350 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 500 0 200 L 50 50 0 0 B
+P 2 0 1 6 220 100 220 -100 N
+P 2 0 1 6 280 100 280 -100 N
+P 2 0 1 6 200 0 220 0 N
+P 2 0 1 6 280 0 300 0 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model MCT06030C1004FP500
+#/358102/128060/2.38/2/5/Resistor
+DEF MCT06030C1004FP500 R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "MCT06030C1004FP500" 550 150 50 H V L CNN
+F2 "RESC1608X55N" 550 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/MCT06030C1004FP500.pdf" 550 -50 50 H I L CNN
+F4 "Thin Film Resistors - SMD .1W 1Mohm 1% 0603 50ppm Auto" 550 -150 50 H I L CNN "Description"
+F5 "0.55" 550 -250 50 H I L CNN "Height"
+F6 "594-MCT06030C1004FP5" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=594-MCT06030C1004FP5" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "Vishay" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "MCT06030C1004FP500" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model CRCW020110K0FNED
+#/267482/128060/2.38/2/5/Resistor
+DEF CRCW020110K0FNED R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "CRCW020110K0FNED" 550 150 50 H V L CNN
+F2 "RESC0603X28N" 550 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/CRCW020110K0FNED.pdf" 550 -50 50 H I L CNN
+F4 "Thick Film Resistors - SMD 1/20watt 10Kohms 1% 200ppm" 550 -150 50 H I L CNN "Description"
+F5 "0.28" 550 -250 50 H I L CNN "Height"
+F6 "71-CRCW0201-10K" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=71-CRCW0201-10K" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "Vishay" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "CRCW020110K0FNED" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model CRCW0201150RFKED
+#/340136/128060/2.38/2/5/Resistor
+DEF CRCW0201150RFKED R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "CRCW0201150RFKED" 550 150 50 H V L CNN
+F2 "RESC0603X28N" 550 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/CRCW0201150RFKED.pdf" 550 -50 50 H I L CNN
+F4 "Thick Film Resistors - SMD 1/20watt 150ohms 1% 100ppm" 550 -150 50 H I L CNN "Description"
+F5 "0.28" 550 -250 50 H I L CNN "Height"
+F6 "71-CRCW0201150RFKED" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=71-CRCW0201150RFKED" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "Vishay" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "CRCW0201150RFKED" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model B160-13-F
+#/364029/128060/2.38/2/4/Diode
+DEF B160-13-F D 0 30 Y Y 1 F N
+F0 "D" 450 200 50 H V L CNN
+F1 "B160-13-F" 450 100 50 H V L CNN
+F2 "DIOM5226X240N" 450 0 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/B160-13-F.pdf" 450 -100 50 H I L CNN
+F4 "Schottky Diode 1A 60V 0.7Vf SMA Diodes Inc B160-13-F, SMT Schottky Diode, 60V 1A, 2-Pin DO-214AC" 450 -200 50 H I L CNN "Description"
+F5 "2.4" 450 -300 50 H I L CNN "Height"
+F6 "621-B160-F" 450 -400 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=621-B160-F" 450 -500 50 H I L CNN "Mouser Price/Stock"
+F8 "Diodes Inc." 450 -600 50 H I L CNN "Manufacturer_Name"
+F9 "B160-13-F" 450 -700 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 600 0 200 L 50 50 0 0 B
+P 4 0 1 6 200 0 400 100 400 -100 200 0 N
+P 2 0 1 6 200 100 200 -100 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model RC0201FR-07130RL
+#/1406415/128060/2.38/2/5/Resistor
+DEF RC0201FR-07130RL R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "RC0201FR-07130RL" 550 150 50 H V L CNN
+F2 "RESC0603X26N" 550 50 50 H I L CNN
+F3 "https://www.mouser.com/datasheet/2/447/PYu-RC_Group_51_RoHS_L_10-1527934.pdf" 550 -50 50 H I L CNN
+F4 "YAGEO RC0201 VALUE1" 550 -150 50 H I L CNN "Description"
+F5 "0.26" 550 -250 50 H I L CNN "Height"
+F6 "603-RC0201FR-07130RL" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "YAGEO (PHYCOMP)" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "RC0201FR-07130RL" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model RC0201FR-071ML
+#/564616/128060/2.38/2/5/Resistor
+DEF RC0201FR-071ML R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "RC0201FR-071ML" 550 150 50 H V L CNN
+F2 "RESC0603X26N" 550 50 50 H I L CNN
+F3 "https://www.mouser.com/datasheet/2/447/PYu-RC_Group_51_RoHS_L_10-1527934.pdf" 550 -50 50 H I L CNN
+F4 "YAGEO RC0201 VALUE1" 550 -150 50 H I L CNN "Description"
+F5 "0.26" 550 -250 50 H I L CNN "Height"
+F6 "603-RC0201FR-071ML" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "YAGEO (PHYCOMP)" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "RC0201FR-071ML" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model RC0201JR-0710KL
+#/237813/128060/2.38/2/4/Resistor
+DEF RC0201JR-0710KL R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "RC0201JR-0710KL" 550 150 50 H V L CNN
+F2 "RESC0603X26N" 550 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/RC0201JR-0710KL.pdf" 550 -50 50 H I L CNN
+F4 "THICK FILM CHIP RESISTORS" 550 -150 50 H I L CNN "Description"
+F5 "0.26" 550 -250 50 H I L CNN "Height"
+F6 "603-RC0201JR-0710KL" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201JR-0710KL" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "YAGEO (PHYCOMP)" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "RC0201JR-0710KL" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model RC0201FR-0710KL
+#/274691/128060/2.38/2/5/Resistor
+DEF RC0201FR-0710KL R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "RC0201FR-0710KL" 550 150 50 H V L CNN
+F2 "RESC0603X26N" 550 50 50 H I L CNN
+F3 "https://componentsearchengine.com/Datasheets/1/RC0201FR-0710KL.pdf" 550 -50 50 H I L CNN
+F4 "Thick Film Resistors - SMD 10K OHM 1%" 550 -150 50 H I L CNN "Description"
+F5 "0.26" 550 -250 50 H I L CNN "Height"
+F6 "603-RC0201FR-0710KL" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.com/Search/Refine.aspx?Keyword=603-RC0201FR-0710KL" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "YAGEO (PHYCOMP)" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "RC0201FR-0710KL" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#SamacSys ECAD Model RC0201FR-07402RL
+#/817438/128060/2.38/2/5/Resistor
+DEF RC0201FR-07402RL R 0 30 Y Y 1 F N
+F0 "R" 550 250 50 H V L CNN
+F1 "RC0201FR-07402RL" 550 150 50 H V L CNN
+F2 "RESC0603X26N" 550 50 50 H I L CNN
+F3 "https://www.mouser.com/datasheet/2/447/PYu-RC_Group_51_RoHS_L_10-1527934.pdf" 550 -50 50 H I L CNN
+F4 "YAGEO RC0201 VALUE1" 550 -150 50 H I L CNN "Description"
+F5 "0.26" 550 -250 50 H I L CNN "Height"
+F6 "603-RC0201FR-07402RL" 550 -350 50 H I L CNN "Mouser Part Number"
+F7 "" 550 -450 50 H I L CNN "Mouser Price/Stock"
+F8 "YAGEO (PHYCOMP)" 550 -550 50 H I L CNN "Manufacturer_Name"
+F9 "RC0201FR-07402RL" 550 -650 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X ~ 1 0 0 200 R 50 50 0 0 B
+X ~ 2 700 0 200 L 50 50 0 0 B
+P 5 0 1 6 200 50 500 50 500 -50 200 -50 200 50 N
+ENDDRAW
+ENDDEF
+#
+#End Library
