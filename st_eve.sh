@@ -55,7 +55,7 @@ awk '/address/{gsub(/hostname/,"$hostn")};{print}' /eve/webui/conf/conf.json > /
 #Setup file storage
 
 #Reboot
-echo "System will reboot now ..."
+#echo "System will reboot now ..."
 #reboot
 
 
