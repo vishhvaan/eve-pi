@@ -430,8 +430,11 @@ class Morbidostat:
         # Create the I2C bus
 
         self.P_drug_times = self.config[self.varstr].getfloat('P_drug_times')
+        self.drug_pump_flo_rate = self.config[self.varstr].getfloat('drug_pump_flo_rate')
         self.P_nut_times = self.config[self.varstr].getfloat('P_nut_times')
+        self.nut_pump_flo_rate = self.config[self.varstr].getfloat('nut_pump_flo_rate')
         self.P_waste_times = self.config[self.varstr].getfloat('P_waste_times')
+        self.waste_pump_flo_rate = self.config[self.varstr].getfloat('waste_pump_flo_rate')
 
         self.running_data = []  # the list which will hold our 2-tuples of time and OD
         self.pump_data = []
@@ -511,7 +514,7 @@ class Morbidostat:
         self.slack_usericon = self.config[self.sysstr]['slack_icon']
         self.chan = self.config['MAIN']['slack_channel']
 
-        if self.P_drug_times * self.drug_pump_flo_rate != self.P_waste_times * waste_pump_flo_rate or self.P_nut_times * self.nut_pump_flo_rate != self.P_waste_times * waste_pump_flo_rate:
+        if self.P_drug_times * self.drug_pump_flo_rate != self.P_waste_times * self.waste_pump_flo_rate or self.P_nut_times * self.nut_pump_flo_rate != self.P_waste_times * self.waste_pump_flo_rate:
             print('[%s] WARNING: Net volume of the CU will change over time with the currently configured pump times.' % self.sysstr)
             volwarn = self.slack_client.api_call(
                 "chat.postMessage",
