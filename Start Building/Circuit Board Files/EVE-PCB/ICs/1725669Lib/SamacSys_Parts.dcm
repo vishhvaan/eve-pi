@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP 1725669
+D 3 way PCB vertical mount terminal,2.54mm 3 way PCB vertical mount terminal,2.54mm
+K
+F https://www.phoenixcontact.com/online/portal/gb?uri=pxc-oc-itemdetail:pid=1725669&library=gben&tab=1
+$ENDCMP
+#
+#End Doc Library

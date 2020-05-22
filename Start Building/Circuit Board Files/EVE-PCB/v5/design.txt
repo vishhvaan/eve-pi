@@ -1,0 +1,49 @@
+3 CU
+
+Daisy Chainable
+
+CU1 = 2 LED/ 2 PD / 4 Pumps
+CU1 = 1 LED/ 1 PD / 4 Pumps
+CU1 = 1 LED/ 1 PD / 4 Pumps
+
+TCA9548A for sda/scl
+- Address select via solder pads
+- 8 breakouts
+
+2x PWM PCA9685 
+- 16 channels
+- 1 x (4pumps, 2LED, 1IND) = 7 channels
+- 2 x (4pumps, 1LED, 1IND) = 6 channels
+19 channels total
+
+1x ADS1115
+- 4 channels
+- With op amp for photopdiode
+
+2x AD5241
+- 1mohm
+- with 1quad opamp
+- for inital amp
+
+- op amp with hardwired amp and low pass filter (?)
+- amp 5/4
+- diode protection for op amp
+
+1x AD5254
+- Quad pot
+- 10 k
+- 5V power + Vab
+- CU LED R
+
+- high current output voltage follower
+- 2x ALM2402-Q1
+- (more expensive) 4x OPA564
+- 2ohm 1W resistor
+
+Change shotkey to PMEG6010CEH
+
+Logic level inverter for PWM (SN74LVC1G04)
+Logic level shifter for SDA/SCL (?)
+
+Integrate Temp Sensor
+
