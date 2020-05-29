@@ -501,9 +501,14 @@ class Morbidostat:
         self.P_drug_pins = self.config[self.sysstr].getint('P_drug_pins')
         self.P_nut_pins = self.config[self.sysstr].getint('P_nut_pins')
         self.P_waste_pins = self.config[self.sysstr].getint('P_waste_pins')
-        self.P_LED_pins = self.config[self.sysstr].getint('P_LED_pins')
-	# P_fan_pins = self.config[self.sysstr].getint('P_fan_pins')
+        self.P_LED_pins = self.config[self.sysstr].getint('P_led_pins')
         self.pin_list = [self.P_drug_pins, self.P_nut_pins, self.P_waste_pins, self.P_LED_pins]
+
+        self.ledind = self.config[self.sysstr]['P_ind_pins'].isdigit()
+
+        if self.ledind:
+            self.P_ind_pins = self.config[self.sysstr].getint('P_ind_pins')
+            self.pin_list.append(self.P_ind_pins)
 
         self.init_pins(self.pin_list)
 
@@ -643,21 +648,24 @@ class Morbidostat:
     def get_OD(self):
 
         print_buffer = 0
-        self.init_pins([self.P_LED_pins])
+        self.init_pins([self.P_LED_pins, self.P_ind_pins]) if self.ledind else self.init_pins([self.P_LED_pins])
 
         try:
             if self.pipins:
                 GPIO.output(self.P_LED_pins,1)
-                time.sleep(0.1)
-                self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
-                time.sleep(0.1)
-                GPIO.output(self.P_LED_pins,0)
+                if self.ledind: GPIO.output(self.P_ind_pins,1) 
             else:
                 self.pins[self.P_LED_pins].value = True
-                time.sleep(0.1)
-                self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
-                time.sleep(0.1)
+                if self.ledind: self.pins[self.P_ind_pins].value = True
+            time.sleep(0.1)
+            self.currOD = self.photod.voltage #np.asarray(self.value)#[0]
+            time.sleep(0.1)
+            if self.pipins:
+                GPIO.output(self.P_LED_pins,0)
+                if self.ledind: GPIO.output(self.P_ind_pins,0)
+            else:
                 self.pins[self.P_LED_pins].value = False
+                if self.ledind: self.pins[self.P_ind_pins].value = False
         except:
             print ('[%s] OD - WARNING ADC REQUEST CRASHED' % self.sysstr)
             pass
