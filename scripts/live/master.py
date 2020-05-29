@@ -16,6 +16,7 @@ import os
 import board
 import busio
 import adafruit_ads1x15.ads1015 as ADS
+import adafruit_ads1x15.ads1115 as ADS_HR
 from adafruit_ads1x15.analog_in import AnalogIn
 from adafruit_mcp230xx.mcp23017 import MCP23017
 import digitalio
@@ -107,7 +108,10 @@ def IC_init():
 
     if adc_add:
         for add in adc_add:
-            adc.append(ADS.ADS1015(i2c, address= add))
+            if config['MAIN'].getboolean('ads1115'):
+                adc.append(ADS_HR.ADS1115(i2c, address= add))
+            else:
+                adc.append(ADS.ADS1015(i2c, address= add))
 
     if gpio_add:
         for add in gpio_add:
