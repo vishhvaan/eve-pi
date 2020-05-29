@@ -1,64 +1,79 @@
 #!/usr/bin/python3
-""" Vishhvaan's Test Script """
 
-import time
-import RPi.GPIO as GPIO
-from adafruit_mcp230xx.mcp23017 import MCP23017
-import digitalio
-import board
+from board import SCL, SDA
 import busio
 
+from adafruit_pca9685 import PCA9685
+
 import configparser
+
+config = configparser.ConfigParser()
+config.read('eve-conf.ini')
 
 import sys
 
 try:
-    evenum = int(sys.argv[1])
-    fant = float(sys.argv[3])
+    fanper = float(sys.argv[3])
 except ValueError:
     sys.exit("Please type a number.")
 
-config = configparser.ConfigParser()
-config.read('../test/multiplex/eve-conf.ini')
-
+fanper=abs(fanper)
 totsys = (''.join(config.sections())).count('CU')
-sysstr = 'CU' + str(evenum)
 
-i2c = busio.I2C(board.SCL, board.SDA)
-# mcp = adafruit_mcp230xx.MCP23017(i2c, address=32)
-mcp = MCP23017(i2c, address=config[sysstr].getint('m_address'))
+pwmgs = list()
+pwmg_add = list()
 
-fant=abs(fant)
+for sysitr in range(totsys):
+    sysnum = sysitr + 1
+    confsec = 'CU' + str(sysnum)
+    if config[confsec].getboolean('enabled'):
+        if not config[confsec].getboolean('Pi_pins'):
+            pwmg_add.append(config[confsec].getint('pwm_address'))
 
-# setup the GPIO pins to control the devices
-P_sfan_pins = config[sysstr].getint('P_sfan_pins')
-P_fan_pins = config[sysstr].getint('P_fan_pins')
-pin_list = [P_fan_pins, P_sfan_pins]
+pwmg_add = list(set(pwmg_add))
 
-pins =  [None]*(max(pin_list)+1)
+i2c = busio.I2C(SCL, SDA)
 
-for i in pin_list:
-    pins[i] = mcp.get_pin(i)
-    pins[i].direction = digitalio.Direction.OUTPUT
-    pins[i].value = False
+if pwmg_add:
+    for add in pwmg_add:
+        pwmgs.append(PCA9685(i2c, address=add))
+        pwmgs[-1].frequency = config['MAIN'].getint('pwm_freq')
 
-class Morbidostat():
-    def __init__(self):
-        if sys.argv[2] == "Off":
-            print("Turning Fan Off")
-            pins[P_sfan_pins].value = False
-            pins[P_fan_pins].value = False
-        elif sys.argv[2] == "On":
-            print("Fan at Full Power")
-            pins[P_sfan_pins].value = True
-            pins[P_fan_pins].value = True
-            time.sleep(fant)
-            pins[P_sfan_pins].value = False
-            print("Fan at Low Power. Done.")
 
-try:
-    Morbidostat()
-except KeyboardInterrupt:
-    pins[P_sfan_pins].value = False
-    pins[P_fan_pins].value = False
-    print("Stopped Early")
+def runner(sysnum,pwmgs,pwmg_add,ptog,fanper,config):
+    confsec = 'CU' + str(sysnum)
+    fan_pin = config[confsec].getint('p_fan_pins')
+
+    pwmg = pwmgs[pwmg_add.index(config[confsec].getint('pwm_address'))]
+
+    if ptog == 'On':
+        pwmg.channels[fan_pin].duty_cycle = int(int(fanper)*65535/100)
+    else:
+        pwmg.channels[fan_pin].duty_cycle = 0
+    
+totsys_l = sys.argv[1]
+print('CUs Selected:')
+
+evesys = []
+if totsys_l == 'all':
+    totsys_l = list(range(totsys+1))
+    totsys_l.pop(0)
+    for sysiter in totsys_l:
+        confsec = 'CU' + str(sysiter)
+        if config[confsec].getboolean('enabled'):
+            evesys.append(sysiter)
+else:
+    totsys_l = totsys_l.split(',')
+    totsys_l = list(map(int, totsys_l))
+    for sysiter in totsys_l:
+        confsec = 'CU' + str(sysiter)
+        if config[confsec].getboolean('enabled'):
+            evesys.append(sysiter)
+
+print(evesys)
+
+ptog = sys.argv[2]
+print(f'Turning {ptog}')
+
+for sys in evesys: runner(sys,pwmgs,pwmg_add,ptog,fanper,config)
+

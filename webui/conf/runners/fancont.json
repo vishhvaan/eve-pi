@@ -1,7 +1,7 @@
 {
   "name": "2 - Fan Control",
   "script_path": "fancont.py",
-  "description": "Turns on/off the fan with the ability to run it at full power for a short time. The fan has to be run at full power for a very short time before it can be slowed.",
+  "description": "Turns on or off the fans. Set all fans with the [Fan Percent Power] option. Customize individual fan speeds within the program.",
   "working_directory": "/eve/scripts/webui-sc",
   "parameters": [
     {
@@ -19,8 +19,8 @@
       ]
     },
     {
-      "name": "Full Power Duration (s)",
-      "default": "0.3"
+      "name": "Fan Percent Power (0-100)",
+      "default": "80"
     }
   ]
 }

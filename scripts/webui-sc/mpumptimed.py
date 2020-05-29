@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-""" Vishhvaan's Test Script """
 
 import time
 import RPi.GPIO as GPIO
@@ -125,10 +124,10 @@ def stopper(sysnum,gpioe,gpio_add,pname):
 totsys_l = sys.argv[1]
 print('CUs Selected:')
 
+evesys = []
 if totsys_l == 'all':
     totsys_l = list(range(totsys+1))
     totsys_l.pop(0)
-    evesys = []
     for sysiter in totsys_l:
         confsec = 'CU' + str(sysiter)
         if config[confsec].getboolean('enabled'):
@@ -136,7 +135,6 @@ if totsys_l == 'all':
 else:
     totsys_l = totsys_l.split(',')
     totsys_l = list(map(int, totsys_l))
-    evesys = []
     for sysiter in totsys_l:
         confsec = 'CU' + str(sysiter)
         if config[confsec].getboolean('enabled'):
@@ -146,15 +144,11 @@ pname = sys.argv[2].split(',')
 print('Started')
 print('Pin Lists:')
 
-for sys in evesys:
-    sysstr = 'CU' + str(sys)
-    runner(sys,gpioe,gpio_add,pname)
+for sys in evesys: runner(sys,gpioe,gpio_add,pname)
 
 print('Running ...')
 time.sleep(pumpt)
 
-for sys in evesys:
-    sysstr = 'CU' + str(sys)
-    stopper(sys,gpioe,gpio_add,pname)
+for sys in evesys: stopper(sys,gpioe,gpio_add,pname)
 
 
