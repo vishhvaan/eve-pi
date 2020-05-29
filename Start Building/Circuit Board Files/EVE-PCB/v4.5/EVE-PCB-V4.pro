@@ -1,4 +1,4 @@
-update=Sun 10 May 2020 01:29:14 PM EDT
+update=Thu 28 May 2020 12:34:41 PM EDT
 version=1
 last_client=kicad
 [general]
@@ -67,7 +67,7 @@ OthersTextUpright=1
 SolderMaskClearance=0.051
 SolderMaskMinWidth=0.25
 SolderPasteClearance=0
-SolderPasteRatio=0
+SolderPasteRatio=-0
 [pcbnew/Layer.F.Cu]
 Name=F.Cu
 Type=0
@@ -272,6 +272,17 @@ dPairViaGap=0.25
 Name=5v
 Clearance=0.2
 TrackWidth=0.25
+ViaDiameter=0.8
+ViaDrill=0.4
+uViaDiameter=0.3
+uViaDrill=0.1
+dPairWidth=0.2
+dPairGap=0.25
+dPairViaGap=0.25
+[pcbnew/Netclasses/4]
+Name=ultrabig
+Clearance=0.2
+TrackWidth=4
 ViaDiameter=0.8
 ViaDrill=0.4
 uViaDiameter=0.3
