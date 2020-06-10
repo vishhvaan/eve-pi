@@ -1,6 +1,0 @@
-{
-  "name": "Configuration Editor",
-  "script_path": "/eve/scripts/webui-sc/confeditor.py",
-  "working_directory": "/eve/scripts/webui-sc",
-  "description": "EVE Configuration Editor"
-}
