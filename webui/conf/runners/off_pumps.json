@@ -1,0 +1,6 @@
+{
+  "name": "Pumps and LED Off",
+  "script_path": "pumpsledoff.py",
+  "description": "Turns off all the pumps and the LED.",
+  "working_directory": "/eve/scripts/webui-sc"
+}
