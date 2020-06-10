@@ -1,0 +1,229 @@
+{
+  "name": "Very parameterized",
+  "script_path": "scripts/parameterized.sh",
+  "working_directory": "./samples",
+  "description": "This script does nothing except accepting a lot of parameters and printing them",
+  "allowed_users": [
+    "*"
+  ],
+  "include": "${Simple Text}.json",
+  "parameters": [
+    {
+      "name": "Simple Int",
+      "param": "--simple_int",
+      "type": "int"
+    },
+    {
+      "name": "Simple Boolean",
+      "param": "--simple_bool",
+      "no_value": true,
+      "description": "Boolean One"
+    },
+    {
+      "name": "Simple Text",
+      "required": true,
+      "param": "--simple_text",
+      "description": "Parameter Four"
+    },
+    {
+      "name": "Simple List",
+      "param": "--simple_list",
+      "type": "list",
+      "description": "Parameter Five",
+      "values": [
+        "val1",
+        "val3",
+        "some long value"
+      ]
+    },
+    {
+      "name": "File upload",
+      "param": "--file_upload",
+      "type": "file_upload",
+      "description": "File upload testing"
+    },
+    {
+      "name": "Multiple selection",
+      "param": "--multiselect",
+      "type": "multiselect",
+      "description": "Multiselect list",
+      "values": [
+        "Black cat",
+        "Brown dog",
+        "Green parrot",
+        "Red fox"
+      ]
+    },
+    {
+      "name": "Required Text",
+      "required": true,
+      "param": "--required_text",
+      "description": "Parameter One",
+      "env_var": "Req_Text"
+    },
+    {
+      "name": "Required List",
+      "required": true,
+      "param": "--required_list",
+      "type": "list",
+      "description": "List with required value",
+      "values": [
+        "v1",
+        "v2"
+      ]
+    },
+    {
+      "name": "Constrained Int",
+      "required": "true",
+      "param": "--constrained_int",
+      "type": "int",
+      "default": "5",
+      "description": "Parameter Three",
+      "min": "-1",
+      "max": "123"
+    },
+    {
+      "name": "Default Text",
+      "required": true,
+      "param": "--def_text",
+      "default": "some_text",
+      "description": "Text with default value and required"
+    },
+    {
+      "name": "Default Boolean",
+      "param": "--def_bool",
+      "no_value": true,
+      "default": true,
+      "description": "Boolean Two"
+    },
+    {
+      "name": "Constant Text",
+      "param": "--const_text",
+      "default": "constOne",
+      "constant": true,
+      "description": "Constant value"
+    },
+    {
+      "name": "Command-based list",
+      "param": "--var_file",
+      "type": "list",
+      "description": "List parameter 2",
+      "values": {
+        "script": "ls /var"
+      }
+    },
+    {
+      "name": "Secure Int",
+      "type": "int",
+      "description": "Parameter Nine",
+      "secure": true
+    },
+    {
+      "name": "Secure List",
+      "param": "--secure_list",
+      "type": "list",
+      "default": "qwerty",
+      "description": "Parameter Ten",
+      "secure": true,
+      "values": [
+        "qwerty",
+        "12345678",
+        "password"
+      ]
+    },
+    {
+      "name": "Very long list",
+      "param": "--very_long_list",
+      "type": "list",
+      "description": "List with very long values",
+      "values": [
+        "some quite long line",
+        "short",
+        "a bit longer",
+        "abcdefghijklmopqrstuvwxyz",
+        "/home/whoever/wherever/temp/stuff/internal/my_important_file-180214.txt",
+        "abcde-fghijk:lmopqr.stuvwx_yzabcd efghij.klmopq-rstuv%wxyz"
+      ]
+    },
+    {
+      "name": "Multiselect as secure arguments",
+      "required": true,
+      "type": "multiselect",
+      "default": [
+        "multi1",
+        "multi 3"
+      ],
+      "description": "Multiselect list as multiple arguments",
+      "secure": true,
+      "values": [
+        "multi1",
+        "multi2",
+        "multi 3"
+      ],
+      "multiple_arguments": true
+    },
+    {
+      "name": "Dependant list",
+      "type": "list",
+      "description": "A list with values depending on other parameters",
+      "values": {
+        "script": "ls /var/${Command-based list}/${Required Text}"
+      }
+    },
+    {
+      "name": "Auth username",
+      "param": "-u",
+      "default": "${auth.username}"
+    },
+    {
+      "name": "Audit name",
+      "param": "--audit_name",
+      "default": "${auth.audit_name}",
+      "constant": true
+    },
+    {
+      "name": "Any IP",
+      "param": "--any_ip",
+      "type": "ip"
+    },
+    {
+      "name": "IP v4",
+      "param": "--ip4",
+      "type": "ip4",
+      "default": "127.0.0.1"
+    },
+    {
+      "name": "IP v6",
+      "param": "--ip6",
+      "type": "ip6"
+    },
+    {
+      "name": "Server file",
+      "param": "--server_file",
+      "type": "server_file",
+      "secure": true,
+      "file_dir": "/var/log",
+      "file_extensions": [
+        "log"
+      ]
+    },
+    {
+      "name": "Recursive file",
+      "param": "--recurs_file",
+      "type": "server_file",
+      "default": [
+        "samples",
+        "configs",
+        "parameterized.json"
+      ],
+      "secure": true,
+      "file_dir": "..",
+      "file_recursive": true,
+      "file_extensions": [
+        "json",
+        ".log",
+        "TXT"
+      ]
+    }
+  ]
+}
