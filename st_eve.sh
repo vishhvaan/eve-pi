@@ -48,10 +48,6 @@ cp /eve/webui/eve_webui.service /lib/systemd/system/eve_webui.service
 chmod 644 /lib/systemd/system/eve_webui.service
 systemctl enable eve_webui
 
-
-#Set hostname in the files
-awk '/address/{gsub(/hostname/,"$hostn")};{print}' /eve/webui/conf/conf.json > /eve/webui/conf/conf.json
-
 #Setup file storage
 
 #Reboot
