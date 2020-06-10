@@ -1,6 +1,0 @@
-{
-  "name": "3 - Morbidostat Experiment",
-  "script_path": "master.py",
-  "description": "Run the Morbidostat Experiement",
-  "working_directory": "/eve/scripts/webui-sc"
-}
