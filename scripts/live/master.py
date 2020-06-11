@@ -479,9 +479,6 @@ class Morbidostat:
 
         self.vial_drug_mass = 0
         self.culture_vol = self.config[self.varstr].getint('culture_vol')
-        self.drug_flo_rate = self.config[self.varstr].getint('drug_flo_rate')
-        self.nut_flo_rate = self.config[self.varstr].getint('nut_flo_rate')
-        self.waste_flo_rate = self.config[self.varstr].getint('waste_flo_rate')
         self.pump_act_times = []
         self.dil_rate = 0
         self.max_dil_rate = 0
@@ -1213,7 +1210,7 @@ class Morbidostat:
         self.drug = 2
         self.pump_act_times.append(self.P_drug_times)
 
-        self.vial_drug_mass = self.vial_drug_mass + self.drug_conc * self.P_drug_times * self.drug_flo_rate
+        self.vial_drug_mass = self.vial_drug_mass + self.drug_conc * self.P_drug_times * self.drug_pump_flo_rate
 
         drugamsg = self.slack_client.api_call(
             "chat.postMessage",
@@ -1259,11 +1256,11 @@ class Morbidostat:
             self.pump_act_times.pop(0)
 
         if self.drug == 2:
-            self.dil_rate = self.drug_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
+            self.dil_rate = self.drug_pump_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
         elif self.nut == 1:
-            self.dil_rate = self.nut_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
+            self.dil_rate = self.nut_pump_flo_rate * self.pump_act_times[-1]/(self.time_between_pumps * self.culture_vol)
         else:
-            self.dil_rate= 0
+            self.dil_rate = 0
 
         # self.dil_rate_smo = self.pump_flo_rate * np.mean(self.pump_act_times)/(self.time_between_pumps * self.culture_vol)
 
