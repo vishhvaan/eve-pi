@@ -319,62 +319,6 @@ def comb_grapher():
             )
         comb_lat_sw = [comblat_pic['file']['shares']['public'][chanid][0]['ts'], comblat_pics['file']['shares']['public'][chanid][0]['ts']]
 
-
-
-
-def slackresponder():
-    while True:
-        try:
-            events = slack_client.rtm_read()
-            for event in events:
-                for sysitr in range(len(morbidostats)):
-                    sysnum = morbidostats[sysitr][1]
-                    evename = 'CU' + str(sysnum)
-                    if (
-                        event.get('channel') == chanid and
-                        event.get('text') == evename and
-                        event.get('thread_ts') == multits and
-                        event.get('type') == 'message'
-                    ):
-                        # print(event)
-                        respmsg = slack_client.api_call(
-                            "chat.postMessage",
-                            username = 'Multiplexer',
-                            icon_url = config['MAIN']['multi_icon'],
-                            channel=mchan,
-                            text = 'Generating Graphs for ' + evename,
-                            thread_ts= multits
-                            )
-                        morbidostats[sysitr][0].graphOD()
-            time.sleep(60)
-        except KeyboardInterrupt:
-            break
-        except Exception as e:
-            # slack_client.api_call(
-                # "chat.postMessage",
-                # username = 'Multiplexer',
-                # icon_url = config['MAIN']['multi_icon'],
-                # channel=mchan,
-                # text = 'Slack Reponder *o*',
-                # thread_ts= multits
-                # )
-            # slack_client.api_call(
-                # "chat.postMessage",
-                # username = 'Multiplexer',
-                # icon_url = config['MAIN']['multi_icon'],
-                # channel=mchan,
-                # text = e,
-                # thread_ts= multits
-                # )
-            pass
-
-# def temp_runner():
-    # if config['MAIN'].getboolean('temp_sensor'):
-        # while True:
-            # i2c_q.append('TT')
-            # time.sleep(3)
-
-
 def temp_sensor_func():
     base_dir = '/sys/bus/w1/devices/'
     device_folder = glob.glob(base_dir + '28*')[0]
