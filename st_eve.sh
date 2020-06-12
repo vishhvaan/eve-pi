@@ -19,8 +19,7 @@ echo "Changed."
 echo ""
 
 #Change the hostname
-echo -n "Enter the Hostname (Network Name) of the Device: "
-read hostn
+read -r -p "Enter the Hostname (Network Name) of the Device: " hostn
 hostnamectl set-hostname $hostn
 
 echo "Changed."
@@ -37,7 +36,7 @@ apt install -y git python3 python3-pip libatlas-base-dev
 #apt install -y nfs-kernel-server vim tmux
 
 umask 022
-pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 numpy slackclient==1.3.2 pandas matplotlib configparser tornado dash
+pip3 install adafruit-circuitpython-ads1x15 adafruit-circuitpython-mcp230xx adafruit-circuitpython-onewire adafruit-circuitpython-ds18x20 adafruit-circuitpython-pca9685 numpy slackclient==1.3.2 pandas matplotlib configparser tornado dash
 
 #Git Clone Repo
 mkdir /eve
@@ -51,7 +50,14 @@ systemctl enable eve_webui
 #Setup file storage
 
 #Reboot
-#echo "System will reboot now ..."
-#reboot
-
+echo ""
+echo ""
+echo "Setup Complete."
+read -r -p "Reboot Now? (Y/n): " reb_tog
+case "$reb_tog" in
+    [yY][eE][sS]|[yY]) 
+        reboot
+        ;;
+    *)
+esac
 
