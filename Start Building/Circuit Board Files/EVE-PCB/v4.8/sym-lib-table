@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name EVE-PCB-V4-rescue)(type Legacy)(uri ${KIPRJMOD}/EVE-PCB-V4-rescue.lib)(options "")(descr ""))
+  (lib (name MCP1501-40E_SN)(type Legacy)(uri "/home/vishhvaan/Documents/Git Repos/eve-pi/Start Building/Circuit Board Files/EVE-PCB/ICs/MCP1501-40E_SN/MCP1501-40E_SN.lib")(options "")(descr ""))
+)
