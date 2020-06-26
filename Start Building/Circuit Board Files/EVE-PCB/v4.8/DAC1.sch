@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 3
+Sheet 3 3
 Title ""
 Date ""
 Rev ""
@@ -222,7 +222,7 @@ MEDIA1_POS
 Text Label 3100 1300 2    50   ~ 0
 WASTE1_POS
 Text Label 3100 1400 2    50   ~ 0
-LED1_POS
+FAN1_POS
 $Comp
 L EVE-PCB-V4-rescue:+12V-power-EVE-PCB-rescue #PWR034
 U 1 1 5CB5F5B6
@@ -484,7 +484,7 @@ MEDIA2_POS
 Text Label 4050 1300 2    50   ~ 0
 WASTE2_POS
 Text Label 4050 1400 2    50   ~ 0
-LED2_POS
+FAN2_POS
 $Comp
 L EVE-PCB-V4-rescue:+12V-power-EVE-PCB-rescue #PWR039
 U 1 1 5CBDEDD4
@@ -1085,11 +1085,11 @@ Connection ~ 8000 1650
 Wire Wire Line
 	3100 1850 2600 1850
 Text Label 3100 1850 2    50   ~ 0
-FAN1_POS
+LED1_POS
 Wire Wire Line
 	4050 1850 3550 1850
 Text Label 4050 1850 2    50   ~ 0
-FAN2_POS
+LED2_POS
 Wire Wire Line
 	3550 1750 3550 1850
 Wire Wire Line
