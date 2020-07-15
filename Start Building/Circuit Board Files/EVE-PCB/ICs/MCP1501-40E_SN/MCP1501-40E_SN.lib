@@ -1,0 +1,29 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# MCP1501-40E/SN
+#
+DEF MCP1501-40E/SN U 0 40 Y Y 1 L N
+F0 "U" -401 351 50 H V L BNN
+F1 "MCP1501-40E/SN" -401 -451 50 H V L BNN
+F2 "SOIC127P600X175-8N" 0 0 50 H I L BNN
+F3 "Microchip" 0 0 50 H I L BNN
+DRAW
+P 2 0 0 10 -400 350 -400 -350 N
+P 2 0 0 10 -400 -350 400 -350 N
+P 2 0 0 10 400 -350 400 350 N
+P 2 0 0 10 400 350 -400 350 N
+X OUT 7 600 150 200 L 40 40 0 0 O 
+X FEEDBACK 8 600 -50 200 L 40 40 0 0 P 
+X GND 2 600 -250 200 L 40 40 0 0 P 
+X GND 4 600 -250 200 L 40 40 0 0 P 
+X GND 5 600 -250 200 L 40 40 0 0 P 
+X GND 6 600 -250 200 L 40 40 0 0 P 
+X ~SHDN~ 3 -600 50 200 R 40 40 0 0 I 
+X VDD 1 -600 250 200 R 40 40 0 0 W 
+ENDDRAW
+ENDDEF
+#
+# End Library

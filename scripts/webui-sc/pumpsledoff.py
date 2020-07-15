@@ -46,6 +46,11 @@ def runner(sysnum,gpioe,gpio_add):
     P_LED_pins = config[confsec].getint('P_LED_pins')
 
     pin_list = [P_drug_pins, P_nut_pins, P_waste_pins, P_LED_pins]
+
+    if config[confsec]['P_ind_pins'].isdigit():
+        P_ind_pins = config[confsec].getint('P_ind_pins')
+        pin_list.append(P_ind_pins)
+    
     print(pin_list)
 
 

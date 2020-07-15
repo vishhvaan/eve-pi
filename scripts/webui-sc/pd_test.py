@@ -62,21 +62,23 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
     confsec = 'CU' + str(sysnum)
     print(confsec)
     pipins = config[confsec].getboolean('Pi_pins')
-    P_LED_pins = config[confsec].getint('P_LED_pins')
+    pins = [config[confsec].getint('P_LED_pins')]
+    if config[confsec]['P_ind_pins'].isdigit(): pins.append(config[confsec].getint('P_ind_pins'))
     photod = AnalogIn(adc[adc_add.index(config[confsec].getint('a_address'))], getattr(ADS,'P'+ str(config[confsec].getint('Analogin'))))
 
     if pipins:
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(P_LED_pins, GPIO.OUT)
-        GPIO.output(P_LED_pins,1)
+        for pin in pins:
+            GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin,1)
         time.sleep(0.1)
-
     else:
         mcp = gpioe[gpio_add.index(config[confsec].getint('m_address'))]
-
-        led_pin = mcp.get_pin(P_LED_pins)
-        led_pin.direction = digitalio.Direction.OUTPUT
-        led_pin.value = True
+        mcp_pins = []
+        for pin in pins:
+            mcp_pins.append(mcp.get_pin(pin))
+            mcp_pins[-1].direction = digitalio.Direction.OUTPUT
+            mcp_pins[-1].value = True
         time.sleep(0.1)
 
     for i in list(range(loops)):
@@ -85,18 +87,11 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops):
 
 
     if pipins:
-        GPIO.output(P_LED_pins,0)
+        for pin in pins: GPIO.output(pin,0)
         time.sleep(0.1)
-
     else:
-        led_pin.value = False
+        for pin in mcp_pins: pin.value = False
         time.sleep(0.1)
-
-
-
-
-
-
 
 evesys = sys.argv[1]
 

@@ -32,9 +32,12 @@ $ sudo su
 $ bash <(curl -s https://raw.githubusercontent.com/vishhvaan/eve-pi/master/st_eve.sh)
 ```
 6. Follow the on-screen instructions to install the software.
-7. If the Pi has a browser, navigate to the web interface by accessing: http://localhost.
-8. On a browser on the network, navigate to the web interface by accessing the IP address or hostname of the device (e.g. http://eve.local_domain.net).
+7. Navigate to the folder `scripts/live/` and copy the `sample-conf.in` to `eve-conf.ini`.
+8. Edit the `eve-conf.ini` file based on the "Configuration File Parameter Definitions" file in the "Start Building" folder.\*
+9. If the Pi has a browser, navigate to the web interface by accessing: http://localhost.
+10. On a browser on the network, navigate to the web interface by accessing the IP address or hostname of the device (e.g. http://eve.local_domain.net).
 
+\* If the schematic was exactly followed, the default values for the hardware address in the sample-conf.ini file will work and do no tneed to be edited.
 
 ## Install for Docker for ARM Devices
  
