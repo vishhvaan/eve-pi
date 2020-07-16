@@ -23,6 +23,7 @@ import digitalio
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import signal
 
 # Needed for Slack Integration
 # import slack
@@ -401,8 +402,8 @@ class Morbidostat:
         # self.OD_av_length = self.config[self.varstr].getint('OD_av_length')
         # # OD averaging buffer
         # self.avOD_buffer = [0] * self.OD_av_length #need to change for multiplexing
-        self.filtwindow = signal.firwin(self.config[self.varstr].getfloat('length_of_od_filter'), self.config[self.varstr].getfloat('low_pass_corner_frequ'), fs = 1/self.time_between_ODs)
-        self.window = signal.lfilter_zi(b, 1)
+        self.filtwindow = signal.firwin(self.config[self.varstr].getint('length_of_od_filter'), self.config[self.varstr].getfloat('low_pass_corner_frequ'), fs = 1/self.time_between_ODs)
+        self.window = signal.lfilter_zi(self.filtwindow , 1)
         self.thresh_check = self.config[self.varstr].getfloat('time_thresh')
         self.growthOD = []
         self.growthrate = []
@@ -616,8 +617,8 @@ class Morbidostat:
         # self.avOD_buffer = self.avOD_buffer + [self.currOD]
         # self.avOD_buffer.pop(0)
         # self.avOD = sum(self.avOD_buffer)/len(self.avOD_buffer)
-        self.avOD = signal.lfilter(self.filtwindow, 1, [self.currOD], zi = self.window)
-        self.maxOD = self.avOD if self.avOD > self.maxOD
+        [self.avOD], self.window = signal.lfilter(self.filtwindow, 1, [self.currOD], zi = self.window)
+        if self.avOD > self.maxOD: self.maxOD = self.avOD
 
         self.thread_locks['adc'].release()
 
