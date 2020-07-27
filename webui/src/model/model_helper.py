@@ -1,9 +1,10 @@
 import logging
 import os
+import re
 
 import utils.env_utils as env_utils
-import utils.string_utils as string_utils
-from model.script_configs import Parameter
+from config.constants import FILE_TYPE_DIR, FILE_TYPE_FILE
+from utils.string_utils import is_blank
 
 ENV_VAR_PREFIX = '$$'
 SECURE_MASK = '*' * 6
@@ -11,19 +12,25 @@ SECURE_MASK = '*' * 6
 LOGGER = logging.getLogger('script_server.model_helper')
 
 
-def get_default(parameter: Parameter):
-    default = parameter.get_default()
-    if not default:
-        return default
+def resolve_env_vars(value, *, full_match=False):
+    if not isinstance(value, str) or is_empty(value):
+        return value
 
-    return unwrap_conf_value(default)
+    if full_match:
+        if value.startswith(ENV_VAR_PREFIX):
+            return env_utils.read_variable(value[2:])
+        return value
 
+    def resolve_var(match):
+        var_match = match.group()
+        var_name = var_match[2:]
+        resolved = env_utils.read_variable(var_name, fail_on_missing=False)
+        if resolved is not None:
+            return resolved
+        return var_match
 
-def unwrap_conf_value(value):
-    if isinstance(value, str) and value.startswith(ENV_VAR_PREFIX):
-        return env_utils.read_variable(value[2:])
-
-    return value
+    pattern = re.escape(ENV_VAR_PREFIX) + '\w+'
+    return re.sub(pattern, resolve_var, value)
 
 
 def read_obligatory(values_dict, key, error_suffix=''):
@@ -85,6 +92,20 @@ def read_dict(values_dict, key, default=None):
     raise Exception('"' + key + '" has invalid type. Dict expected')
 
 
+def read_bool_from_config(key, config_obj, *, default=None):
+    value = config_obj.get(key)
+    if value is None:
+        return default
+
+    if isinstance(value, bool):
+        return value
+
+    if isinstance(value, str):
+        return value.lower() == 'true'
+
+    raise Exception('"' + key + '" field should be true or false')
+
+
 def read_bool(value):
     if isinstance(value, bool):
         return value
@@ -94,101 +115,142 @@ def read_bool(value):
 
     return value.lower() == 'true'
 
+
+def read_int_from_config(key, config_obj, *, default=None):
+    value = config_obj.get(key)
+    if value is None:
+        return default
+
+    if isinstance(value, int) and not isinstance(value, bool):
+        return value
+
+    if isinstance(value, str):
+        if value.strip() == '':
+            return default
+        try:
+            return int(value)
+        except ValueError as e:
+            raise InvalidValueException(key, 'Invalid %s value: integer expected, but was: %s' % (key, value)) from e
+
+    raise InvalidValueTypeException('Invalid %s value: integer expected, but was: %s' % (key, repr(value)))
+
+
+def read_str_from_config(config_obj, key, *, default=None, blank_to_none=False):
+    """
+    Reads string value from a config by the key
+    If the value is missing, returns specified default value
+    If the value is not string, InvalidValueTypeException is thrown
+
+    :param config_obj: where to read value from
+    :param key: key to read value from
+    :param default: default value, if config value is missing
+    :param blank_to_none: if value is blank, treat it as null
+    :return: config_obj[key] if non None, default otherwise
+    """
+    value = config_obj.get(key)
+
+    if blank_to_none and isinstance(value, str) and is_blank(value):
+        value = None
+
+    if value is None:
+        return default
+
+    if isinstance(value, str):
+        return value
+
+    raise InvalidValueTypeException('Invalid %s value: string expected, but was: %s' % (key, repr(value)))
+
+
 def is_empty(value):
     return (not value) and (value != 0) and (value is not False)
 
 
-def validate_parameters(parameters, config):
-    for parameter in config.get_parameters():
-        if parameter.is_constant():
+def fill_parameter_values(parameter_configs, template, values):
+    result = template
+
+    for parameter_config in parameter_configs:
+        if parameter_config.secure or parameter_config.no_value:
             continue
 
-        name = parameter.get_name()
+        parameter_name = parameter_config.name
+        value = values.get(parameter_name)
 
-        if name in parameters:
-            value = parameters[name]
-        else:
-            value = None
+        if value is None:
+            value = ''
 
-        if is_empty(value):
-            if parameter.is_required():
-                LOGGER.error('Parameter ' + name + ' is not specified')
-                return False
-            continue
+        if not isinstance(value, str):
+            mapped_value = parameter_config.map_to_script(value)
+            value = parameter_config.to_script_args(mapped_value)
 
-        value_string = value_to_str(value, parameter)
+        result = result.replace('${' + parameter_name + '}', str(value))
 
-        if parameter.is_no_value():
-            if value not in ['true', True, 'false', False]:
-                LOGGER.error('Parameter ' + name + ' should be boolean, but has value ' + value_string)
-                return False
-            continue
-
-        if parameter.type == 'text':
-            continue
-
-        if parameter.type == 'file_upload':
-            if not os.path.exists(value):
-                LOGGER.error('Cannot find file ' + value)
-                return False
-            continue
-
-        if parameter.type == 'int':
-            if not (isinstance(value, int) or (isinstance(value, str) and string_utils.is_integer(value))):
-                LOGGER.error('Parameter ' + name + ' should be integer, but has value ' + value_string)
-                return False
-
-            int_value = int(value)
-
-            if (not is_empty(parameter.get_max())) and (int_value > int(parameter.get_max())):
-                LOGGER.error('Parameter ' + name + ' is greater than allowed value (' +
-                             value_string + ' > ' + str(parameter.get_max()) + ')')
-                return False
-
-            if (not is_empty(parameter.get_min())) and (int_value < int(parameter.get_min())):
-                LOGGER.error('Parameter ' + name + ' is lower than allowed value (' +
-                             value_string + ' < ' + str(parameter.get_min()) + ')')
-                return False
-
-            continue
-
-        if parameter.type == 'list':
-            if value not in parameter.get_values():
-                LOGGER.error('Parameter ' + name + ' has value ' + value_string +
-                             ', but should be in [' + ','.join(parameter.get_values()) + ']')
-                return False
-            continue
-
-        if parameter.type == 'multiselect':
-            if not isinstance(value, list):
-                LOGGER.error(
-                    'Parameter ' + name + ' should be a list, but was: ' + value_string + '(' + str(type(value)) + ')')
-                return False
-            for value_element in value:
-                if value_element not in parameter.get_values():
-                    element_str = value_to_str(value_element, parameter)
-                    LOGGER.error('Parameter ' + name + ' has value ' + element_str +
-                                 ', but should be in [' + ','.join(parameter.get_values()) + ']')
-                    return False
-            continue
-
-    return True
+    return result
 
 
-def value_to_str(value, parameter):
-    if parameter.secure:
-        return SECURE_MASK
+def replace_auth_vars(text, username, audit_name):
+    result = text
 
-    return str(value)
+    if not username:
+        username = ''
+    if not audit_name:
+        audit_name = ''
+
+    result = result.replace('${auth.username}', str(username))
+    result = result.replace('${auth.audit_name}', str(audit_name))
+
+    return result
 
 
-def prepare_multiselect_values(param_values, parameters):
-    for param in parameters:
-        if (param.type == 'multiselect') and (param.name in param_values):
-            value = param_values[param.name]
-            if isinstance(value, list):
+def normalize_extension(extension):
+    return re.sub('^\.', '', extension).lower()
+
+
+def list_files(dir, file_type=None, file_extensions=None):
+    if not os.path.exists(dir) or not os.path.isdir(dir):
+        raise InvalidFileException(dir, 'Directory not found')
+
+    result = []
+
+    if not is_empty(file_extensions):
+        file_type = FILE_TYPE_FILE
+
+    sorted_files = sorted(os.listdir(dir), key=lambda s: s.casefold())
+    for file in sorted_files:
+        file_path = os.path.join(dir, file)
+
+        if file_type:
+            if file_type == FILE_TYPE_DIR and not os.path.isdir(file_path):
                 continue
-            if not is_empty(value):
-                param_values[param.name] = [value]
-            else:
-                param_values[param.name] = []
+            elif file_type == FILE_TYPE_FILE and not os.path.isfile(file_path):
+                continue
+
+        if file_extensions and not os.path.isdir(file_path):
+            _, extension = os.path.splitext(file_path)
+            if normalize_extension(extension) not in file_extensions:
+                continue
+
+        result.append(file)
+
+    return result
+
+
+class InvalidFileException(Exception):
+    def __init__(self, path, message) -> None:
+        super().__init__(message)
+        self.path = path
+
+
+class InvalidValueException(Exception):
+    def __init__(self, param_name, validation_error) -> None:
+        super().__init__(validation_error)
+        self.param_name = param_name
+
+
+class InvalidValueTypeException(Exception):
+    def __init__(self, message) -> None:
+        super().__init__(message)
+
+
+class AccessProhibitedException(Exception):
+    def __init__(self, message) -> None:
+        super().__init__(message)

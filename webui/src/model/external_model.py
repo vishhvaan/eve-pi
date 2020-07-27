@@ -1,7 +1,5 @@
-import json
 from datetime import timezone
 
-from model import model_helper
 from utils import date_utils
 
 
@@ -11,30 +9,42 @@ class ExecutionInfo(object):
         self.script = None
 
 
-def config_to_json(config):
+def config_to_external(config, id):
     parameters = []
-    for parameter in config.get_parameters():
-        if parameter.is_constant():
+    for parameter in config.parameters:
+        external_param = parameter_to_external(parameter)
+
+        if external_param is None:
             continue
 
-        parameters.append({
-            "name": parameter.get_name(),
-            "description": parameter.get_description(),
-            "withoutValue": parameter.is_no_value(),
-            "required": parameter.is_required(),
-            "default": model_helper.get_default(parameter),
-            "type": parameter.type,
-            "min": parameter.get_min(),
-            "max": parameter.get_max(),
-            "values": parameter.get_values(),
-            "secure": parameter.secure
-        })
+        parameters.append(external_param)
 
-    return json.dumps({
-        "name": config.name,
-        "description": config.get_description(),
-        "parameters": parameters
-    })
+    return {
+        'id': id,
+        'name': config.name,
+        'description': config.description,
+        'parameters': parameters
+    }
+
+
+def parameter_to_external(parameter):
+    if parameter.constant:
+        return None
+
+    return {
+        'name': parameter.name,
+        'description': parameter.description,
+        'withoutValue': parameter.no_value,
+        'required': parameter.required,
+        'default': parameter.default,
+        'type': parameter.type,
+        'min': parameter.min,
+        'max': parameter.max,
+        'values': parameter.values,
+        'secure': parameter.secure,
+        'fileRecursive': parameter.file_recursive,
+        'fileType': parameter.file_type
+    }
 
 
 def to_short_execution_log(history_entries, running_script_ids=None):
@@ -77,6 +87,7 @@ def _translate_history_entry(entry, running):
 def running_flag_to_status(running):
     return 'running' if running else 'finished'
 
+
 def to_execution_info(request_parameters):
     NAME_KEY = '__script_name'
 
@@ -95,10 +106,9 @@ def to_execution_info(request_parameters):
     return info
 
 
-def to_external_parameter_values(values):
-    result_dict = {}
-
-    for key, value in values.items():
-        result_dict[key] = value
-
-    return json.dumps(result_dict)
+def server_conf_to_external(server_config, server_version):
+    return {
+        'title': server_config.title,
+        'enableScriptTitles': server_config.enable_script_titles,
+        'version': server_version
+    }

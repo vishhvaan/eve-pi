@@ -23,6 +23,7 @@ import digitalio
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import signal
 
 # Needed for Slack Integration
 # import slack
@@ -398,9 +399,11 @@ class Morbidostat:
         self.scaling = self.config[self.varstr].getboolean('scaling')
         self.avOD = 0
         self.maxOD = 0
-        self.OD_av_length = self.config[self.varstr].getint('OD_av_length')
-        # OD averaging buffer
-        self.avOD_buffer = [0] * self.OD_av_length #need to change for multiplexing
+        # self.OD_av_length = self.config[self.varstr].getint('OD_av_length')
+        # # OD averaging buffer
+        # self.avOD_buffer = [0] * self.OD_av_length #need to change for multiplexing
+        self.filtwindow = signal.firwin(self.config[self.varstr].getint('length_of_od_filter'), self.config[self.varstr].getfloat('low_pass_corner_frequ'), fs = 1/self.time_between_ODs)
+        self.window = signal.lfilter_zi(self.filtwindow , 1)
         self.thresh_check = self.config[self.varstr].getfloat('time_thresh')
         self.growthOD = []
         self.growthrate = []
@@ -611,9 +614,10 @@ class Morbidostat:
             print ('[%s] OD - WARNING ADC REQUEST CRASHED' % self.sysstr)
             pass
 
-        self.avOD_buffer = self.avOD_buffer + [self.currOD]
-        self.avOD_buffer.pop(0)
-        self.avOD = sum(self.avOD_buffer)/len(self.avOD_buffer)
+        # self.avOD_buffer = self.avOD_buffer + [self.currOD]
+        # self.avOD_buffer.pop(0)
+        # self.avOD = sum(self.avOD_buffer)/len(self.avOD_buffer)
+        [self.avOD], self.window = signal.lfilter(self.filtwindow, 1, [self.currOD], zi = self.window)
         if self.avOD > self.maxOD: self.maxOD = self.avOD
 
         self.thread_locks['adc'].release()
@@ -710,7 +714,7 @@ class Morbidostat:
                 channel = self.chan,
                 username=self.sysstr,
                 icon_url = self.slack_usericon,
-                text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.avOD)),
                 thread_ts = self.threadts
                 )
 
@@ -905,7 +909,7 @@ class Morbidostat:
                     channel = self.chan,
                     username=self.sysstr,
                     icon_url = self.slack_usericon,
-                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.avOD)),
                     thread_ts = self.recgrats
                     )
                 with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
@@ -1001,7 +1005,7 @@ class Morbidostat:
                     channel = self.chan,
                     username=self.sysstr,
                     icon_url = self.slack_usericon,
-                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.currOD)),
+                    text = ('Elapsed Time: %s ; OD = %.3f' % (self.secondsToText(int(self.elapsed_time.total_seconds())),self.avOD)),
                     thread_ts = self.recgrats
                     )
                 with open("%s/%s/%s/ODplot_%s.png" % (self.root_dir, self.sysstr, self.start_time, self.start_time), "rb") as file_content:
@@ -1315,7 +1319,7 @@ class Morbidostat:
 
 
         if self.printing:
-            print ('[%s] Elapsed Time: %s ; Threads = %d ; OD = %.3f' % (self.sysstr, self.secondsToText(int(self.elapsed_time.total_seconds())),self.active_threads,self.currOD))
+            print ('[%s] Elapsed Time: %s ; Threads = %d ; OD = %.3f' % (self.sysstr, self.secondsToText(int(self.elapsed_time.total_seconds())),self.active_threads,self.avOD))
 
         self.thread_locks['threads'].release()
 
