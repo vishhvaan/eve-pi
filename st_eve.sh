@@ -49,6 +49,9 @@ systemctl enable eve_webui
 
 #Setup file storage
 
+#Setup WebUI
+/eve/webui/tools/init.py --no-npm
+
 #Reboot
 echo ""
 echo ""
