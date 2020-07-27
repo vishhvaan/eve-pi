@@ -10,10 +10,13 @@ import execution.logging
 from execution.logging import ExecutionLoggingService
 from utils import file_utils
 from utils.date_utils import sec_to_datetime, to_millis
+from utils.string_utils import is_blank
 
 __migrations_registry = OrderedDict()
 
 _MigrationDescriptor = namedtuple('_MigrationDescriptor', ['id', 'callable', 'name', 'requires'])
+
+_Context = namedtuple('_Context', ['temp_folder', 'conf_folder', 'conf_file', 'log_folder'])
 
 LOGGER = logging.getLogger('migrations')
 
@@ -84,8 +87,8 @@ def _validate_requirements():
 
 
 @_migration('add_execution_info_to_log_files')
-def __migrate_old_files():
-    output_folder = os.path.join('logs', 'processes')
+def __migrate_old_files(context):
+    output_folder = os.path.join(context.log_folder, 'processes')
     if not os.path.exists(output_folder):
         return
 
@@ -157,8 +160,8 @@ def __migrate_old_files():
 
 
 @_migration('add_user_id_to_log_files', requires=['add_execution_info_to_log_files'])
-def __migrate_user_id():
-    output_folder = os.path.join('logs', 'processes')
+def __migrate_user_id(context):
+    output_folder = os.path.join(context.log_folder, 'processes')
     if not os.path.exists(output_folder):
         return
 
@@ -196,14 +199,14 @@ def __migrate_user_id():
 
 
 @_migration('introduce_access_config')
-def __introduce_access_config():
-    file_path = os.path.join('conf', 'conf.json')
+def __introduce_access_config(context):
+    file_path = context.conf_file
 
     if not os.path.exists(file_path):
         return
 
     content = file_utils.read_file(file_path)
-    json_object = json.loads(content)
+    json_object = json.loads(content, object_pairs_hook=OrderedDict)
 
     def move_to_access(field, parent_object):
         if 'access' not in json_object:
@@ -227,18 +230,73 @@ def __introduce_access_config():
             move_to_access(field, json_object)
 
     if changed:
-        space_matches = re.findall('^\s+', content, flags=re.MULTILINE)
-        if space_matches:
-            indent_string = space_matches[0].replace('\t', '    ')
-            indent = min(len(indent_string), 8)
-        else:
-            indent = 4
-
-        with open(file_path, 'w') as fp:
-            json.dump(json_object, fp, indent=indent)
+        _write_json(file_path, json_object, content)
 
 
-def migrate(temp_folder, conf_folder):
+@_migration('migrate_output_files_parameters_substitution')
+def __migrate_output_files_parameters_substitution(context):
+    for (conf_file, json_object, content) in _load_runner_files(context.conf_folder):
+        if ('output_files' not in json_object) or ('parameters' not in json_object):
+            continue
+
+        output_files = json_object['output_files']
+        parameter_names = [p['name'] for p in json_object['parameters'] if not is_blank(p.get('name'))]
+
+        changed = False
+
+        for i in range(len(output_files)):
+            output_file = output_files[i]
+
+            if not isinstance(output_file, str):
+                continue
+
+            for param_name in parameter_names:
+                output_file = re.sub('\\$\\$\\$' + param_name, '${' + param_name + '}', output_file)
+
+            if output_file != output_files[i]:
+                output_files[i] = output_file
+                changed = True
+
+        if changed:
+            _write_json(conf_file, json_object, content)
+
+
+def _write_json(file_path, json_object, old_content):
+    space_matches = re.findall('^\s+', old_content, flags=re.MULTILINE)
+    if space_matches:
+        indent_string = space_matches[0].replace('\t', '    ')
+        indent = min(len(indent_string), 8)
+    else:
+        indent = 4
+    with open(file_path, 'w') as fp:
+        json.dump(json_object, fp, indent=indent)
+
+
+def _load_runner_files(conf_folder):
+    runners_folder = os.path.join(conf_folder, 'runners')
+
+    if not os.path.exists(runners_folder):
+        return
+
+    conf_files = [os.path.join(runners_folder, file)
+                  for file in os.listdir(runners_folder)
+                  if file.lower().endswith('.json')]
+
+    result = []
+
+    for conf_file in conf_files:
+        content = file_utils.read_file(conf_file)
+        try:
+            json_object = json.loads(content, object_pairs_hook=OrderedDict)
+            result.append((conf_file, json_object, content))
+        except Exception:
+            LOGGER.exception('Failed to load file for migration: ' + conf_file)
+            continue
+
+    return result
+
+
+def migrate(temp_folder, conf_folder, conf_file, log_folder):
     _validate_requirements()
 
     if _is_new_installation(temp_folder, conf_folder):
@@ -250,6 +308,8 @@ def migrate(temp_folder, conf_folder):
 
         if not to_migrate:
             return
+
+        context = _Context(temp_folder, conf_folder, conf_file, log_folder)
 
         migrated = list(old_migrations)
 
@@ -264,7 +324,7 @@ def migrate(temp_folder, conf_folder):
                     continue
 
                 LOGGER.info('Applying migration ' + str(migration_id))
-                migration_descriptor.callable()
+                migration_descriptor.callable(context)
                 migrated.append(migration_id)
                 to_migrate.remove(migration_id)
                 _write_migrations(temp_folder, migrated)

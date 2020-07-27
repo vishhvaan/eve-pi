@@ -1,11 +1,14 @@
 import json
+import logging
 import os
 
 import utils.file_utils as file_utils
 from auth.authorization import ANY_USER
 from model import model_helper
-from model.model_helper import read_list
+from model.model_helper import read_list, read_int_from_config, read_bool_from_config
 from utils.string_utils import strip
+
+LOGGER = logging.getLogger('server_conf')
 
 
 class ServerConfig(object):
@@ -21,9 +24,15 @@ class ServerConfig(object):
         self.logging_config = None
         self.admin_config = None
         self.title = None
+        self.enable_script_titles = None
         self.trusted_ips = []
         self.user_groups = None
         self.admin_users = []
+        self.full_history_users = []
+        self.max_request_size_mb = None
+        self.callbacks_config = None
+        self.user_header_name = None
+        self.secret_storage_file = None
 
     def get_port(self):
         return self.port
@@ -36,20 +45,6 @@ class ServerConfig(object):
 
     def get_ssl_cert_path(self):
         return self.ssl_cert_path
-
-    def get_alerts_config(self):
-        return self.alerts_config
-
-
-class AlertsConfig:
-    def __init__(self) -> None:
-        self.destinations = []
-
-    def add_destination(self, destination):
-        self.destinations.append(destination)
-
-    def get_destinations(self):
-        return self.destinations
 
 
 class LoggingConfig:
@@ -91,14 +86,17 @@ def from_json(conf_path, temp_folder):
 
     if json_object.get('title'):
         config.title = json_object.get('title')
+    config.enable_script_titles = read_bool_from_config('enable_script_titles', json_object, default=True)
 
     access_config = json_object.get('access')
     if access_config:
         allowed_users = access_config.get('allowed_users')
         user_groups = model_helper.read_dict(access_config, 'groups')
+        user_header_name = access_config.get('user_header_name')
     else:
         allowed_users = None
         user_groups = {}
+        user_header_name = None
 
     auth_config = json_object.get('auth')
     if auth_config:
@@ -106,7 +104,7 @@ def from_json(conf_path, temp_folder):
 
         auth_type = config.authenticator.auth_type
         if auth_type == 'google_oauth' and allowed_users is None:
-            raise Exception('auth.allowed_users field is mandatory for ' + auth_type)
+            raise Exception('access.allowed_users field is mandatory for ' + auth_type)
 
         def_trusted_ips = []
         def_admins = []
@@ -117,15 +115,24 @@ def from_json(conf_path, temp_folder):
     if access_config:
         config.trusted_ips = strip(read_list(access_config, 'trusted_ips', default=def_trusted_ips))
         admin_users = _parse_admin_users(access_config, default_admins=def_admins)
+        full_history_users = _parse_history_users(access_config)
     else:
         config.trusted_ips = def_trusted_ips
         admin_users = def_admins
+        full_history_users = []
 
     config.allowed_users = _prepare_allowed_users(allowed_users, admin_users, user_groups)
-    config.alerts_config = parse_alerts_config(json_object)
+    config.alerts_config = json_object.get('alerts')
+    config.callbacks_config = json_object.get('callbacks')
     config.logging_config = parse_logging_config(json_object)
     config.user_groups = user_groups
     config.admin_users = admin_users
+    config.full_history_users = full_history_users
+    config.user_header_name = user_header_name
+
+    config.max_request_size_mb = read_int_from_config('max_request_size', json_object, default=10)
+
+    config.secret_storage_file = json_object.get('secret_storage_file', os.path.join(temp_folder, 'secret.dat'))
 
     return config
 
@@ -143,6 +150,9 @@ def create_authenticator(auth_object, temp_folder):
     elif auth_type == 'google_oauth':
         from auth.auth_google_oauth import GoogleOauthAuthenticator
         authenticator = GoogleOauthAuthenticator(auth_object)
+    elif auth_type == 'htpasswd':
+        from auth.auth_htpasswd import HtpasswdAuthenticator
+        authenticator = HtpasswdAuthenticator(auth_object)
     else:
         raise Exception(auth_type + ' auth is not supported')
 
@@ -175,33 +185,6 @@ def _prepare_allowed_users(allowed_users, admin_users, user_groups):
     return list(coerced_users)
 
 
-def parse_alerts_config(json_object):
-    if json_object.get('alerts'):
-        alerts_object = json_object.get('alerts')
-        destination_objects = alerts_object.get('destinations')
-
-        if destination_objects:
-            alerts_config = AlertsConfig()
-
-            for destination_object in destination_objects:
-                destination_type = destination_object.get('type')
-
-                if destination_type == 'email':
-                    import alerts.destination_email as email
-                    destination = email.EmailDestination(destination_object)
-                elif destination_type == 'http':
-                    import alerts.destination_http as http
-                    destination = http.HttpDestination(destination_object)
-                else:
-                    raise Exception('Unknown alert destination type: ' + destination_type)
-
-                alerts_config.add_destination(destination)
-
-            return alerts_config
-
-    return None
-
-
 def parse_logging_config(json_object):
     config = LoggingConfig()
 
@@ -214,4 +197,23 @@ def parse_logging_config(json_object):
 
 
 def _parse_admin_users(json_object, default_admins=None):
-    return strip(read_list(json_object, 'admin_users', default=default_admins))
+    admins = strip(read_list(json_object, 'admin_users', default=default_admins))
+    if '*' in admins:
+        LOGGER.warning('Any user is allowed to access admin page, be careful!')
+        return [ANY_USER]
+
+    return admins
+
+
+def _parse_history_users(json_object):
+    full_history_users = strip(read_list(json_object, 'full_history', default=[]))
+    if (isinstance(full_history_users, list) and '*' in full_history_users) \
+            or full_history_users == '*':
+        return [ANY_USER]
+
+    return full_history_users
+
+
+class InvalidServerConfigException(Exception):
+    def __init__(self, message) -> None:
+        super().__init__(message)

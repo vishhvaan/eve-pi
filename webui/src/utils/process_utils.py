@@ -10,33 +10,30 @@ from utils import string_utils
 LOGGER = logging.getLogger('script_server.process_utils')
 
 
-def invoke(command, work_dir='.'):
+def invoke(command, work_dir='.', *, environment_variables=None, check_stderr=True):
     if isinstance(command, str):
         command = split_command(command, working_directory=work_dir)
+
+    if environment_variables is not None:
+        env = dict(os.environ, **environment_variables)
+    else:
+        env = None
 
     p = subprocess.Popen(command,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE,
-                         cwd=work_dir)
+                         cwd=work_dir,
+                         env=env,
+                         universal_newlines=True)
 
-    (output_bytes, error_bytes) = p.communicate()
-
-    output = output_bytes.decode("utf-8")
-    error = error_bytes.decode("utf-8")
+    (output, error) = p.communicate()
 
     result_code = p.returncode
     if result_code != 0:
-        message = "Execution failed with exit code " + str(result_code)
-        print(message)
-        print(output)
+        raise ExecutionException(result_code, error, output)
 
-        if error:
-            print(" --- ERRORS ---:")
-            print(error)
-        raise Exception(message)
-
-    if error:
-        print("WARN! Error output wasn't empty, although the command finished with code 0!")
+    if error and check_stderr:
+        LOGGER.warning("Error output wasn't empty, although the command finished with code 0!")
 
     return output
 
@@ -55,6 +52,9 @@ def split_command(script_command, working_directory=None):
         args = [script_command]
 
     script_path = file_utils.normalize_path(args[0], working_directory)
+    if (not os.path.isabs(script_path)) or (not os.path.exists(script_path)):
+        script_path = args[0]
+
     script_args = args[1:]
     for i, body_arg in enumerate(script_args):
         expanded = os.path.expanduser(body_arg)
@@ -77,3 +77,19 @@ def _is_file_path(script_command_with_whitespaces, working_directory):
         return True
 
     return False
+
+
+class ExecutionException(Exception):
+    def __init__(self, exit_code, stderr, stdout):
+        message = 'Execution failed. Code ' + str(exit_code)
+        if stderr:
+            message += ': ' + stderr
+        elif stdout:
+            last_line_start = stdout.rfind('\n')
+            message += ': ' + stdout[last_line_start:]
+
+        super().__init__(message)
+
+        self.stdout = stdout
+        self.stderr = stderr
+        self.exit_code = exit_code

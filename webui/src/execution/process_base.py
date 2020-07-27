@@ -12,14 +12,16 @@ from utils import os_utils
 LOGGER = logging.getLogger('script_server.process_base')
 
 class ProcessWrapper(metaclass=abc.ABCMeta):
-    def __init__(self, command, working_directory):
+    def __init__(self, command, working_directory, env_variables):
         self.process = None
 
         self.working_directory = working_directory
         self.command = command
+        self.env_variables = env_variables
 
         self.finish_listeners = []
 
+        # output_stream is guaranteed to close not earlier than process exit
         self.output_stream = ReplayObservable()
 
         self.notify_finish_thread = None
@@ -49,7 +51,7 @@ class ProcessWrapper(metaclass=abc.ABCMeta):
     def wait_finish(self):
         pass
 
-    def _get_process_id(self):
+    def get_process_id(self):
         return self.process.pid
 
     def is_finished(self):
@@ -64,7 +66,7 @@ class ProcessWrapper(metaclass=abc.ABCMeta):
     def stop(self):
         if not self.is_finished():
             if not os_utils.is_win():
-                group_id = os.getpgid(self._get_process_id())
+                group_id = os.getpgid(self.get_process_id())
                 os.killpg(group_id, signal.SIGTERM)
 
                 class KillChildren(object):
@@ -85,11 +87,11 @@ class ProcessWrapper(metaclass=abc.ABCMeta):
     def kill(self):
         if not self.is_finished():
             if not os_utils.is_win():
-                group_id = os.getpgid(self._get_process_id())
+                group_id = os.getpgid(self.get_process_id())
                 os.killpg(group_id, signal.SIGKILL)
                 self._write_script_output('\n>> KILLED\n')
             else:
-                subprocess.Popen("taskkill /F /T /PID " + self._get_process_id())
+                subprocess.Popen("taskkill /F /T /PID " + self.get_process_id())
 
     def add_finish_listener(self, listener):
         if self.is_finished():
