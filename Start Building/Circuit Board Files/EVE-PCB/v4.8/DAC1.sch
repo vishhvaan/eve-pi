@@ -54,11 +54,11 @@ Text Label 1150 3700 0    50   ~ 0
 SDA
 Text HLabel 1400 750  0    50   BiDi ~ 0
 SCL
-Text HLabel 1400 1050 0    50   BiDi ~ 0
+Text HLabel 1400 1000 0    50   BiDi ~ 0
 SDA
 Text Label 1850 750  2    50   ~ 0
 SCL
-Text Label 1850 1050 2    50   ~ 0
+Text Label 1850 1000 2    50   ~ 0
 SDA
 Wire Wire Line
 	1050 3300 1550 3300
@@ -518,7 +518,7 @@ Wire Wire Line
 Wire Wire Line
 	1400 750  1850 750 
 Wire Wire Line
-	1400 1050 1850 1050
+	1400 1000 1850 1000
 NoConn ~ 2950 4400
 NoConn ~ 1550 4500
 Wire Wire Line
@@ -740,48 +740,18 @@ Wire Wire Line
 	7150 4900 7650 4900
 Wire Wire Line
 	7150 5000 7650 5000
-Text Label 3100 2000 2    50   ~ 0
-PD1_POS
-$Comp
-L EVE-PCB-V4-rescue:GND-power-EVE-PCB-rescue #PWR035
-U 1 1 5CCCBCCC
-P 2600 2000
-F 0 "#PWR035" H 2600 1750 50  0001 C CNN
-F 1 "GND" H 2605 1827 50  0000 C CNN
-F 2 "" H 2600 2000 50  0001 C CNN
-F 3 "" H 2600 2000 50  0001 C CNN
-	1    2600 2000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2600 2000 3100 2000
-Text Label 4050 2000 2    50   ~ 0
-PD2_POS
-$Comp
-L EVE-PCB-V4-rescue:GND-power-EVE-PCB-rescue #PWR040
-U 1 1 5CCEE678
-P 3550 2000
-F 0 "#PWR040" H 3550 1750 50  0001 C CNN
-F 1 "GND" H 3555 1827 50  0000 C CNN
-F 2 "" H 3550 2000 50  0001 C CNN
-F 3 "" H 3550 2000 50  0001 C CNN
-	1    3550 2000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3550 2000 4050 2000
-Text Label 1850 1650 2    50   ~ 0
+Text Label 1850 1550 2    50   ~ 0
 PD2_NEG
-Text Label 1850 1350 2    50   ~ 0
+Text Label 1850 1250 2    50   ~ 0
 PD1_NEG
-Text HLabel 1400 1350 0    50   Output ~ 0
+Text HLabel 1400 1250 0    50   Output ~ 0
 PD1_NEG
-Text HLabel 1400 1650 0    50   Output ~ 0
+Text HLabel 1400 1550 0    50   Output ~ 0
 PD2_NEG
 Wire Wire Line
-	1400 1350 1850 1350
+	1400 1250 1850 1250
 Wire Wire Line
-	1400 1650 1850 1650
+	1400 1550 1850 1550
 $Comp
 L EVE-PCB-V4-rescue:C-Device-EVE-PCB-rescue C?
 U 1 1 5EB6CE57
@@ -1026,17 +996,17 @@ NoConn ~ 5600 4800
 NoConn ~ 5600 4900
 NoConn ~ 4600 4800
 NoConn ~ 4600 4900
-Text Label 1850 1950 2    50   ~ 0
+Text Label 1850 1850 2    50   ~ 0
 FAN1_PWM
-Text Label 1850 2250 2    50   ~ 0
+Text Label 1850 2150 2    50   ~ 0
 FAN2_PWM
 Wire Wire Line
-	1850 1950 1450 1950
+	1850 1850 1450 1850
 Wire Wire Line
-	1850 2250 1450 2250
-Text HLabel 1450 1950 0    50   Input ~ 0
+	1850 2150 1450 2150
+Text HLabel 1450 1850 0    50   Input ~ 0
 FAN1_PWM
-Text HLabel 1450 2250 0    50   Input ~ 0
+Text HLabel 1450 2150 0    50   Input ~ 0
 FAN2_PWM
 Text Label 9000 2000 2    50   ~ 0
 FAN1_NEG
@@ -1276,4 +1246,30 @@ F 3 "" H 3550 1650 50  0001 C CNN
 	1    3550 1650
 	1    0    0    -1  
 $EndComp
+Text HLabel 1450 2400 0    50   Input ~ 0
+V_REF
+Text Label 3100 2150 2    50   ~ 0
+PD1_POS
+Text Label 4050 2150 2    50   ~ 0
+PD2_POS
+Text Label 1850 2400 2    50   ~ 0
+V_REF
+Wire Wire Line
+	1850 2400 1450 2400
+Text Label 2600 2000 0    50   ~ 0
+V_REF
+Text Label 3550 2000 0    50   ~ 0
+V_REF
+Wire Wire Line
+	3550 2000 3700 2000
+Wire Wire Line
+	3700 2000 3700 2150
+Wire Wire Line
+	3700 2150 4050 2150
+Wire Wire Line
+	2600 2000 2750 2000
+Wire Wire Line
+	2750 2000 2750 2150
+Wire Wire Line
+	2750 2150 3100 2150
 $EndSCHEMATC
