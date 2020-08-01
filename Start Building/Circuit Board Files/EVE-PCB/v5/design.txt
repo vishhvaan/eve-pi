@@ -12,9 +12,9 @@ TCA9548A for sda/scl
 
 2x PWM PCA9685 
 - 16 channels
-- 1 x (4pumps, 2LED, 1IND) = 7 channels
+- 1 x (4pumps, 2LED, 2IND) = 8 channels
 - 2 x (4pumps, 1LED, 1IND) = 6 channels
-19 channels total
+20 channels total
 
 1x ADS1115
 - 4 channels
@@ -34,6 +34,9 @@ TCA9548A for sda/scl
 - 10 k
 - 5V power + Vab
 - CU LED R
+
+1x I2C VRef for OD signals
+- Voltage limiting circuit
 
 - high current output voltage follower
 - 2x ALM2402-Q1
