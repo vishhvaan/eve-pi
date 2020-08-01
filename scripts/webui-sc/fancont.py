@@ -46,10 +46,8 @@ def runner(sysnum,pwmgs,pwmg_add,ptog,fanper,config):
 
     pwmg = pwmgs[pwmg_add.index(config[confsec].getint('pwm_address'))]
 
-    if ptog == 'On':
-        pwmg.channels[fan_pin].duty_cycle = int(int(fanper)*65535/100)
-    else:
-        pwmg.channels[fan_pin].duty_cycle = 0
+    if fanper > 100 or fanper < 0: fanper = 0
+    pwmg.channels[fan_pin].duty_cycle = int(fanper*65535/100) if ptog == 'On' else 0
     
 totsys_l = sys.argv[1]
 print('CUs Selected:')
