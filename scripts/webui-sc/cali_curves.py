@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-""" Vishhvaan's Test Script """
 
 import time
 import RPi.GPIO as GPIO
@@ -11,6 +10,7 @@ import board
 import busio
 from adafruit_mcp230xx.mcp23017 import MCP23017
 import adafruit_ads1x15.ads1015 as ADS
+import adafruit_ads1x15.ads1115 as ADS_HR
 from adafruit_ads1x15.analog_in import AnalogIn
 
 import configparser
@@ -61,11 +61,14 @@ i2c = busio.I2C(board.SCL, board.SDA)
 
 if adc_add:
     for add in adc_add:
-        adc.append(ADS.ADS1015(i2c, address= add))
+        if config['MAIN'].getboolean('ads1115'):
+            adc.append(ADS_HR.ADS1115(i2c, address = add))
+        else:
+            adc.append(ADS.ADS1015(i2c, address = add))
 
 if gpio_add:
     for add in gpio_add:
-        gpioe.append(MCP23017(i2c, address=add))
+        gpioe.append(MCP23017(i2c, address = add))
 
 
 
@@ -74,7 +77,10 @@ def runner(sysnum,gpioe,gpio_add,adc,adc_add,chkt,loops,outfile):
     print(confsec)
     pipins = config[confsec].getboolean('Pi_pins')
     P_LED_pins = config[confsec].getint('P_LED_pins')
-    photod = AnalogIn(adc[adc_add.index(config[confsec].getint('a_address'))], getattr(ADS,'P'+ str(config[confsec].getint('Analogin'))))
+    if config['MAIN'].getboolean('ads1115'):
+        photod = AnalogIn(adc[adc_add.index(config[confsec].getint('a_address'))], getattr(ADS_HR,'P'+ str(config[confsec].getint('Analogin'))))
+    else:
+        photod = AnalogIn(adc[adc_add.index(config[confsec].getint('a_address'))], getattr(ADS,'P'+ str(config[confsec].getint('Analogin'))))
 
     odlist = []
 
