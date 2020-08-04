@@ -110,13 +110,13 @@ def IC_init():
     if adc_add:
         for add in adc_add:
             if config['MAIN'].getboolean('ads1115'):
-                adc.append(ADS_HR.ADS1115(i2c, address= add))
+                adc.append(ADS_HR.ADS1115(i2c, address = add))
             else:
-                adc.append(ADS.ADS1015(i2c, address= add))
+                adc.append(ADS.ADS1015(i2c, address = add))
 
     if gpio_add:
         for add in gpio_add:
-            gpioe.append(MCP23017(i2c, address=add))
+            gpioe.append(MCP23017(i2c, address = add))
 
     return {'adc':adc, 'gpioe':gpioe, 'adc_add':adc_add, 'gpio_add':gpio_add}
 
@@ -438,7 +438,10 @@ class Morbidostat:
 
         # num_cham = 1 # number of morbidostat vials being used
 
-        self.photod = AnalogIn(self.adc[self.adc_add.index(self.config[self.sysstr].getint('a_address'))], getattr(ADS,'P'+ str(self.config[self.sysstr].getint('Analogin'))))
+        if config['MAIN'].getboolean('ads1115'):
+            self.photod = AnalogIn(self.adc[self.adc_add.index(self.config[self.sysstr].getint('a_address'))], getattr(ADS_HR,'P'+ str(self.config[self.sysstr].getint('Analogin'))))
+        else:
+            self.photod = AnalogIn(self.adc[self.adc_add.index(self.config[self.sysstr].getint('a_address'))], getattr(ADS,'P'+ str(self.config[self.sysstr].getint('Analogin'))))
 
         # Setup the GPIO Pins to Control the Pumps
         self.pipins = self.config[self.sysstr].getboolean('pi_pins')
