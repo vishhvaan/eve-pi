@@ -10,11 +10,12 @@ TCA9548A for sda/scl
 - Address select via solder pads
 - 8 breakouts
 
-2x PWM PCA9685 
+3x PWM PCA9685 
 - 16 channels
-- 1 x (4pumps, 2LED, 2IND) = 8 channels
-- 2 x (4pumps, 1LED, 1IND) = 6 channels
-20 channels total
+- 4 x (4pumps, 2LED, 2IND) = 8 channels
+- 0 x (4pumps, 1LED, 1IND) = 6 channels
+- 4 x FANS = 4 channels
+36 channels total
 
 1x ADS1115
 - 4 channels
@@ -25,9 +26,12 @@ TCA9548A for sda/scl
 - with 1quad opamp
 - for inital amp
 
-- op amp with hardwired amp and low pass filter (?)
-- amp 5/4
+- op amp with hardwired amp and low pass filter
+1x AD5254 (100k)
+- amp up to 100 times (others one 1k)
 - diode protection for op amp
+
+- Diode to 5v to prevent more than 5V from going to ADC
 
 1x AD5254
 - Quad pot
@@ -35,7 +39,7 @@ TCA9548A for sda/scl
 - 5V power + Vab
 - CU LED R
 
-1x I2C VRef for OD signals
+[NOT NEEDED] 1x I2C VRef for OD signals
 - Voltage limiting circuit
 
 - high current output voltage follower
@@ -49,4 +53,11 @@ Logic level inverter for PWM (SN74LVC1G04)
 Logic level shifter for SDA/SCL (?)
 
 Integrate Temp Sensor
+
+
+Addresses:
+
+PWM1: 1000000 = Hex:40
+PWM1: 1000001 = Hex:41
+PWM1: 1000010 = Hex:42
 
