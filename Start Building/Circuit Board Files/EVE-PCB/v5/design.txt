@@ -2,62 +2,90 @@
 
 Daisy Chainable
 
-CU1 = 2 LED/ 2 PD / 4 Pumps
-CU1 = 1 LED/ 1 PD / 4 Pumps
-CU1 = 1 LED/ 1 PD / 4 Pumps
+CU1-4 = 2 LED/ 2 PD / 4 Pumps / 1 Fan
 
-TCA9548A for sda/scl
+TCA9548A for sda/scl [DONE]
 - Address select via solder pads
 - 8 breakouts
 
-3x PWM PCA9685 
+3x PWM PCA9685 [DONE]
 - 16 channels
 - 4 x (4pumps, 2LED, 2IND) = 8 channels
 - 0 x (4pumps, 1LED, 1IND) = 6 channels
 - 4 x FANS = 4 channels
 36 channels total
 
-1x ADS1115
-- 4 channels
+2x ADS1115 [DONE]
+- 8 channels - 2 pd per CU
 - With op amp for photopdiode
 
-2x AD5241
+4x INA219 for fan sensing [DONE]
+
+2x AD5242 [DONE]
 - 1mohm
 - with 1quad opamp
 - for inital amp
 
-- op amp with hardwired amp and low pass filter
-1x AD5254 (100k)
-- amp up to 100 times (others one 1k)
+- op amp with hardwired amp and low pass filter [DONE]
+2x AD5254 (50k)
+- amp up to 200 times
 - diode protection for op amp
 
 - Diode to 5v to prevent more than 5V from going to ADC
 
-1x AD5254
+2x AD5254 [DONE]
 - Quad pot
-- 10 k
+- 100 k
 - 5V power + Vab
 - CU LED R
 
 [NOT NEEDED] 1x I2C VRef for OD signals
 - Voltage limiting circuit
 
-- high current output voltage follower
+- high current output voltage follower [DONE]
+- 2x THS6184 (4 chan)
 - 2x ALM2402-Q1
 - (more expensive) 4x OPA564
 - 2ohm 1W resistor
 
 Change shotkey to PMEG6010CEH
-
-Logic level inverter for PWM (SN74LVC1G04)
-Logic level shifter for SDA/SCL (?)
-
-Integrate Temp Sensor
+Headers
 
 
+Integrate Temp Sensor [DONE]
+
+To do:
+LEDs (+digipot) [DONE]
+ADC
+Fan Sensing [DONE]
+
+2 LED [DONE] / 2 PD / 4 Pumps [DONE] / 1 Fan [DONE]
 Addresses:
 
-PWM1: 1000000 = Hex:40
-PWM1: 1000001 = Hex:41
-PWM1: 1000010 = Hex:42
+PWM-
+PWM: 1000000 = Dec:64 [LEDs+PUMPs]
+PWM: 1000001 = Dec:65 [LEDs+PUMPs]
+PWM: 1000010 = Dec:66 [FANs]
+
+50KPOT-
+50KPOT: 0101100 = Dec:44 [LED1+2]
+50KPOT: 0101101 = Dec:45 [LED3+4]
+50KPOT: 0101110 = Dec:46 [AMP1+2]
+50KPOT: 0101111 = Dec:47 [AMP3+4]
+
+1MPOT-
+1MPOT: 0101100 = Dec:44
+1MPOT: 0101101 = Dec:44
+1MPOT: 0101110 = Dec:46
+1MPOT: 0101111 = Dec:47
+
+CURSEN-
+CURSEN: 1000000 = Dec:64 [FAN1]
+CURSEN: 1000001 = Dec:65 [FAN2]
+CURSEN: 1000100 = Dec:68 [FAN3]
+CURSEN: 1000101 = Dec:69 [FAN4]
+
+ADC-
+ADC: 1001000 = Dec:72 [PD1+2]
+ADC: 1001001 = Dec:73 [PD3+4]
 

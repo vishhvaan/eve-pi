@@ -1,4 +1,3 @@
 (fp_lib_table
-  (lib (name 1725669andothers)(type KiCad)(uri "/home/vishhvaan/Documents/Git Repos/eve-pi/Start Building/Circuit Board Files/EVE-PCB/ICs/1725669Lib/SamacSys_Parts.pretty")(options "")(descr ""))
-  (lib (name GenParts)(type KiCad)(uri "/home/vishhvaan/GitRepos/eve-pi/Start Building/Circuit Board Files/EVE-PCB/ICs")(options "")(descr ""))
+  (lib (name ICs)(type KiCad)(uri ${KIPRJMOD}/ICs)(options "")(descr ""))
 )

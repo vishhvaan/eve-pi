@@ -4858,7 +4858,7 @@
   )
   (gr_line (start 87.553346 124.672269) (end 191.053346 124.672269) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 191.053346 34.062269) (end 87.553346 34.062269) (layer Edge.Cuts) (width 0.15))
-  (gr_text "REV 4.81" (at 141.701846 52.465769) (layer F.SilkS)
+  (gr_text "REV 4.82" (at 141.701846 52.465769) (layer F.SilkS)
     (effects (font (size 1 1.5) (thickness 0.25) italic))
   )
   (gr_text EVE_PCB (at 141.701846 49.925769) (layer F.SilkS)
