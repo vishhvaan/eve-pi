@@ -15,6 +15,8 @@ This device is meant to be used for the study of population dynamics and evoluti
 # Build it!
 Head over to [Start Building] folder to find the 3D stls and circuit schematics (along with KiCAD project). 
 
+[PCB]: Start%20Building/pcb2.png "PCB"
+
 # Installation
 
 1. Download and flash the [Raspbian] Buster OS on an SD card.
