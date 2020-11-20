@@ -15,7 +15,14 @@ This device is meant to be used for the study of population dynamics and evoluti
 # Build it!
 Head over to [Start Building] folder to find the 3D stls and circuit schematics (along with KiCAD project). 
 
-[PCB]: Start%20Building/pcb2.png "PCB"
+#### PCB Schematic
+[PCB]: https://raw.githubusercontent.com/vishhvaan/eve-pi/master/Start%20Building/pcb_sche.png "PCB"
+
+#### Holder
+<p align="center">
+  <img src="https://raw.githubusercontent.com/vishhvaan/eve-pi/master/Start%20Building/eve_cu.png" height ="100">
+</p>
+
 
 # Installation
 
