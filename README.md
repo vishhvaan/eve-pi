@@ -1,6 +1,6 @@
 ![alt text][logo]
 
-[logo]: https://github.com/vishhvaan/eve-pi/raw/master/eve.png "The EVoltionary biorEactor"
+![The EVoltionary biorEactor](https://github.com/vishhvaan/eve-pi/raw/master/eve.png)
 
 
 The EVE is an open framework for an automated continuous culture system.
@@ -16,7 +16,7 @@ This device is meant to be used for the study of population dynamics and evoluti
 Head over to [Start Building] folder to find the 3D stls and circuit schematics (along with KiCAD project). 
 
 #### PCB Schematic
-[PCB]: https://raw.githubusercontent.com/vishhvaan/eve-pi/master/Start%20Building/pcb_sche.png "PCB"
+![PCB](https://raw.githubusercontent.com/vishhvaan/eve-pi/master/Start%20Building/pcb_sche.png)
 
 #### Holder
 <p align="center">
