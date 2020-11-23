@@ -1,4 +1,4 @@
-447968871918941
+466125492747941
 Package_SO
 Diodes_PSOP-8
 8-Lead Plastic PSOP, Exposed Die Pad (see https://www.diodes.com/assets/Datasheets/AP2204.pdf)
@@ -366,6 +366,27 @@ DSO-20
 Package_SO
 Infineon_PG-DSO-20-32
 Infineon SO package 20pin without exposed pad (https://www.infineon.com/cms/en/product/packages/PG-DSO/PG-DSO-20-32/)
+DSO-20
+0
+20
+20
+Package_SO
+Infineon_PG-DSO-20-85
+Infineon SO package 20pin with exposed pad (https://www.infineon.com/cms/en/product/packages/PG-DSO/PG-DSO-20-85/)
+DSO-20
+0
+31
+21
+Package_SO
+Infineon_PG-DSO-20-85_ThermalVias
+Infineon SO package 20pin with exposed pad (https://www.infineon.com/cms/en/product/packages/PG-DSO/PG-DSO-20-85/)
+DSO-20
+0
+113
+21
+Package_SO
+Infineon_PG-DSO-20-87
+Infineon SO package 20pin without exposed pad (https://www.infineon.com/cms/en/product/packages/PG-DSO/PG-DSO-20-87/)
 DSO-20
 0
 20
@@ -749,12 +770,26 @@ SO SO
 8
 8
 Package_SO
+SO-14_3.9x8.65mm_P1.27mm
+SO, 14 Pin (https://www.st.com/resource/en/datasheet/l6491.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SO SO
+0
+14
+14
+Package_SO
 SO-14_5.3x10.2mm_P1.27mm
 SO, 14 Pin (https://www.ti.com/lit/ml/msop002a/msop002a.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
 SO SO
 0
 14
 14
+Package_SO
+SO-16_3.9x9.9mm_P1.27mm
+SO, 16 Pin (https://www.nxp.com/docs/en/package-information/SOT109-1.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SO SO
+0
+16
+16
 Package_SO
 SO-16_5.3x10.2mm_P1.27mm
 SO, 16 Pin (https://www.ti.com/lit/ml/msop002a/msop002a.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
@@ -917,6 +952,13 @@ SOIC SO
 8
 8
 Package_SO
+SOIC-14-16_3.9x9.9mm_P1.27mm
+SOIC, 16 Pin package with pin 2 and 13 removed for voltage clearance  (UCC256301, https://www.ti.com/lit/ds/symlink/ucc256301.pdf)
+SOIC SO
+0
+14
+14
+Package_SO
 SOIC-14W_7.5x9mm_P1.27mm
 SOIC, 14 Pin (JEDEC MS-013AF, https://www.analog.com/media/en/package-pcb-resources/package/54614177245586rw_14.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
 SOIC SO
@@ -1078,6 +1120,13 @@ SOP SO
 8
 8
 Package_SO
+SOP-16_3.9x9.9mm_P1.27mm
+SOP, 16 Pin (https://www.diodes.com/assets/Datasheets/PAM8403.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOP SO
+0
+16
+16
+Package_SO
 SOP-16_4.4x10.4mm_P1.27mm
 16-Lead Plastic Small Outline http://www.vishay.com/docs/49633/sg2098.pdf
 SOP 1.27
@@ -1098,6 +1147,13 @@ SOP SO
 0
 18
 18
+Package_SO
+SOP-20_7.5x12.8mm_P1.27mm
+SOP, 20 Pin (https://www.holtek.com/documents/10179/116723/sop20-300.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOP SO
+0
+20
+20
 Package_SO
 SOP-24_7.5x15.4mm_P1.27mm
 SOP, 24 Pin (http://www.issi.com/WW/pdf/31FL3218.pdf#page=14), generated with kicad-footprint-generator ipc_gullwing_generator.py
@@ -1455,6 +1511,13 @@ TSOPII TSOP2
 0
 54
 54
+Package_SO
+TSSOP-4_4.4x5mm_P4mm
+TSSOP, 4 Pin (https://www.onsemi.com/pub/Collateral/MDB8S-D.PDF#page=4), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSSOP SO
+0
+4
+4
 Package_SO
 TSSOP-8_3x3mm_P0.65mm
 TSSOP8: plastic thin shrink small outline package; 8 leads; body width 3 mm; (see NXP SSOP-TSSOP-VSO-REFLOW.pdf and sot505-1_po.pdf)
