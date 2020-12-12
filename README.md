@@ -1,5 +1,3 @@
-![alt text][logo]
-
 ![The EVoltionary biorEactor](https://github.com/vishhvaan/eve-pi/raw/master/eve.png)
 
 
