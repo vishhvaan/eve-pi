@@ -9,7 +9,7 @@ class ExecutionInfo(object):
         self.script = None
 
 
-def config_to_external(config, id):
+def config_to_external(config, id, external_id=None):
     parameters = []
     for parameter in config.parameters:
         external_param = parameter_to_external(parameter)
@@ -21,8 +21,10 @@ def config_to_external(config, id):
 
     return {
         'id': id,
+        'clientModelId': external_id,
         'name': config.name,
         'description': config.description,
+        'schedulable': config.schedulable,
         'parameters': parameters
     }
 
@@ -40,6 +42,7 @@ def parameter_to_external(parameter):
         'type': parameter.type,
         'min': parameter.min,
         'max': parameter.max,
+        'max_length': parameter.max_length,
         'values': parameter.values,
         'secure': parameter.secure,
         'fileRecursive': parameter.file_recursive,
@@ -111,4 +114,14 @@ def server_conf_to_external(server_config, server_version):
         'title': server_config.title,
         'enableScriptTitles': server_config.enable_script_titles,
         'version': server_version
+    }
+
+
+def parse_external_schedule(external_schedule):
+    return {
+        'repeatable': external_schedule.get('repeatable'),
+        'start_datetime': external_schedule.get('startDatetime'),
+        'repeat_unit': external_schedule.get('repeatUnit'),
+        'repeat_period': external_schedule.get('repeatPeriod'),
+        'weekdays': external_schedule.get('weekDays')
     }

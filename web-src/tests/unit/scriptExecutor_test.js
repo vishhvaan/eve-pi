@@ -1,5 +1,4 @@
 import scriptExecutor, {__RewireAPI__ as ExecutorRewireAPI} from '@/main-app/store/scriptExecutor';
-import {createLocalVue} from '@vue/test-utils';
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -7,12 +6,12 @@ import {assert} from 'chai';
 import {Server, WebSocket} from 'mock-socket';
 import * as sinon from 'sinon';
 import Vuex from 'vuex';
-import {timeout} from './test_utils'
+import {createScriptServerTestVue, timeout} from './test_utils'
 
 const axiosMock = new MockAdapter(axios);
 window.WebSocket = WebSocket;
 
-const localVue = createLocalVue();
+const localVue = createScriptServerTestVue();
 localVue.use(Vuex);
 
 function createStore() {
@@ -28,14 +27,6 @@ function mockStopEndpoint(id) {
         return [200];
     });
     axiosMock.onPost('executions/stop/' + id).reply(spy);
-    return spy;
-}
-
-function spyCleanup(id) {
-    const spy = sinon.spy(function () {
-        return [200];
-    });
-    axiosMock.onPost('executions/cleanup/' + id).reply(spy);
     return spy;
 }
 
@@ -109,36 +100,27 @@ describe('Test scriptExecutor module', function () {
         });
 
         it('Test socket closed on finish', async function () {
-            const spy = spyCleanup(123);
-
             await mockSocketClose(1000, 'xyz');
 
             assert.equal('finished', store.state.scriptExecutor.status);
-            assert.isTrue(spy.calledOnce);
         });
 
         it('Test socket closed on disconnect when finished', async function () {
-            const spy = spyCleanup(123);
             await mockSocketClose(1006, 'finished');
 
             assert.equal('finished', store.state.scriptExecutor.status);
-            assert.isTrue(spy.calledOnce);
         });
 
         it('Test socket closed on disconnect when executing', async function () {
-            const spy = spyCleanup(123);
             await mockSocketClose(1006, 'executing');
 
             assert.equal('disconnected', store.state.scriptExecutor.status);
-            assert.isTrue(spy.notCalled);
         });
 
         it('Test socket closed on disconnect when get status error', async function () {
-            const spy = spyCleanup(123);
             await mockSocketClose(1006, new Error('test message'));
 
             assert.equal('error', store.state.scriptExecutor.status);
-            assert.isTrue(spy.notCalled);
         });
     });
 

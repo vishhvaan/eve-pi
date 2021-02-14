@@ -29,6 +29,12 @@ export const noValueField = {
     description: 'Pass only flag (Arg) to the script, without any value'
 };
 
+export const repeatParamField = {
+    name: 'Space after Arg',
+    withoutValue: true,
+    description: 'Separate Arg and value with space (--Arg= value) or not (--Arg=value)'
+};
+
 export const constantField = {
     name: 'Constant',
     withoutValue: true,
@@ -61,6 +67,11 @@ export const allowedValuesScriptField = {
     required: true
 };
 
+export const maxLengthField = {
+    name: 'Max characters length',
+    type: 'int'
+};
+
 export const allowedValuesFromScriptField = {
     name: 'Load from script',
     withoutValue: true,
@@ -75,6 +86,12 @@ export const multipleArgumentsField = {
     name: 'As multiple arguments',
     withoutValue: true,
     description: 'Pass each value as a separate argument (single comma-separated argument otherwise)'
+};
+
+export const sameArgParamField = {
+    name: 'Repeat Arg with each value',
+    withoutValue: true,
+    description: 'Add argument name to each value (Arg val1 Arg val2), one time argument otherwise (Arg val1 val2)'
 };
 
 export const separatorField = {

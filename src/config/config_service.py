@@ -49,6 +49,9 @@ class ConfigService:
         if config_object.get('name') is None:
             config_object['name'] = short_config.name
 
+        if not self._can_edit_script(user, short_config):
+            raise ConfigNotAllowedException(str(user) + ' has no admin access to ' + short_config.name)
+
         return {'config': config_object, 'filename': os.path.basename(path)}
 
     def create_config(self, user, config):
@@ -84,6 +87,9 @@ class ConfigService:
         if (found_config_path is not None) and (os.path.basename(found_config_path) != filename):
             raise InvalidConfigException('Another script found with the same name: ' + name)
 
+        if (short_config is not None) and not self._can_edit_script(user, short_config):
+            raise ConfigNotAllowedException(str(user) + ' is not allowed to modify ' + short_config.name)
+
         LOGGER.info('Updating script config "' + name + '" in ' + original_file_path)
         self._save_config(config, original_file_path)
 
@@ -92,7 +98,11 @@ class ConfigService:
         config_json = json.dumps(sorted_config, indent=2)
         file_utils.write_file(path, config_json)
 
-    def list_configs(self, user):
+    def list_configs(self, user, mode=None):
+        edit_mode = mode == 'edit'
+        if edit_mode:
+            self._check_admin_access(user)
+
         conf_service = self
 
         def load_script(path, content):
@@ -103,7 +113,10 @@ class ConfigService:
                 if short_config is None:
                     return None
 
-                if not conf_service._can_access_script(user, short_config):
+                if edit_mode and (not conf_service._can_edit_script(user, short_config)):
+                    return None
+
+                if (not edit_mode) and (not conf_service._can_access_script(user, short_config)):
                     return None
 
                 return short_config
@@ -112,7 +125,7 @@ class ConfigService:
 
         return self._visit_script_configs(load_script)
 
-    def load_config_model(self, name, user, parameter_values=None):
+    def load_config_model(self, name, user, parameter_values=None, skip_invalid_parameters=False):
         (short_config, path, json_object) = self._find_config(name)
 
         if path is None:
@@ -121,7 +134,7 @@ class ConfigService:
         if not self._can_access_script(user, short_config):
             raise ConfigNotAllowedException()
 
-        return self._load_script_config(path, json_object, user, parameter_values)
+        return self._load_script_config(path, json_object, user, parameter_values, skip_invalid_parameters)
 
     def _visit_script_configs(self, visitor):
         configs_dir = self._script_configs_folder
@@ -173,7 +186,7 @@ class ConfigService:
 
         return configs[0]
 
-    def _load_script_config(self, path, content_or_json_dict, user, parameter_values):
+    def _load_script_config(self, path, content_or_json_dict, user, parameter_values, skip_invalid_parameters):
         if isinstance(content_or_json_dict, str):
             json_object = json.loads(content_or_json_dict)
         else:
@@ -184,22 +197,27 @@ class ConfigService:
             user.get_username(),
             user.get_audit_name(),
             pty_enabled_default=os_utils.is_pty_supported(),
-            ansi_enabled_default=os_utils.is_linux() or os_utils.is_mac(),
-            parameter_values=parameter_values)
+            ansi_enabled_default=os_utils.is_linux() or os_utils.is_mac())
+
+        if parameter_values is not None:
+            config.set_all_param_values(parameter_values, skip_invalid_parameters)
 
         return config
 
     def _can_access_script(self, user, short_config):
         return self._authorizer.is_allowed(user.user_id, short_config.allowed_users)
 
+    def _can_edit_script(self, user, short_config):
+        return self._authorizer.is_allowed(user.user_id, short_config.admin_users)
+
     def _check_admin_access(self, user):
         if not self._authorizer.is_admin(user.user_id):
-            raise AdminAccessRequiredException('Access to script is prohibited for ' + str(user))
+            raise AdminAccessRequiredException('Admin access to scripts is prohibited for ' + str(user))
 
 
 class ConfigNotAllowedException(Exception):
-    def __init__(self):
-        pass
+    def __init__(self, message=None):
+        super().__init__(message)
 
 
 class AdminAccessRequiredException(Exception):

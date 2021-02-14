@@ -190,8 +190,8 @@ class ExecutionLoggingService:
             LOGGER.warning('find_history_entry: cannot parse file for %s', execution_id)
 
         elif not self._can_access_entry(entry, user_id):
-            message = 'User ' + user_id + ' has not access to execution #' + str(execution_id)
-            LOGGER.warning('%s. Original user: %s', message, execution_id)
+            message = 'User ' + user_id + ' has no access to execution #' + str(execution_id)
+            LOGGER.warning('%s. Original user: %s', message, entry.user_id)
             raise AccessProhibitedException(message)
 
         return entry
@@ -381,12 +381,12 @@ class ExecutionLoggingController:
         execution_service = self._execution_service
         logging_service = self._execution_logging_service
 
-        def started(execution_id):
-            script_config = execution_service.get_config(execution_id)
+        def started(execution_id, user):
+            script_config = execution_service.get_config(execution_id, user)
             script_name = str(script_config.name)
-            audit_name = execution_service.get_audit_name(execution_id)
-            owner = execution_service.get_owner(execution_id)
-            all_audit_names = execution_service.get_all_audit_names(execution_id)
+            audit_name = user.get_audit_name()
+            owner = user.user_id
+            all_audit_names = user.audit_names
             output_stream = execution_service.get_anonymized_output_stream(execution_id)
             audit_command = execution_service.get_audit_command(execution_id)
 
@@ -399,7 +399,7 @@ class ExecutionLoggingController:
                 output_stream,
                 all_audit_names)
 
-        def finished(execution_id):
+        def finished(execution_id, user):
             exit_code = execution_service.get_exit_code(execution_id)
             logging_service.write_post_execution_info(execution_id, exit_code)
 

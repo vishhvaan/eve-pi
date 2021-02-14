@@ -329,6 +329,10 @@ export function isWebsocketClosed(websocket) {
     return ((websocket.readyState === 2) || (websocket.readyState === 3));
 }
 
+export function isWebsocketConnecting(websocket) {
+    return (websocket.readyState === 0)
+}
+
 export function isWebsocketOpen(websocket) {
     return !isNull(websocket) && (websocket.readyState === 1);
 }
@@ -666,4 +670,25 @@ export function trimTextNodes(el) {
             node.data = node.data.trim();
         }
     }
+}
+
+export function getElementsByTagNameRecursive(parent, tag) {
+    const tagLower = tag.toLowerCase();
+
+    const result = [];
+
+    const queue = [];
+    queue.push(...parent.childNodes);
+
+    while (!isEmptyArray(queue)) {
+        const next = queue.shift()
+
+        if (next.tagName && (next.tagName.toLowerCase() === tagLower)) {
+            result.push(next);
+        }
+
+        queue.push(...next.childNodes);
+    }
+
+    return result;
 }
