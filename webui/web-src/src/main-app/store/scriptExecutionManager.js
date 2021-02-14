@@ -1,8 +1,9 @@
-import {forEachKeyValue, isEmptyArray, isEmptyString, isNull} from '@/common/utils/common';
+import {isEmptyArray, isEmptyString, isNull} from '@/common/utils/common';
 import axios from 'axios';
 import clone from 'lodash/clone';
 import get from 'lodash/get';
 import scriptExecutor, {STATUS_EXECUTING, STATUS_FINISHED, STATUS_INITIALIZING} from './scriptExecutor';
+import {parametersToFormData} from '@/main-app/store/mainStoreHelper';
 
 export const axiosInstance = axios.create();
 
@@ -98,23 +99,14 @@ export default {
         selectScript({state, commit, dispatch}, {selectedScript}) {
             let selectedExecutor = null;
 
-            if ((!isNull(state.currentExecutor))) {
-                const previousScriptName = state.currentExecutor.state.scriptName;
-
-                const executorsToRemove = Object.values(state.executors).filter(function (executor) {
-                    return (executor.state.scriptName === previousScriptName) && executor.state.status === STATUS_FINISHED;
-                });
-
-                for (const executor of executorsToRemove) {
-                    dispatch('_removeExecutor', executor);
-                }
-            }
-
-            forEachKeyValue(state.executors, (key, value) => {
-                if (value.state.scriptName === selectedScript) {
-                    selectedExecutor = value;
-                }
+            const matchingExecutors = Object.values(state.executors).filter(function (executor) {
+                return (executor.state.scriptName === selectedScript);
             });
+
+            if (!isEmptyArray(matchingExecutors)) {
+                matchingExecutors.sort((a, b) => parseInt(a.state.id) - parseInt(b.state.id));
+                selectedExecutor = matchingExecutors[0];
+            }
 
             dispatch('selectExecutor', selectedExecutor);
         },
@@ -125,19 +117,8 @@ export default {
             const parameterValues = clone(rootState.scriptSetup.parameterValues);
             const scriptName = rootState.scriptConfig.scriptConfig.name;
 
-            var formData = new FormData();
+            const formData = parametersToFormData(parameterValues);
             formData.append('__script_name', scriptName);
-
-            forEachKeyValue(parameterValues, function (parameter, value) {
-                if (Array.isArray(value)) {
-                    for (let i = 0; i < value.length; i++) {
-                        const valueElement = value[i];
-                        formData.append(parameter, valueElement);
-                    }
-                } else if (!isNull(value)) {
-                    formData.append(parameter, value);
-                }
-            });
 
             const executor = scriptExecutor(null, scriptName, parameterValues);
             store.registerModule(['executions', 'temp'], executor);
@@ -212,17 +193,22 @@ export default {
 
         selectExecutor({commit, state, dispatch}, executor) {
             const currentExecutor = state.currentExecutor;
-            if ((!isNull(currentExecutor))) {
-                if ((currentExecutor.state.scriptName === this.state.scripts.selectedScript)
-                    && (currentExecutor.state.status === STATUS_FINISHED)) {
+            if (!isNull(currentExecutor)) {
+                // Don't remove finished executor automatically, if it was cleaned up
+                // unless id is null, meaning it was an error
+                if (executor && !isNull(executor.state.id) && (executor.state.id === currentExecutor.state.id)) {
+                    return;
+                }
+
+                if (currentExecutor.state.status === STATUS_FINISHED) {
                     dispatch('_removeExecutor', currentExecutor);
                 }
             }
 
             commit('SELECT_EXECUTOR', executor);
             if (executor) {
-                dispatch('scriptSetup/setParameterValues', {
-                    values: executor.state.parameterValues,
+                dispatch('scriptSetup/reloadModel', {
+                    values: clone(executor.state.parameterValues),
                     forceAllowedValues: true,
                     scriptName: executor.state.scriptName
                 }, {root: true});
@@ -234,7 +220,6 @@ export default {
                 return;
             }
 
-            dispatch(executor.state.id + '/cleanup');
             this.unregisterModule(['executions', executor.state.id]);
             commit('REMOVE_EXECUTOR', executor)
         }

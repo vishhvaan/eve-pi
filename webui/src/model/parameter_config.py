@@ -18,6 +18,7 @@ LOGGER = logging.getLogger('script_server.parameter_config')
 
 @observable_fields(
     'param',
+    'repeat_param'
     'env_var',
     'no_value',
     'description',
@@ -26,12 +27,14 @@ LOGGER = logging.getLogger('script_server.parameter_config')
     'type',
     'min',
     'max',
+    'max_length',
     'constant',
     '_values_provider',
     'values',
     'secure',
     'separator',
     'multiple_arguments',
+    'same_arg_param',
     'file_dir',  # path relative to working dir (for execution)
     '_list_files_dir',  # file_dir, relative to the server path (for listing files)
     'file_type',
@@ -62,15 +65,18 @@ class ParameterModel(object):
         config = self._original_config
 
         self.param = config.get('param')
+        self.repeat_param = read_bool_from_config('repeat_param', config, default=True)
         self.env_var = config.get('env_var')
         self.no_value = read_bool_from_config('no_value', config, default=False)
-        self.description = config.get('description')
+        self.description = replace_auth_vars(config.get('description'), self._username, self._audit_name)
         self.required = read_bool_from_config('required', config, default=False)
         self.min = config.get('min')
         self.max = config.get('max')
+        self.max_length = config.get('max_length')
         self.secure = read_bool_from_config('secure', config, default=False)
         self.separator = config.get('separator', ',')
         self.multiple_arguments = read_bool_from_config('multiple_arguments', config, default=False)
+        self.same_arg_param = read_bool_from_config('same_arg_param', config, default=False)
         self.default = _resolve_default(config.get('default'), self._username, self._audit_name, self._working_dir)
         self.file_dir = _resolve_file_dir(config, 'file_dir')
         self._list_files_dir = _resolve_list_files_dir(self.file_dir, self._working_dir)
@@ -92,7 +98,7 @@ class ParameterModel(object):
         self._reload_values()
 
     def _validate_config(self):
-        param_log_name = self._str_name()
+        param_log_name = self.str_name()
 
         if self.constant and not self.default:
             message = 'Constant should have default value specified'
@@ -102,7 +108,7 @@ class ParameterModel(object):
             if not self.file_dir:
                 raise Exception('Parameter ' + param_log_name + ' has missing config file_dir')
 
-    def _str_name(self):
+    def str_name(self):
         names = (name for name in (self.name, self.param, self.description) if name)
         return next(names, 'unknown')
 
@@ -176,7 +182,7 @@ class ParameterModel(object):
             return ConstValuesProvider(values_config)
 
         elif 'script' in values_config:
-            script = values_config['script']
+            script = replace_auth_vars(values_config['script'], self._username, self._audit_name)
 
             if '${' not in script:
                 return ScriptValuesProvider(script)
@@ -273,6 +279,9 @@ class ParameterModel(object):
             return None
 
         if self.type == 'text':
+            if (not is_empty(self.max_length)) and (len(value) > int(self.max_length)):
+                return 'is longer than allowed char length (' \
+                        + str(len(value)) + ' > ' + str(self.max_length) + ')'
             return None
 
         if self.type == 'file_upload':
@@ -287,7 +296,7 @@ class ParameterModel(object):
             int_value = int(value)
 
             if (not is_empty(self.max)) and (int_value > int(self.max)):
-                return 'is greater than allowed value (' \
+                return 'is longer than allowed value (' \
                        + value_string + ' > ' + str(self.max) + ')'
 
             if (not is_empty(self.min)) and (int_value < int(self.min)):
@@ -462,8 +471,8 @@ class WrongParameterUsageException(Exception):
 
 
 def get_sorted_config(param_config):
-    key_order = ['name', 'required', 'param', 'type', 'no_value', 'default', 'constant', 'description', 'secure',
-                 'values', 'min', 'max', 'multiple_arguments', 'separator', 'file_dir', 'file_recursive', 'file_type',
+    key_order = ['name', 'required', 'param', 'repeat_param', 'type', 'no_value', 'default', 'constant', 'description', 'secure',
+                 'values', 'min', 'max', 'multiple_arguments', 'same_arg_param', 'separator', 'file_dir', 'file_recursive', 'file_type',
                  'file_extensions']
 
     def get_order(key):

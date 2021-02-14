@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import Vue from 'vue'
 import Vuex from 'vuex'
 import authModule from './auth';
+import scheduleModule from './scriptSchedule';
 import pageModule from './page';
 
 import scriptConfigModule from './scriptConfig';
@@ -25,7 +26,8 @@ const store = new Vuex.Store({
         executions: scriptExecutionManagerModule,
         auth: authModule,
         history: historyModule(),
-        page: pageModule
+        page: pageModule,
+        scriptSchedule: scheduleModule
     },
     actions: {
         init({dispatch}) {
@@ -61,7 +63,7 @@ store.watch((state) => state.scripts.selectedScript, (selectedScript) => {
 
 store.watch((state) => state.scripts.predefinedParameters, (predefinedParameters) => {
     if (!isNull(predefinedParameters)) {
-        store.dispatch('scriptSetup/setParameterValues', {
+        store.dispatch('scriptSetup/reloadModel', {
             values: predefinedParameters,
             forceAllowedValues: false,
             scriptName: store.state.scripts.selectedScript
@@ -70,8 +72,9 @@ store.watch((state) => state.scripts.predefinedParameters, (predefinedParameters
 });
 
 store.watch((state) => state.scriptConfig.parameters, (parameters) => {
-    let scriptName = store.state.scriptConfig.scriptConfig ? store.state.scriptConfig.scriptConfig.name : null;
-    store.dispatch('scriptSetup/initFromParameters', {scriptName, parameters});
+    const scriptConfig = store.state.scriptConfig.scriptConfig
+    const scriptName = scriptConfig ? scriptConfig.name : null;
+    store.dispatch('scriptSetup/initFromParameters', {scriptName, parameters, scriptConfig});
 });
 
 axios.interceptors.response.use((response) => response, (error) => {

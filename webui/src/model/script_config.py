@@ -7,7 +7,7 @@ from collections import OrderedDict
 from auth.authorization import ANY_USER
 from model import parameter_config
 from model.model_helper import is_empty, fill_parameter_values, read_bool_from_config, InvalidValueException, \
-    read_str_from_config
+    read_str_from_config, replace_auth_vars
 from model.parameter_config import ParameterModel
 from react.properties import ObservableList, ObservableDict, observable_fields, Property
 from utils import file_utils
@@ -20,6 +20,7 @@ class ShortConfig(object):
     def __init__(self):
         self.name = None
         self.allowed_users = []
+        self.admin_users = []
         self.group = None
 
 
@@ -30,6 +31,7 @@ class ShortConfig(object):
     'working_directory',
     'ansi_enabled',
     'output_files',
+    'schedulable',
     '_included_config')
 class ConfigModel:
 
@@ -39,8 +41,7 @@ class ConfigModel:
                  username,
                  audit_name,
                  pty_enabled_default=True,
-                 ansi_enabled_default=True,
-                 parameter_values=None):
+                 ansi_enabled_default=True):
         super().__init__()
 
         short_config = read_short(path, config_object)
@@ -51,6 +52,7 @@ class ConfigModel:
 
         self._username = username
         self._audit_name = audit_name
+        self.schedulable = False
 
         self.parameters = ObservableList()
         self.parameter_values = ObservableDict()
@@ -63,13 +65,12 @@ class ConfigModel:
 
         self._reload_config()
 
+        self.parameters.subscribe(self)
+
         self._init_parameters(username, audit_name)
 
-        if parameter_values is not None:
-            self.set_all_param_values(parameter_values)
-        else:
-            for parameter in self.parameters:
-                self.parameter_values[parameter.name] = parameter.default
+        for parameter in self.parameters:
+            self.parameter_values[parameter.name] = parameter.default
 
         self._reload_parameters({})
 
@@ -88,15 +89,24 @@ class ConfigModel:
 
         self.parameter_values[param_name] = value
 
-    def set_all_param_values(self, param_values):
+    def set_all_param_values(self, param_values, skip_invalid_parameters=False):
         original_values = dict(self.parameter_values)
         processed = {}
 
         anything_changed = True
+
+        def get_sort_key(parameter):
+            if parameter.name in self._included_config_path.required_parameters:
+                return len(parameter.get_required_parameters())
+            return 100 + len(parameter.get_required_parameters())
+
+        sorted_parameters = sorted(self.parameters, key=get_sort_key)
+
         while (len(processed) < len(self.parameters)) and anything_changed:
             anything_changed = False
 
-            for parameter in self.parameters:
+            parameters = sorted_parameters + [p for p in self.parameters if p not in sorted_parameters]
+            for parameter in parameters:
                 if parameter.name in processed:
                     continue
 
@@ -107,8 +117,12 @@ class ConfigModel:
                 value = parameter.normalize_user_value(param_values.get(parameter.name))
                 validation_error = parameter.validate_value(value)
                 if validation_error:
-                    self.parameter_values.set(original_values)
-                    raise InvalidValueException(parameter.name, validation_error)
+                    if skip_invalid_parameters:
+                        logging.warning('Parameter ' + parameter.name + ' has invalid value, skipping')
+                        value = parameter.normalize_user_value(None)
+                    else:
+                        self.parameter_values.set(original_values)
+                        raise InvalidValueException(parameter.name, validation_error)
 
                 self.parameter_values[parameter.name] = value
                 processed[parameter.name] = parameter
@@ -152,7 +166,7 @@ class ConfigModel:
             config = merge_dicts(self._original_config, self._included_config, ignored_keys=['parameters'])
 
         self.script_command = config.get('script_path')
-        self.description = config.get('description')
+        self.description = replace_auth_vars(config.get('description'), self._username, self._audit_name)
         self.working_directory = config.get('working_directory')
 
         required_terminal = read_bool_from_config('requires_terminal', config, default=self._pty_enabled_default)
@@ -162,6 +176,9 @@ class ConfigModel:
         self.ansi_enabled = ansi_enabled
 
         self.output_files = config.get('output_files', [])
+
+        if config.get('scheduling'):
+            self.schedulable = read_bool_from_config('enabled', config.get('scheduling'), default=False)
 
         if not self.script_command:
             raise Exception('No script_path is specified for ' + self.name)
@@ -204,6 +221,15 @@ class ConfigModel:
                 return parameter
         return None
 
+    def on_add(self, parameter, index):
+        if self.schedulable and parameter.secure:
+            LOGGER.warning(
+                'Disabling schedulable functionality, because parameter ' + parameter.str_name() + ' is secure')
+            self.schedulable = False
+
+    def on_remove(self, parameter):
+        pass
+
     def _validate_parameter_configs(self):
         for parameter in self.parameters:
             parameter.validate_parameter_dependencies(self.parameters)
@@ -240,6 +266,7 @@ def read_short(file_path, json_object):
 
     config.name = _read_name(file_path, json_object)
     config.allowed_users = json_object.get('allowed_users')
+    config.admin_users = json_object.get('admin_users')
     config.group = read_str_from_config(json_object, 'group', blank_to_none=True)
 
     hidden = read_bool_from_config('hidden', json_object, default=False)
@@ -250,6 +277,11 @@ def read_short(file_path, json_object):
         config.allowed_users = ANY_USER
     elif (config.allowed_users == '*') or ('*' in config.allowed_users):
         config.allowed_users = ANY_USER
+
+    if config.admin_users is None:
+        config.admin_users = ANY_USER
+    elif (config.admin_users == '*') or ('*' in config.admin_users):
+        config.admin_users = ANY_USER
 
     return config
 
@@ -336,7 +368,15 @@ class _TemplateProperty:
 
 
 def get_sorted_config(config):
-    key_order = ['name', 'script_path', 'working_directory', 'hidden', 'description', 'allowed_users', 'include',
+    key_order = ['name', 'script_path',
+                 'working_directory',
+                 'hidden',
+                 'description',
+                 'group',
+                 'allowed_users',
+                 'admin_users',
+                 'schedulable',
+                 'include',
                  'output_files', 'requires_terminal', 'bash_formatting', 'parameters']
 
     def get_order(key):
