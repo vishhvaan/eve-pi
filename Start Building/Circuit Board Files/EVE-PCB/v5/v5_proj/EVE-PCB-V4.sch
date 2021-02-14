@@ -2586,7 +2586,7 @@ F 6 "low" H 3300 13750 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 2600 13950 0    50   ~ 0
-DRUGS11_PWM
+DRUG11_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0137
 U 1 1 606F5882
@@ -2661,7 +2661,7 @@ F 6 "low" H 5150 13750 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 4500 13950 0    50   ~ 0
-DRUGS12_PWM
+DRUG12_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0139
 U 1 1 606F58A9
@@ -2902,7 +2902,7 @@ F 6 "low" H 3300 15200 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 2600 15400 0    50   ~ 0
-DRUGS21_PWM
+DRUG21_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0145
 U 1 1 5F86B638
@@ -2977,7 +2977,7 @@ F 6 "low" H 5150 15200 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 4500 15400 0    50   ~ 0
-DRUGS22_PWM
+DRUG22_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0147
 U 1 1 5F86B65D
@@ -3218,7 +3218,7 @@ F 6 "low" H 3300 16700 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 2600 16900 0    50   ~ 0
-DRUGS31_PWM
+DRUG31_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0153
 U 1 1 5F8D8992
@@ -3293,7 +3293,7 @@ F 6 "low" H 5150 16700 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 4500 16900 0    50   ~ 0
-DRUGS32_PWM
+DRUG32_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0155
 U 1 1 5F8D89B7
@@ -3534,7 +3534,7 @@ F 6 "low" H 3300 18350 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 2600 18550 0    50   ~ 0
-DRUGS41_PWM
+DRUG41_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0161
 U 1 1 5F94D734
@@ -3609,7 +3609,7 @@ F 6 "low" H 5150 18350 50  0001 C CNN "Power"
 	-1   0    0    -1  
 $EndComp
 Text Label 4500 18550 0    50   ~ 0
-DRUGS42_PWM
+DRUG42_PWM
 $Comp
 L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0163
 U 1 1 5F94D759
@@ -6254,9 +6254,9 @@ Wire Wire Line
 Text Label 13100 5400 0    50   ~ 0
 APOT12
 Text Label 13100 5700 0    50   ~ 0
-APOT11
+APOT21
 Text Label 13100 5900 0    50   ~ 0
-APOT11
+APOT22
 Text Label 15000 8200 2    50   ~ 0
 ALP31
 Text Label 15000 8300 2    50   ~ 0
