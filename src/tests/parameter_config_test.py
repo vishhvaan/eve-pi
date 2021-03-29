@@ -41,7 +41,7 @@ class ParameterModelInitTest(unittest.TestCase):
             'min': min,
             'max': max,
             'separator': separator,
-            'multiple_arguments': 'True',
+            'multiselect_argument_type': 'argument_per_value',
             'default': default,
             'type': type,
             'constant': 'false',
@@ -57,7 +57,7 @@ class ParameterModelInitTest(unittest.TestCase):
         self.assertEqual(min, parameter_model.min)
         self.assertEqual(max, parameter_model.max)
         self.assertEqual(separator, parameter_model.separator)
-        self.assertEqual(True, parameter_model.multiple_arguments)
+        self.assertEqual('argument_per_value', parameter_model.multiselect_argument_type)
         self.assertEqual(default, parameter_model.default)
         self.assertEqual(type, parameter_model.type)
         self.assertEqual(False, parameter_model.constant)
@@ -125,6 +125,13 @@ class ParameterModelInitTest(unittest.TestCase):
             'values': {'script': 'echo "123\n" "456"'}})
         self.assertEqual(None, parameter_model.values)
 
+    def test_allowed_values_for_editable_list(self):
+        parameter_model = _create_parameter_model({
+            'name': 'def_param',
+            'type': 'editable_list',
+            'values': {'script': 'echo "123\n" "456"'}})
+        self.assertEqual(['123', ' 456'], parameter_model.values)
+
     def test_ip_uppercase(self):
         parameter_model = _create_parameter_model({
             'name': 'def_param',
@@ -169,7 +176,7 @@ class ParameterModelMapValueTest(unittest.TestCase):
         parameter_model = create_parameter_model('param1',
                                                  type=PARAM_TYPE_MULTISELECT,
                                                  allowed_values=['abc', 'def', '456'],
-                                                 multiple_arguments=True)
+                                                 multiselect_argument_type='argument_per_value')
         self.assertEqual(['abc', '456'], parameter_model.to_script_args(['abc', '456']))
 
     def test_map_to_script_args_multiselect_single_arg(self):
@@ -477,6 +484,13 @@ class TestSingleParameterValidation(unittest.TestCase):
 
         error = parameter.validate_value('val4')
         self.assert_error(error)
+
+    def test_editable_list_parameter_when_not_matches(self):
+        parameter = create_parameter_model(
+            'param', type='editable_list', allowed_values=['val1', 'val2', 'val3'])
+
+        error = parameter.validate_value('val4')
+        self.assertIsNone(error)
 
     def test_multiselect_when_empty_string(self):
         parameter = create_parameter_model(
