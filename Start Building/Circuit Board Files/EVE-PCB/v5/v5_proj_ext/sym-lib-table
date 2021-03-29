@@ -1,0 +1,7 @@
+(sym_lib_table
+  (lib (name EVE-PCB-V4-rescue)(type Legacy)(uri ${KIPRJMOD}/EVE-PCB-V4-rescue.lib)(options "")(descr ""))
+  (lib (name 2020-09-29_16-21-42)(type Legacy)(uri ${KIPRJMOD}/ICs/THS3122ID/2020-09-29_16-21-42.lib)(options "")(descr ""))
+  (lib (name MAX16828)(type Legacy)(uri "/home/vishhvaan/GitRepos/eve-pi/Start Building/Circuit Board Files/EVE-PCB/v5/v5_proj/ICs/ul_max16828asa/2020-10-01_03-26-35.lib")(options "")(descr ""))
+  (lib (name TPS92511DDA)(type Legacy)(uri "/home/vishhvaan/GitRepos/eve-pi/Start Building/Circuit Board Files/EVE-PCB/v5/v5_proj/ICs/ul_TPS92511DDAR/KiCAD/2020-12-01_18-16-27/2020-12-01_18-16-27.lib")(options "")(descr ""))
+  (lib (name 2020-10-01_22-54-38)(type Legacy)(uri ${KIPRJMOD}/ICs/ul_2828887/2020-10-01_22-54-38.lib)(options "")(descr ""))
+)

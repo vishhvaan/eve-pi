@@ -1,0 +1,789 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "2020-05-05"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L EVE-PCB-V4-rescue:GND-power-EVE-PCB-rescue #PWR010
+U 1 1 5EC8A601
+P 2350 5300
+F 0 "#PWR010" H 2350 5050 50  0001 C CNN
+F 1 "GND" H 2355 5127 50  0000 C CNN
+F 2 "" H 2350 5300 50  0001 C CNN
+F 3 "" H 2350 5300 50  0001 C CNN
+	1    2350 5300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2350 5300 2700 5300
+Wire Wire Line
+	3650 5300 4000 5300
+Wire Wire Line
+	3000 5300 3350 5300
+$Comp
+L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR017
+U 1 1 5EC9749D
+P 4000 5300
+F 0 "#PWR017" H 4000 5150 50  0001 C CNN
+F 1 "+5V" H 4015 5473 50  0000 C CNN
+F 2 "" H 4000 5300 50  0001 C CNN
+F 3 "" H 4000 5300 50  0001 C CNN
+	1    4000 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D3
+U 1 1 5EC8A60A
+P 3500 5300
+F 0 "D3" H 3493 5516 50  0000 C CNN
+F 1 "19-217/GHC-YR1S2/3T" H 3493 5425 50  0000 C CNN
+F 2 "LED_SMD:LED_0603_1608Metric" H 3500 5300 50  0001 C CNN
+F 3 "19-217/GHC-YR1S2/3T (Green)" H 3500 5300 50  0001 C CNN
+F 4 "C72043" H 3500 5300 50  0001 C CNN "LCSC"
+F 5 "LED_0603" H 3500 5300 50  0001 C CNN "Package"
+	1    3500 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 5EC8A5FB
+P 2850 5300
+F 0 "R3" V 2643 5300 50  0000 C CNN
+F 1 "169Ω" V 2734 5300 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 2780 5300 50  0001 C CNN
+F 3 "0805W8F1690T5E" H 2850 5300 50  0001 C CNN
+F 4 "C17489" V 2850 5300 50  0001 C CNN "LCSC"
+F 5 "0805" H 2850 5300 50  0001 C CNN "Package"
+F 6 "0.017" V 2850 5300 50  0001 C CNN "Power"
+	1    2850 5300
+	0    1    1    0   
+$EndComp
+Text Label 2700 2250 2    50   ~ 0
+DRUG12_NEG
+Text Label 2700 2350 2    50   ~ 0
+WASTE1_NEG
+Text Label 5650 1850 2    50   ~ 0
+LED11_NEG
+Text Label 5650 1750 2    50   ~ 0
+FAN1_NEG
+Text Label 5650 2050 2    50   ~ 0
+PD11_NEG
+Wire Wire Line
+	2700 2250 2200 2250
+Wire Wire Line
+	2700 2350 2200 2350
+Wire Wire Line
+	5650 1750 5150 1750
+Wire Wire Line
+	5650 1850 5150 1850
+Wire Wire Line
+	5650 2050 5150 2050
+Wire Wire Line
+	2700 2050 2200 2050
+Text Label 2700 2050 2    50   ~ 0
+MEDIA1_NEG
+Text Label 2700 2150 2    50   ~ 0
+DRUG11_NEG
+Wire Wire Line
+	2700 2150 2200 2150
+Text Label 5650 1950 2    50   ~ 0
+LED12_NEG
+Wire Wire Line
+	5650 1950 5150 1950
+Text Label 4150 1850 0    50   ~ 0
+LED11_POS
+Text Label 4150 1750 0    50   ~ 0
+FAN1_POS
+Text Label 4150 2050 0    50   ~ 0
+PD11_POS
+Wire Wire Line
+	4150 1750 4650 1750
+Wire Wire Line
+	4150 1850 4650 1850
+Wire Wire Line
+	4150 2050 4650 2050
+Text Label 4150 1950 0    50   ~ 0
+LED12_POS
+Wire Wire Line
+	4150 1950 4650 1950
+Text Label 4150 2150 0    50   ~ 0
+PD12_POS
+Wire Wire Line
+	4150 2150 4650 2150
+Text Label 2700 2650 2    50   ~ 0
+DRUG22_NEG
+Text Label 2700 2750 2    50   ~ 0
+WASTE2_NEG
+Text Label 5650 2350 2    50   ~ 0
+LED21_NEG
+Text Label 5650 2250 2    50   ~ 0
+FAN2_NEG
+Text Label 5650 2550 2    50   ~ 0
+PD21_NEG
+Wire Wire Line
+	2700 2650 2200 2650
+Wire Wire Line
+	2700 2750 2200 2750
+Wire Wire Line
+	5650 2250 5150 2250
+Wire Wire Line
+	5650 2350 5150 2350
+Wire Wire Line
+	5650 2550 5150 2550
+Wire Wire Line
+	2700 2450 2200 2450
+Text Label 2700 2450 2    50   ~ 0
+MEDIA2_NEG
+Text Label 2700 2550 2    50   ~ 0
+DRUG21_NEG
+Wire Wire Line
+	2700 2550 2200 2550
+Text Label 5650 2450 2    50   ~ 0
+LED22_NEG
+Wire Wire Line
+	5650 2450 5150 2450
+Text Label 5650 2650 2    50   ~ 0
+PD22_NEG
+Wire Wire Line
+	5650 2650 5150 2650
+Text Label 1200 2650 0    50   ~ 0
+DRUG22_POS
+Text Label 1200 2750 0    50   ~ 0
+WASTE2_POS
+Text Label 4150 2350 0    50   ~ 0
+LED21_POS
+Text Label 4150 2250 0    50   ~ 0
+FAN2_POS
+Text Label 4150 2550 0    50   ~ 0
+PD21_POS
+Wire Wire Line
+	1200 2650 1700 2650
+Wire Wire Line
+	1200 2750 1700 2750
+Wire Wire Line
+	4150 2250 4650 2250
+Wire Wire Line
+	4150 2350 4650 2350
+Wire Wire Line
+	4150 2550 4650 2550
+Wire Wire Line
+	1200 2450 1700 2450
+Text Label 1200 2450 0    50   ~ 0
+MEDIA2_POS
+Text Label 1200 2550 0    50   ~ 0
+DRUG21_POS
+Wire Wire Line
+	1200 2550 1700 2550
+Text Label 4150 2450 0    50   ~ 0
+LED22_POS
+Wire Wire Line
+	4150 2450 4650 2450
+Text Label 4150 2650 0    50   ~ 0
+PD22_POS
+Wire Wire Line
+	4150 2650 4650 2650
+Text Label 5650 2850 2    50   ~ 0
+LED31_NEG
+Text Label 5650 2750 2    50   ~ 0
+FAN3_NEG
+Text Label 5650 3050 2    50   ~ 0
+PD31_NEG
+Wire Wire Line
+	5650 2750 5150 2750
+Wire Wire Line
+	5650 2850 5150 2850
+Wire Wire Line
+	5650 3050 5150 3050
+Text Label 5650 2950 2    50   ~ 0
+LED32_NEG
+Wire Wire Line
+	5650 2950 5150 2950
+Text Label 5650 3150 2    50   ~ 0
+PD32_NEG
+Wire Wire Line
+	5650 3150 5150 3150
+Text Label 1200 3050 0    50   ~ 0
+DRUG32_POS
+Text Label 1200 3150 0    50   ~ 0
+WASTE3_POS
+Text Label 4150 2850 0    50   ~ 0
+LED31_POS
+Text Label 4150 2750 0    50   ~ 0
+FAN3_POS
+Text Label 4150 3050 0    50   ~ 0
+PD31_POS
+Wire Wire Line
+	1200 3050 1700 3050
+Wire Wire Line
+	1200 3150 1700 3150
+Wire Wire Line
+	4150 2750 4650 2750
+Wire Wire Line
+	4150 2850 4650 2850
+Wire Wire Line
+	4150 3050 4650 3050
+Wire Wire Line
+	1200 2850 1700 2850
+Text Label 1200 2850 0    50   ~ 0
+MEDIA3_POS
+Text Label 1200 2950 0    50   ~ 0
+DRUG31_POS
+Wire Wire Line
+	1200 2950 1700 2950
+Text Label 4150 2950 0    50   ~ 0
+LED32_POS
+Wire Wire Line
+	4150 2950 4650 2950
+Text Label 4150 3150 0    50   ~ 0
+PD32_POS
+Wire Wire Line
+	4150 3150 4650 3150
+Text Label 2700 3450 2    50   ~ 0
+DRUG42_NEG
+Text Label 2700 3550 2    50   ~ 0
+WASTE4_NEG
+Text Label 5650 3350 2    50   ~ 0
+LED41_NEG
+Text Label 5650 3250 2    50   ~ 0
+FAN4_NEG
+Text Label 5650 3550 2    50   ~ 0
+PD41_NEG
+Wire Wire Line
+	2700 3450 2200 3450
+Wire Wire Line
+	2700 3550 2200 3550
+Wire Wire Line
+	5650 3250 5150 3250
+Wire Wire Line
+	5650 3350 5150 3350
+Wire Wire Line
+	5650 3550 5150 3550
+Wire Wire Line
+	2700 3250 2200 3250
+Text Label 2700 3250 2    50   ~ 0
+MEDIA4_NEG
+Text Label 2700 3350 2    50   ~ 0
+DRUG41_NEG
+Wire Wire Line
+	2700 3350 2200 3350
+Text Label 5650 3450 2    50   ~ 0
+LED42_NEG
+Wire Wire Line
+	5650 3450 5150 3450
+Text Label 5650 3650 2    50   ~ 0
+PD42_NEG
+Wire Wire Line
+	5650 3650 5150 3650
+Text Label 1200 3450 0    50   ~ 0
+DRUG42_POS
+Text Label 1200 3550 0    50   ~ 0
+WASTE4_POS
+Text Label 4150 3350 0    50   ~ 0
+LED41_POS
+Text Label 4150 3250 0    50   ~ 0
+FAN4_POS
+Text Label 4150 3550 0    50   ~ 0
+PD41_POS
+Wire Wire Line
+	1200 3450 1700 3450
+Wire Wire Line
+	1200 3550 1700 3550
+Wire Wire Line
+	4150 3250 4650 3250
+Wire Wire Line
+	4150 3350 4650 3350
+Wire Wire Line
+	4150 3550 4650 3550
+Wire Wire Line
+	1200 3250 1700 3250
+Text Label 1200 3250 0    50   ~ 0
+MEDIA4_POS
+Text Label 1200 3350 0    50   ~ 0
+DRUG41_POS
+Wire Wire Line
+	1200 3350 1700 3350
+Text Label 4150 3450 0    50   ~ 0
+LED42_POS
+Wire Wire Line
+	4150 3450 4650 3450
+Text Label 4150 3650 0    50   ~ 0
+PD42_POS
+Wire Wire Line
+	4150 3650 4650 3650
+$Comp
+L Connector_Generic:Conn_02x18_Odd_Even J6
+U 1 1 601755E6
+P 1900 2650
+F 0 "J6" H 1950 3667 50  0000 C CNN
+F 1 "Conn_02x18_Odd_Even" H 1950 3576 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x18_P2.54mm_Vertical" H 1900 2650 50  0001 C CNN
+F 3 "~" H 1900 2650 50  0001 C CNN
+	1    1900 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1200 2150 1700 2150
+Text Label 1200 2150 0    50   ~ 0
+DRUG11_POS
+Text Label 1200 2050 0    50   ~ 0
+MEDIA1_POS
+Wire Wire Line
+	1200 2050 1700 2050
+Wire Wire Line
+	1200 2350 1700 2350
+Wire Wire Line
+	1200 2250 1700 2250
+Text Label 1200 2350 0    50   ~ 0
+WASTE1_POS
+Text Label 1200 2250 0    50   ~ 0
+DRUG12_POS
+Wire Wire Line
+	5650 2150 5150 2150
+Text Label 5650 2150 2    50   ~ 0
+PD12_NEG
+$Comp
+L Connector_Generic:Conn_02x22_Odd_Even J7
+U 1 1 603318F2
+P 4850 2750
+F 0 "J7" H 4900 3967 50  0000 C CNN
+F 1 "Conn_02x22_Odd_Even" H 4900 3876 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x22_P2.54mm_Vertical" H 4850 2750 50  0001 C CNN
+F 3 "~" H 4850 2750 50  0001 C CNN
+	1    4850 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 2950 2200 2950
+Text Label 2700 2950 2    50   ~ 0
+DRUG31_NEG
+Text Label 2700 2850 2    50   ~ 0
+MEDIA3_NEG
+Wire Wire Line
+	2700 2850 2200 2850
+Wire Wire Line
+	2700 3150 2200 3150
+Wire Wire Line
+	2700 3050 2200 3050
+Text Label 2700 3150 2    50   ~ 0
+WASTE3_NEG
+Text Label 2700 3050 2    50   ~ 0
+DRUG32_NEG
+$Comp
+L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0310
+U 1 1 628546CB
+P 1000 1900
+F 0 "#PWR0310" H 1000 1750 50  0001 C CNN
+F 1 "+5V" H 1015 2073 50  0000 C CNN
+F 2 "" H 1000 1900 50  0001 C CNN
+F 3 "" H 1000 1900 50  0001 C CNN
+	1    1000 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1000 1900 1000 1950
+Wire Wire Line
+	1000 1950 1700 1950
+$Comp
+L EVE-PCB-V4-rescue:GND-power-EVE-PCB-rescue #PWR0311
+U 1 1 62D53048
+P 2800 2000
+F 0 "#PWR0311" H 2800 1750 50  0001 C CNN
+F 1 "GND" H 2805 1827 50  0000 C CNN
+F 2 "" H 2800 2000 50  0001 C CNN
+F 3 "" H 2800 2000 50  0001 C CNN
+	1    2800 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 1950 2800 2000
+Wire Wire Line
+	2200 1950 2800 1950
+$Comp
+L EVE-PCB-V4-rescue:+5V-power-EVE-PCB-rescue #PWR0312
+U 1 1 64A27D9D
+P 3950 3700
+F 0 "#PWR0312" H 3950 3550 50  0001 C CNN
+F 1 "+5V" H 3965 3873 50  0000 C CNN
+F 2 "" H 3950 3700 50  0001 C CNN
+F 3 "" H 3950 3700 50  0001 C CNN
+	1    3950 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 3700 3950 3750
+Wire Wire Line
+	3950 3750 4650 3750
+$Comp
+L EVE-PCB-V4-rescue:GND-power-EVE-PCB-rescue #PWR0313
+U 1 1 64BD056C
+P 5750 3800
+F 0 "#PWR0313" H 5750 3550 50  0001 C CNN
+F 1 "GND" H 5755 3627 50  0000 C CNN
+F 2 "" H 5750 3800 50  0001 C CNN
+F 3 "" H 5750 3800 50  0001 C CNN
+	1    5750 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5750 3750 5750 3800
+Wire Wire Line
+	5150 3750 5750 3750
+Wire Wire Line
+	2200 1850 2700 1850
+Text Label 2700 1850 2    50   ~ 0
+SCL-PWM
+Wire Wire Line
+	1700 1850 1200 1850
+Text Label 1200 1850 0    50   ~ 0
+SDA-PWM
+Wire Wire Line
+	4650 3850 4150 3850
+Text Label 4150 3850 0    50   ~ 0
+SDA-PWM
+Wire Wire Line
+	5150 3850 5650 3850
+Text Label 5650 3850 2    50   ~ 0
+SCL-PWM
+$Comp
+L Connector_Generic:Conn_02x09_Top_Bottom J1
+U 1 1 60944719
+P 7250 2450
+F 0 "J1" H 7300 3067 50  0000 C CNN
+F 1 "Conn_02x09_Top_Bottom" H 7300 2976 50  0000 C CNN
+F 2 "ul_2828887:282888-7" H 7250 2450 50  0001 C CNN
+F 3 "~" H 7250 2450 50  0001 C CNN
+	1    7250 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x09_Top_Bottom J3
+U 1 1 609574EF
+P 9800 2450
+F 0 "J3" H 9850 3067 50  0000 C CNN
+F 1 "Conn_02x09_Top_Bottom" H 9850 2976 50  0000 C CNN
+F 2 "ul_2828887:282888-7" H 9800 2450 50  0001 C CNN
+F 3 "~" H 9800 2450 50  0001 C CNN
+	1    9800 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x09_Top_Bottom J2
+U 1 1 6099CC9F
+P 7300 4650
+F 0 "J2" H 7350 5267 50  0000 C CNN
+F 1 "Conn_02x09_Top_Bottom" H 7350 5176 50  0000 C CNN
+F 2 "ul_2828887:282888-7" H 7300 4650 50  0001 C CNN
+F 3 "~" H 7300 4650 50  0001 C CNN
+	1    7300 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x09_Top_Bottom J4
+U 1 1 6099CCA5
+P 9850 4650
+F 0 "J4" H 9900 5267 50  0000 C CNN
+F 1 "Conn_02x09_Top_Bottom" H 9900 5176 50  0000 C CNN
+F 2 "ul_2828887:282888-7" H 9850 4650 50  0001 C CNN
+F 3 "~" H 9850 4650 50  0001 C CNN
+	1    9850 4650
+	1    0    0    -1  
+$EndComp
+Text Label 6550 2050 0    50   ~ 0
+MEDIA1_POS
+Wire Wire Line
+	6550 2050 7050 2050
+Wire Wire Line
+	8050 2050 7550 2050
+Text Label 8050 2050 2    50   ~ 0
+MEDIA1_NEG
+Wire Wire Line
+	9100 2050 9600 2050
+Text Label 9100 2050 0    50   ~ 0
+MEDIA2_POS
+Wire Wire Line
+	10600 2050 10100 2050
+Text Label 10600 2050 2    50   ~ 0
+MEDIA2_NEG
+Wire Wire Line
+	6600 4250 7100 4250
+Text Label 6600 4250 0    50   ~ 0
+MEDIA3_POS
+Text Label 8100 4250 2    50   ~ 0
+MEDIA3_NEG
+Wire Wire Line
+	8100 4250 7600 4250
+Wire Wire Line
+	9150 4250 9650 4250
+Text Label 9150 4250 0    50   ~ 0
+MEDIA4_POS
+Wire Wire Line
+	10650 4250 10150 4250
+Text Label 10650 4250 2    50   ~ 0
+MEDIA4_NEG
+Wire Wire Line
+	6550 2150 7050 2150
+Text Label 6550 2150 0    50   ~ 0
+DRUG11_POS
+Wire Wire Line
+	6550 2350 7050 2350
+Wire Wire Line
+	6550 2250 7050 2250
+Text Label 6550 2350 0    50   ~ 0
+WASTE1_POS
+Text Label 6550 2250 0    50   ~ 0
+DRUG12_POS
+Text Label 8050 2250 2    50   ~ 0
+DRUG12_NEG
+Text Label 8050 2350 2    50   ~ 0
+WASTE1_NEG
+Wire Wire Line
+	8050 2250 7550 2250
+Wire Wire Line
+	8050 2350 7550 2350
+Text Label 8050 2150 2    50   ~ 0
+DRUG11_NEG
+Wire Wire Line
+	8050 2150 7550 2150
+Text Label 9100 2250 0    50   ~ 0
+DRUG22_POS
+Text Label 9100 2350 0    50   ~ 0
+WASTE2_POS
+Wire Wire Line
+	9100 2250 9600 2250
+Wire Wire Line
+	9100 2350 9600 2350
+Text Label 9100 2150 0    50   ~ 0
+DRUG21_POS
+Wire Wire Line
+	9100 2150 9600 2150
+Text Label 10600 2250 2    50   ~ 0
+DRUG22_NEG
+Text Label 10600 2350 2    50   ~ 0
+WASTE2_NEG
+Wire Wire Line
+	10600 2250 10100 2250
+Wire Wire Line
+	10600 2350 10100 2350
+Text Label 10600 2150 2    50   ~ 0
+DRUG21_NEG
+Wire Wire Line
+	10600 2150 10100 2150
+Text Label 6600 4450 0    50   ~ 0
+DRUG32_POS
+Text Label 6600 4550 0    50   ~ 0
+WASTE3_POS
+Wire Wire Line
+	6600 4450 7100 4450
+Wire Wire Line
+	6600 4550 7100 4550
+Text Label 6600 4350 0    50   ~ 0
+DRUG31_POS
+Wire Wire Line
+	6600 4350 7100 4350
+Wire Wire Line
+	8100 4350 7600 4350
+Text Label 8100 4350 2    50   ~ 0
+DRUG31_NEG
+Wire Wire Line
+	8100 4550 7600 4550
+Wire Wire Line
+	8100 4450 7600 4450
+Text Label 8100 4550 2    50   ~ 0
+WASTE3_NEG
+Text Label 8100 4450 2    50   ~ 0
+DRUG32_NEG
+Text Label 9150 4450 0    50   ~ 0
+DRUG42_POS
+Text Label 9150 4550 0    50   ~ 0
+WASTE4_POS
+Wire Wire Line
+	9150 4450 9650 4450
+Wire Wire Line
+	9150 4550 9650 4550
+Text Label 9150 4350 0    50   ~ 0
+DRUG41_POS
+Wire Wire Line
+	9150 4350 9650 4350
+Text Label 10650 4450 2    50   ~ 0
+DRUG42_NEG
+Text Label 10650 4550 2    50   ~ 0
+WASTE4_NEG
+Wire Wire Line
+	10650 4450 10150 4450
+Wire Wire Line
+	10650 4550 10150 4550
+Text Label 10650 4350 2    50   ~ 0
+DRUG41_NEG
+Wire Wire Line
+	10650 4350 10150 4350
+Text Label 6550 2550 0    50   ~ 0
+LED11_POS
+Text Label 6550 2450 0    50   ~ 0
+FAN1_POS
+Text Label 6550 2750 0    50   ~ 0
+PD11_POS
+Wire Wire Line
+	6550 2450 7050 2450
+Wire Wire Line
+	6550 2550 7050 2550
+Wire Wire Line
+	6550 2750 7050 2750
+Text Label 6550 2650 0    50   ~ 0
+LED12_POS
+Wire Wire Line
+	6550 2650 7050 2650
+Text Label 6550 2850 0    50   ~ 0
+PD12_POS
+Wire Wire Line
+	6550 2850 7050 2850
+Text Label 8050 2550 2    50   ~ 0
+LED11_NEG
+Text Label 8050 2450 2    50   ~ 0
+FAN1_NEG
+Text Label 8050 2750 2    50   ~ 0
+PD11_NEG
+Wire Wire Line
+	8050 2450 7550 2450
+Wire Wire Line
+	8050 2550 7550 2550
+Wire Wire Line
+	8050 2750 7550 2750
+Text Label 8050 2650 2    50   ~ 0
+LED12_NEG
+Wire Wire Line
+	8050 2650 7550 2650
+Wire Wire Line
+	8050 2850 7550 2850
+Text Label 8050 2850 2    50   ~ 0
+PD12_NEG
+Text Label 9100 2550 0    50   ~ 0
+LED21_POS
+Text Label 9100 2450 0    50   ~ 0
+FAN2_POS
+Text Label 9100 2750 0    50   ~ 0
+PD21_POS
+Wire Wire Line
+	9100 2450 9600 2450
+Wire Wire Line
+	9100 2550 9600 2550
+Wire Wire Line
+	9100 2750 9600 2750
+Text Label 9100 2650 0    50   ~ 0
+LED22_POS
+Wire Wire Line
+	9100 2650 9600 2650
+Text Label 9100 2850 0    50   ~ 0
+PD22_POS
+Wire Wire Line
+	9100 2850 9600 2850
+Text Label 10600 2550 2    50   ~ 0
+LED21_NEG
+Text Label 10600 2450 2    50   ~ 0
+FAN2_NEG
+Text Label 10600 2750 2    50   ~ 0
+PD21_NEG
+Wire Wire Line
+	10600 2450 10100 2450
+Wire Wire Line
+	10600 2550 10100 2550
+Wire Wire Line
+	10600 2750 10100 2750
+Text Label 10600 2650 2    50   ~ 0
+LED22_NEG
+Wire Wire Line
+	10600 2650 10100 2650
+Text Label 10600 2850 2    50   ~ 0
+PD22_NEG
+Wire Wire Line
+	10600 2850 10100 2850
+Text Label 6600 4750 0    50   ~ 0
+LED31_POS
+Text Label 6600 4650 0    50   ~ 0
+FAN3_POS
+Text Label 6600 4950 0    50   ~ 0
+PD31_POS
+Wire Wire Line
+	6600 4650 7100 4650
+Wire Wire Line
+	6600 4750 7100 4750
+Wire Wire Line
+	6600 4950 7100 4950
+Text Label 6600 4850 0    50   ~ 0
+LED32_POS
+Wire Wire Line
+	6600 4850 7100 4850
+Text Label 6600 5050 0    50   ~ 0
+PD32_POS
+Wire Wire Line
+	6600 5050 7100 5050
+Text Label 8100 4750 2    50   ~ 0
+LED31_NEG
+Text Label 8100 4650 2    50   ~ 0
+FAN3_NEG
+Text Label 8100 4950 2    50   ~ 0
+PD31_NEG
+Wire Wire Line
+	8100 4650 7600 4650
+Wire Wire Line
+	8100 4750 7600 4750
+Wire Wire Line
+	8100 4950 7600 4950
+Text Label 8100 4850 2    50   ~ 0
+LED32_NEG
+Wire Wire Line
+	8100 4850 7600 4850
+Text Label 8100 5050 2    50   ~ 0
+PD32_NEG
+Wire Wire Line
+	8100 5050 7600 5050
+Text Label 9150 4750 0    50   ~ 0
+LED41_POS
+Text Label 9150 4650 0    50   ~ 0
+FAN4_POS
+Text Label 9150 4950 0    50   ~ 0
+PD41_POS
+Wire Wire Line
+	9150 4650 9650 4650
+Wire Wire Line
+	9150 4750 9650 4750
+Wire Wire Line
+	9150 4950 9650 4950
+Text Label 9150 4850 0    50   ~ 0
+LED42_POS
+Wire Wire Line
+	9150 4850 9650 4850
+Text Label 9150 5050 0    50   ~ 0
+PD42_POS
+Wire Wire Line
+	9150 5050 9650 5050
+Text Label 10650 4750 2    50   ~ 0
+LED41_NEG
+Text Label 10650 4650 2    50   ~ 0
+FAN4_NEG
+Text Label 10650 4950 2    50   ~ 0
+PD41_NEG
+Wire Wire Line
+	10650 4650 10150 4650
+Wire Wire Line
+	10650 4750 10150 4750
+Wire Wire Line
+	10650 4950 10150 4950
+Text Label 10650 4850 2    50   ~ 0
+LED42_NEG
+Wire Wire Line
+	10650 4850 10150 4850
+Text Label 10650 5050 2    50   ~ 0
+PD42_NEG
+Wire Wire Line
+	10650 5050 10150 5050
+$EndSCHEMATC

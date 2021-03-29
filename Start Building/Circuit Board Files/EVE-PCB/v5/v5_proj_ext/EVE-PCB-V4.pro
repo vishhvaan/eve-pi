@@ -1,4 +1,4 @@
-update=Thu 18 Feb 2021 01:16:52 PM EST
+update=Sat 06 Mar 2021 08:34:01 PM EST
 version=1
 last_client=kicad
 [general]
@@ -304,7 +304,7 @@ dPairViaGap=0.25
 [pcbnew/Netclasses/6]
 Name=vref
 Clearance=0.3
-TrackWidth=0.5
+TrackWidth=0.7
 ViaDiameter=0.8
 ViaDrill=0.4
 uViaDiameter=0.3
