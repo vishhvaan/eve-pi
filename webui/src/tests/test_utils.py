@@ -130,7 +130,7 @@ def create_script_param_config(
         no_value=None,
         constant=None,
         multiselect_separator=None,
-        multiple_arguments=None,
+        multiselect_argument_type=None,
         min=None,
         max=None,
         allowed_values=None,
@@ -139,7 +139,7 @@ def create_script_param_config(
         file_recursive=None,
         file_type=None,
         file_extensions=None,
-        repeat_param=None,
+        excluded_files=None,
         same_arg_param=None):
     conf = {'name': param_name}
 
@@ -173,8 +173,8 @@ def create_script_param_config(
     if multiselect_separator is not None:
         conf['separator'] = multiselect_separator
 
-    if multiple_arguments is not None:
-        conf['multiple_arguments'] = multiple_arguments
+    if multiselect_argument_type is not None:
+        conf['multiselect_argument_type'] = multiselect_argument_type
 
     if min is not None:
         conf['min'] = min
@@ -197,8 +197,8 @@ def create_script_param_config(
     if file_type is not None:
         conf['file_type'] = file_type
 
-    if repeat_param is not None:
-        conf['repeat_param'] = repeat_param
+    if excluded_files is not None:
+        conf['excluded_files'] = excluded_files
 
     if same_arg_param is not None:
         conf['same_arg_param'] = same_arg_param
@@ -260,7 +260,7 @@ def create_parameter_model(name=None,
                            no_value=None,
                            constant=None,
                            multiselect_separator=None,
-                           multiple_arguments=None,
+                           multiselect_argument_type=None,
                            min=None,
                            max=None,
                            allowed_values=None,
@@ -282,7 +282,7 @@ def create_parameter_model(name=None,
         no_value=no_value,
         constant=constant,
         multiselect_separator=multiselect_separator,
-        multiple_arguments=multiple_arguments,
+        multiselect_argument_type=multiselect_argument_type,
         min=min,
         max=max,
         allowed_values=allowed_values,

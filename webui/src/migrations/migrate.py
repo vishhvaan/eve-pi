@@ -8,6 +8,7 @@ from datetime import datetime
 
 import execution.logging
 from execution.logging import ExecutionLoggingService
+from model import model_helper
 from utils import file_utils
 from utils.date_utils import sec_to_datetime, to_millis
 from utils.string_utils import is_blank
@@ -258,6 +259,64 @@ def __migrate_output_files_parameters_substitution(context):
                 changed = True
 
         if changed:
+            _write_json(conf_file, json_object, content)
+
+
+# 1.16 -> 1.17 migration
+@_migration('migrate_bash_formatting_to_output_format')
+def __migrate_bash_formatting_to_output_format(context):
+    for (conf_file, json_object, content) in _load_runner_files(context.conf_folder):
+        if 'bash_formatting' not in json_object:
+            continue
+
+        if model_helper.read_bool_from_config('bash_formatting', json_object, default=True) is False:
+            output_format = 'text'
+        else:
+            output_format = 'terminal'
+
+        del json_object['bash_formatting']
+        json_object['output_format'] = output_format
+
+        _write_json(conf_file, json_object, content)
+
+
+# 1.16 -> 1.17 migration
+@_migration('migrate_repeat_param_and_same_arg_param')
+def __migrate_repeat_param_and_same_arg_param(context):
+    for (conf_file, json_object, content) in _load_runner_files(context.conf_folder):
+        parameters = json_object.get('parameters')
+        if not parameters:
+            continue
+
+        has_changes = False
+        for parameter in parameters:
+            repeat_param = model_helper.read_bool_from_config('repeat_param', parameter)
+            same_arg_param = model_helper.read_bool_from_config('same_arg_param', parameter)
+            multiple_arguments = model_helper.read_bool_from_config('multiple_arguments', parameter)
+
+            if repeat_param is None and same_arg_param is None and multiple_arguments is None:
+                continue
+
+            has_changes = True
+
+            if repeat_param is not None:
+                del parameter['repeat_param']
+
+            if same_arg_param is not None:
+                del parameter['same_arg_param']
+
+            if multiple_arguments is not None:
+                del parameter['multiple_arguments']
+
+            if repeat_param is not None:
+                parameter['same_arg_param'] = not repeat_param
+
+            if same_arg_param:
+                parameter['multiselect_argument_type'] = 'repeat_param_value'
+            elif multiple_arguments:
+                parameter['multiselect_argument_type'] = 'argument_per_value'
+
+        if has_changes:
             _write_json(conf_file, json_object, content)
 
 
