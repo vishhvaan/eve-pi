@@ -6,7 +6,7 @@ The EVE is an open framework for an automated continuous culture system.
   - Easy to use for programmers and non-programmers
   - Cheap
   - Replicate functionality of a morbidostat/chemostat/turbidostat
-  - Vesatile & easily modifiable for different purposes
+  - Versatile & easily modifiable for different purposes
 
 This device is meant to be used for the study of population dynamics and evolution.
 
