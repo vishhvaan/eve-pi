@@ -23,7 +23,7 @@ Head over to [Start Building] folder to find the 3D stls and circuit schematics 
 # Installation
 
 1. Download and flash the [Raspbian] Buster OS on an SD card.
-2. Insert the SD Card into the Pi and connect the Pi to a display, keyboard, and the local area network.
+2. Insert the SD Card into the Pi and connect the Pi to a display, keyboard, local area network, and power.
 3. Note the IP address of the device with the command:
 ```sh
 $ ifconfig
@@ -42,7 +42,19 @@ $ bash <(curl -s https://raw.githubusercontent.com/vishhvaan/eve-pi/master/st_ev
 9. If the Pi has a browser, navigate to the web interface by accessing: http://localhost.
 10. On a browser on the network, navigate to the web interface by accessing the IP address or hostname of the device (e.g. http://eve.local_domain.net).
 
-\* If the schematic was exactly followed, the default values for the hardware address in the sample-conf.ini file will work and do no tneed to be edited.
+\* If the PCB is used or the breadboard was wired like the schematic, the default values for the hardware address in the sample-conf.ini file will work.
+
+For a headless install:
+
+1. Download and flash the [Raspbian] Buster OS on an SD card.
+2. Add a file titled `ssh` to the boot partition.
+3. Insert the SD Card into the Pi and connect the Pi to the local area network and power.
+4. In a seperate computer's terminal run a command to connect to the pi.
+```sh
+$ ssh pi@raspberrypi
+```  
+5. Login to the pi with the password `raspberry`
+6. Continue from step 3 in the non-headless install.
 
 ## Install for Docker for ARM Devices
  
