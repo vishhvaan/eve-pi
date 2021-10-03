@@ -1,0 +1,6 @@
+Comment,Designator,Footprint,LCSC
+"19-217/GHC-YR1S2/3T","D3","LED_SMD:LED_0603_1608Metric","C72043"
+"Conn_02x09_Top_Bottom","J1,J2,J3,J4","ul_2828887:282888-7",""
+"Conn_02x18_Odd_Even","J6","Connector_PinHeader_2.54mm:PinHeader_2x18_P2.54mm_Vertical",""
+"Conn_02x22_Odd_Even","J7","Connector_PinHeader_2.54mm:PinHeader_2x22_P2.54mm_Vertical",""
+"169Ω","R3","Resistor_SMD:R_0805_2012Metric","C17489"
