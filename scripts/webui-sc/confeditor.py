@@ -91,7 +91,6 @@ def save_file(config):
     menu()
 
 def item_editor(config, section):
-    csections = config.sections()
     items = config.items(section)
     print('Section: {}'.format(section))
     for item in items:
