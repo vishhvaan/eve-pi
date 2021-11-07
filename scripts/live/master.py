@@ -19,6 +19,7 @@ import adafruit_ads1x15.ads1015 as ADS
 import adafruit_ads1x15.ads1115 as ADS_HR
 from adafruit_ads1x15.analog_in import AnalogIn
 from adafruit_mcp230xx.mcp23017 import MCP23017
+from w1thermsensor import W1ThermSensor
 import digitalio
 
 import pandas as pd
@@ -321,26 +322,12 @@ def comb_grapher():
         comb_lat_sw = [comblat_pic['file']['shares']['public'][chanid][0]['ts'], comblat_pics['file']['shares']['public'][chanid][0]['ts']]
 
 def temp_sensor_func():
-    base_dir = '/sys/bus/w1/devices/'
-    device_folder = glob.glob(base_dir + '28*')[0]
-    device_file = device_folder + '/w1_slave'
+    temp_sensor = W1ThermSensor()
 
     while True:
-        f = open(device_file, 'r')
-        lines = f.readlines()
-        f.close()
-
-        while lines[0].strip()[-3:] != 'YES':
-            time.sleep(0.2)
-            lines = read_temp_raw()
-        equals_pos = lines[1].find('t=')
-        if equals_pos != -1:
-                temp_string = lines[1][equals_pos+2:]
-                global temp
-                temp = float(temp_string) / 1000.0
+        global temp
+        temp = temp_sensor.get_temperature()
         time.sleep(3)
-
-
 
 class Morbidostat:
     def __init__(self, sysnum, actsys, chips, slack_client):
