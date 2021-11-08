@@ -326,8 +326,14 @@ def temp_sensor_func():
 
     while True:
         global temp
-        temp = temp_sensor.get_temperature()
-        time.sleep(3)
+        try:
+            temp = temp_sensor.get_temperature()
+        except w1thermsensor.errors.SensorNotReadyError:
+            pass
+        except:
+            print("Error with the temp sensor. Continuing.")
+
+        time.sleep(5)
 
 class Morbidostat:
     def __init__(self, sysnum, actsys, chips, slack_client):
