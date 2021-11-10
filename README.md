@@ -129,7 +129,7 @@ MIT
    [slack-api]: <https://github.com/slackapi/python-slackclient>
    [Start Building]: <https://github.com/vishhvaan/eve-pi/tree/master/Start%20Building>
    [plotly]: <https://plot.ly/dash/>
-   [KiCad]: <http://www.kicad-pcb.org/>
+   [KiCad]: <http://www.kicad.org/>
    [Install Docker]: <https://github.com/docker/docker-install>
    [Raspbian]: <https://www.raspberrypi.org/downloads/raspbian/>
    [Docker]: <https://github.com/docker/docker-ce>
